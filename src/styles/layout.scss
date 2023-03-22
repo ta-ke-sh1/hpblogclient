@@ -1,0 +1,29 @@
+
+.custom-wrapper{
+   position: relative;
+   
+}
+
+.center-container{
+   position: absolute;
+   left: 50%;
+   right: 50%;
+
+   width: 100vw;
+   height: 100px;
+   
+   transform: translate(-50%, -50%);
+}
+
+.custom-body{
+   margin-top: 15vh;
+   color: black;
+}
+
+.custom-padding{
+   color: #222222;
+   font-family: 'med-text';
+   font-size: 20px;
+   margin: 30px;
+   margin-left: 54px;
+}

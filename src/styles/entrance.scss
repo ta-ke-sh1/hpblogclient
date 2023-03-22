@@ -1,0 +1,44 @@
+.entrance-shape{
+   height: 40vh;
+   width: 40vh;
+   background-color: gray;
+   transition-duration: 0.6s;
+   border-radius: 10px;
+
+   &:hover{
+      border-radius: 50%;
+   }
+}
+
+.custom-center{
+   position: absolute;
+   left: 50%;
+   top: 50%;
+   transform: translate(-50%, -50%);
+   align-content: center;
+   align-items: center;
+
+   .entrance-col{
+      margin: 40px;
+      
+      .entrance-paragraph{
+         width: 300px;
+
+         p {
+            font-family: 'reg-text';
+            font-size: 34px;
+            line-height: 38px;
+
+            .display-text{
+               font-family: 'display-text';
+               line-height: 38px;
+
+               .crimson{
+                  color: #FF597B;
+               }
+            }
+         }
+         
+      }
+   }
+}
