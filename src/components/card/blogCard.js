@@ -1,7 +1,6 @@
 import React, { useRef } from "react"
 import { fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
 import gsap from 'gsap';
-import $ from 'jquery';
 
 export default function BlogCard({ props }) {
     const coverContainer = useRef();
@@ -10,35 +9,35 @@ export default function BlogCard({ props }) {
 
     var height = window.innerHeight * 25 / 100;
 
-    $(function () {
-        $(container.current).hover(function (e) {
-            gsap.to(coverContainer.current, {
-                y: -height,
-                ease: 'power',
-                duration: 0.6
-            });
-            gsap.to(imageContainer.current, {
-                scale: 1.1,
-                ease: 'power',
-                duration: 0.9
-            })
-        }, function (e) {
-            gsap.to(coverContainer.current, {
-                y: 0,
-                ease: 'power',
-                duration: 0.6
-            })
-            gsap.to(imageContainer.current, {
-                scale: 1,
-                ease: 'power',
-                duration: 0.9
-            })
+    const handleEnter = () => {
+        gsap.to(coverContainer.current, {
+            y: -height,
+            ease: 'power',
+            duration: 0.6
         });
-    });
+        gsap.to(imageContainer.current, {
+            scale: 1.1,
+            ease: 'power',
+            duration: 0.9
+        })
+    }
+
+    const handleLeave = () => {
+        gsap.to(coverContainer.current, {
+            y: 0,
+            ease: 'power',
+            duration: 0.6
+        })
+        gsap.to(imageContainer.current, {
+            scale: 1,
+            ease: 'power',
+            duration: 0.9
+        })
+    }
 
     return (
         <>
-            <div className="card-container" ref={container}>
+            <div className="card-container" ref={container} onMouseEnter={() => handleEnter()} onMouseLeave={() => handleLeave()}>
                 <div className="card-content">
                     <div className="row">
                         <div className="col-sm-2">

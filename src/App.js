@@ -13,6 +13,7 @@ import "./styles/entrance.scss";
 import "./styles/navigation.scss";
 import "./styles/body.scss";
 import './styles/card.scss'
+import BlogDetails from "./views/blog/details";
 
 
 const App = () => {
@@ -27,6 +28,16 @@ const App = () => {
                         <>
                             <Navbar />
                             <MainBlog />
+                        </>
+                    }
+                />
+                <Route
+                    path="/blog/:id"
+                    errorElement={<ErrorPage />}
+                    element={
+                        <>
+                            <Navbar />
+                            <BlogDetails />
                         </>
                     }
                 />

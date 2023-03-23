@@ -1,7 +1,6 @@
 import { useContext, createContext } from "react";
 import { useNavigate, Navigate, Outlet } from "react-router-dom";
 import React, { useState, useMemo } from "react";
-import ValidToken from "../components/wrappers/validToken";
 
 const AuthContext = createContext();
 
@@ -35,7 +34,7 @@ export function AuthProvider({ children }) {
 
     return (
         <AuthContext.Provider value={value}>
-            <ValidToken>{children}</ValidToken>
+            {children}
         </AuthContext.Provider>
     );
 }
