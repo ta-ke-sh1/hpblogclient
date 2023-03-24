@@ -4,7 +4,7 @@ import jwt_decode from "jwt-decode";
 export const host_url = "http://localhost:5000";
 
 export const fromMilisecondsToFormattedDate = (milisecondsSinceEpoch) => {
-    return moment(milisecondsSinceEpoch * 1000).format('YYYY-M-D');
+    return moment(milisecondsSinceEpoch * 1000).format("YYYY-M-D");
 };
 
 export const convertSecondsToTime = (input) => {

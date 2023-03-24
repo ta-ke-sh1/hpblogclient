@@ -2,7 +2,7 @@ import React from "react";
 import { AuthProvider, RequireAuth } from "./hooks/useAuth";
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "./views/ErrorPage";
-import Navbar from "./layouts/navbar";
+
 import MainBlog from "./views/blog/main";
 
 // Styles
@@ -12,9 +12,9 @@ import "./styles/fonts.scss";
 import "./styles/entrance.scss";
 import "./styles/navigation.scss";
 import "./styles/body.scss";
-import './styles/card.scss'
+import "./styles/card.scss";
 import BlogDetails from "./views/blog/details";
-
+import BlogList from "./layouts/bloglist";
 
 const App = () => {
     return (
@@ -26,17 +26,16 @@ const App = () => {
                     errorElement={<ErrorPage />}
                     element={
                         <>
-                            <Navbar />
                             <MainBlog />
                         </>
                     }
                 />
+                <Route path="/blog" element={<BlogList />} />
                 <Route
                     path="/blog/:id"
                     errorElement={<ErrorPage />}
                     element={
                         <>
-                            <Navbar />
                             <BlogDetails />
                         </>
                     }
@@ -45,11 +44,7 @@ const App = () => {
                     <Route
                         path="/main/"
                         errorElement={<ErrorPage />}
-                        element={
-                            <>
-                                <Navbar />
-                            </>
-                        }
+                        element={<></>}
                     />
                 </Route>
             </Routes>

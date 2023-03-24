@@ -1,43 +1,47 @@
-import React, { useRef } from "react"
+import React, { useRef } from "react";
 import { fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
-import gsap from 'gsap';
+import gsap from "gsap";
 
 export default function BlogCard({ props }) {
     const coverContainer = useRef();
     const imageContainer = useRef();
     const container = useRef();
 
-    var height = window.innerHeight * 25 / 100;
+    var height = (window.innerHeight * 25) / 100;
 
     const handleEnter = () => {
         gsap.to(coverContainer.current, {
             y: -height,
-            ease: 'power',
-            duration: 0.6
+            ease: "power",
+            duration: 0.6,
         });
         gsap.to(imageContainer.current, {
             scale: 1.1,
-            ease: 'power',
-            duration: 0.9
-        })
-    }
+            ease: "power",
+            duration: 0.9,
+        });
+    };
 
     const handleLeave = () => {
         gsap.to(coverContainer.current, {
             y: 0,
-            ease: 'power',
-            duration: 0.6
-        })
+            ease: "power",
+            duration: 0.6,
+        });
         gsap.to(imageContainer.current, {
             scale: 1,
-            ease: 'power',
-            duration: 0.9
-        })
-    }
+            ease: "power",
+            duration: 0.9,
+        });
+    };
 
     return (
         <>
-            <div className="card-container" ref={container} onMouseEnter={() => handleEnter()} onMouseLeave={() => handleLeave()}>
+            <div
+                className="card-container"
+                ref={container}
+                onMouseEnter={() => handleEnter()}
+                onMouseLeave={() => handleLeave()}>
                 <div className="card-content">
                     <div className="row">
                         <div className="col-sm-2">
@@ -48,22 +52,34 @@ export default function BlogCard({ props }) {
                         </div>
                         <div className="col-sm-3">
                             <h1>{props.location}</h1>
-                            <h1>{fromMilisecondsToFormattedDate(props.date)}</h1>
+                            <h1>
+                                {fromMilisecondsToFormattedDate(props.date)}
+                            </h1>
                         </div>
                     </div>
                 </div>
-                <div className="card-background" ref={coverContainer} style={
-                    {
-                        backgroundColor: '#f8f8f8',
+                <div
+                    className="card-background"
+                    ref={coverContainer}
+                    style={{
+                        backgroundColor: "#f8f8f8",
                         zIndex: 1,
-                    }
-                }></div>
-                <div className="card-background" ref={imageContainer} style={
-                    {
-                        backgroundImage: `url(${host_url + "/" + fromMilisecondsToFormattedDate(props.date) + "-" + props.id + "/" + props.image[0]})`
-                    }
-                }></div>
+                    }}></div>
+                <div
+                    className="card-background"
+                    ref={imageContainer}
+                    style={{
+                        backgroundImage: `url(${
+                            host_url +
+                            "/" +
+                            fromMilisecondsToFormattedDate(props.date) +
+                            "-" +
+                            props.id +
+                            "/" +
+                            props.image[0]
+                        })`,
+                    }}></div>
             </div>
         </>
-    )
+    );
 }

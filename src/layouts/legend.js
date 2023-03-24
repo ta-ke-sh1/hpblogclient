@@ -1,25 +1,24 @@
-import React from "react"
+import React from "react";
+import background from "../images/DSC_0642.jpg";
 
 export default function LegendBanner() {
     return (
         <div className="container custom-container">
-            <div className="row custom-center">
-                <div className="col entrance-col">
-                    <div className="entrance-paragraph">
-                        <p>
-                            Welcome to my <br /> little hideout, <br />
-                            my escape, unwavering <br />
-                            <span className="display-text">
-                                cradle of <br />
-                                <span className="crimson">purity</span>.
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div className="col entrance-col">
-                    <div className="entrance-shape"></div>
-                </div>
+            <div className="entrance-paragraph">
+                <p>
+                    Welcome to <br />
+                    my hideout, <br />
+                    my escape, <br /> unwavering <br />
+                    <span className="display-text crimson">
+                        cradle of purity.
+                    </span>
+                </p>
             </div>
+            <div
+                className="banner-image"
+                style={{
+                    backgroundImage: `url(${background})`,
+                }}></div>
         </div>
-    )
+    );
 }

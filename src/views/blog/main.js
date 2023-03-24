@@ -8,9 +8,6 @@ export default function MainBlog() {
     return (
         <>
             <LegendBanner />
-            <BlogList />
-            <WriteMe />
-            <Footer />
         </>
     );
 }
