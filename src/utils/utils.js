@@ -51,6 +51,11 @@ export function convertDateToDayOfTheWeek(date) {
     return day.format("ddd");
 }
 
+export function convertDateToDisplayFormat(date) {
+    var day = moment(date);
+    return day.format("MMM DD, YYYY");
+}
+
 export function getCurrentDateAsDBFormat() {
     return moment().format("YYYY/M/D");
 }

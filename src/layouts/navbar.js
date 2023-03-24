@@ -80,17 +80,18 @@ export default function MenuOverlay() {
                         id="first-nav-item">
                         <div className="paragraph">my story</div>
                     </div>
-                    <Link to={"/blog"}>
+                    <Link to={"/writings"}>
                         <div className="content-wrapper" id="first-second-item">
                             <div className="paragraph nav-item">
                                 my writings
                             </div>
                         </div>
                     </Link>
-
-                    <div className="content-wrapper" id="first-third-item">
-                        <div className="paragraph nav-item">my memories</div>
-                    </div>
+                    <Link to={"/memories"}>
+                        <div className="content-wrapper" id="first-third-item">
+                            <div className="paragraph nav-item">my memories</div>
+                        </div>
+                    </Link>
                 </div>
             </div>
         </>

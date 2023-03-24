@@ -1,6 +1,7 @@
 import React, { useRef } from "react";
-import { fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
+import { convertDateToDisplayFormat, fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
 import gsap from "gsap";
+import Tag from "../tag";
 
 export default function BlogCard({ props }) {
     const coverContainer = useRef();
@@ -43,41 +44,28 @@ export default function BlogCard({ props }) {
                 onMouseEnter={() => handleEnter()}
                 onMouseLeave={() => handleLeave()}>
                 <div className="card-content">
-                    <div className="row">
-                        <div className="col-sm-2">
-                            <h1>({props.index + 1})</h1>
-                        </div>
-                        <div className="col-sm-6 title">
-                            <h1>{props.title}</h1>
-                        </div>
-                        <div className="col-sm-3">
-                            <h1>{props.location}</h1>
-                            <h1>
-                                {fromMilisecondsToFormattedDate(props.date)}
-                            </h1>
-                        </div>
+                    <h1>{props.title}</h1>
+                    <p>{props.location} <br />
+                        {convertDateToDisplayFormat(props.date * 1000)}
+                    </p>
+                    <div style={{
+                        display: 'flex'
+                    }}>
+                        {props.tags.map((tag) => <Tag text={tag} />)}
                     </div>
                 </div>
                 <div
                     className="card-background"
-                    ref={coverContainer}
-                    style={{
-                        backgroundColor: "#f8f8f8",
-                        zIndex: 1,
-                    }}></div>
-                <div
-                    className="card-background"
                     ref={imageContainer}
                     style={{
-                        backgroundImage: `url(${
-                            host_url +
+                        backgroundImage: `url(${host_url +
                             "/" +
                             fromMilisecondsToFormattedDate(props.date) +
                             "-" +
                             props.id +
                             "/" +
                             props.image[0]
-                        })`,
+                            })`,
                     }}></div>
             </div>
         </>

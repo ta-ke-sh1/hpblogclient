@@ -2,8 +2,9 @@ import React from "react";
 import { AuthProvider, RequireAuth } from "./hooks/useAuth";
 import { Routes, Route } from "react-router-dom";
 import ErrorPage from "./views/ErrorPage";
-
-import MainBlog from "./views/blog/main";
+import BlogDetails from "./views/blog/details";
+import BlogList from "./layouts/bloglist";
+import LegendBanner from "./layouts/legend";
 
 // Styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -13,8 +14,13 @@ import "./styles/entrance.scss";
 import "./styles/navigation.scss";
 import "./styles/body.scss";
 import "./styles/card.scss";
-import BlogDetails from "./views/blog/details";
-import BlogList from "./layouts/bloglist";
+import './styles/color.scss';
+import './styles/margin.scss';
+import './styles/gallery.scss';
+import Memories from "./layouts/memories";
+import 'lightgallery/scss/lightgallery.scss';
+import 'lightgallery/scss/lg-zoom.scss';
+
 
 const App = () => {
     return (
@@ -26,11 +32,12 @@ const App = () => {
                     errorElement={<ErrorPage />}
                     element={
                         <>
-                            <MainBlog />
+                            <LegendBanner />
                         </>
                     }
                 />
-                <Route path="/blog" element={<BlogList />} />
+                <Route path="/writings" element={<BlogList />} />
+                <Route path='/memories' element={<Memories />} />
                 <Route
                     path="/blog/:id"
                     errorElement={<ErrorPage />}

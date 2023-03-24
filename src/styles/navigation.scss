@@ -2,19 +2,20 @@
 	display: flex;
 	background-color: #f8f8f8;
 	position: fixed;
+	top: 0;
 	width: 100vw;
 	z-index: 100;
 }
 
-.nav-item{
+.nav-item {
 	padding: 24px;
-	color: #F53C62;
-	font-family: 'med-text';
+	color: #f53c62;
+	font-family: "med-text";
 	font-size: 20px;
 	margin-right: 4vw;
 }
 
-.menu-box{
+.menu-box {
 	width: 79px;
 	height: 78px;
 	position: absolute;
@@ -35,7 +36,7 @@
 	.line {
 		width: 100%;
 		height: 4px;
-		background-color: #F53C62;
+		background-color: #f53c62;
 		display: block;
 
 		&:nth-child(1) {
@@ -68,7 +69,7 @@
 		height: fit-content;
 		font-family: editorialMedium;
 		a {
-			color: #F53C62;
+			color: #f53c62;
 			text-decoration: none;
 		}
 	}

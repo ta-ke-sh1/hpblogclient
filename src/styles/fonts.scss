@@ -1,18 +1,30 @@
 @font-face {
-    font-family: "reg-text";
-    src: url("./fonts/HaasGrotDisp55Roman.otf") format("opentype");
+	font-family: "reg-text";
+	src: url("./fonts/HaasGrotDisp55Roman.otf") format("opentype");
 }
 
 @font-face {
-    font-family: "med-text";
-    src: url("./fonts/HaasGrotDisp65Medium.otf") format("opentype");
+	font-family: "med-text";
+	src: url("./fonts/HaasGrotDisp65Medium.otf") format("opentype");
 }
 
 @font-face {
-   font-family: "display-text";
-   src: url("./fonts/CotfordTextItalic.otf") format("opentype");
+	font-family: "display-text";
+	src: url("./fonts/CotfordTextItalic.otf") format("opentype");
 }
 
-body{
-   font-family: 'reg-text';
+body {
+	font-family: "reg-text";
+}
+
+.display-font {
+	font-family: "display-text";
+}
+
+.s-48 {
+	font-size: 48px;
+}
+
+.s-24 {
+	font-size: 24px;
 }
