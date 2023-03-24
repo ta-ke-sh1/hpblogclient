@@ -1,4 +1,5 @@
 import React from "react";
+import BlogList from "./blogs";
 
 export default function MainBlog() {
     return (
@@ -18,6 +19,7 @@ export default function MainBlog() {
                 <div className="col entrance-col">
                     <div className="entrance-shape"></div>
                 </div>
+                <BlogList />
             </div>
         </div>
     );
