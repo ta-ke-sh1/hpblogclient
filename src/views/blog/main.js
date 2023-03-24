@@ -1,26 +1,16 @@
 import React from "react";
-import BlogList from "./blogs";
+import LegendBanner from "../../layouts/legend";
+import BlogList from "../../layouts/bloglist";
+import Footer from "../../layouts/footer";
+import WriteMe from "../../layouts/writeMe";
 
 export default function MainBlog() {
     return (
-        <div className="container">
-            <div className="row custom-center">
-                <div className="col entrance-col">
-                    <div className="entrance-paragraph">
-                        <p>
-                            Welcome to my blog, my escape, unwavering <br />
-                            <span className="display-text">
-                                cradle of <br />
-                                <span className="crimson">purity</span>.
-                            </span>
-                        </p>
-                    </div>
-                </div>
-                <div className="col entrance-col">
-                    <div className="entrance-shape"></div>
-                </div>
-                <BlogList />
-            </div>
-        </div>
+        <>
+            <LegendBanner />
+            <BlogList />
+            <WriteMe />
+            <Footer />
+        </>
     );
 }

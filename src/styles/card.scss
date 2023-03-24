@@ -1,0 +1,46 @@
+.card-container {
+	position: relative;
+	width: 100vw;
+	height: fit-content;
+	min-height: 25vh;
+	padding: 60px;
+	overflow: hidden;
+
+	&:hover {
+		.card-content {
+			h1 {
+				color: white;
+			}
+		}
+	}
+
+	.card-content {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+		z-index: 100;
+
+		h1 {
+			transition-duration: 0.6s;
+			color: black;
+		}
+
+		.title {
+			h1 {
+				font-family: "display-text";
+				font-size: 4rem;
+			}
+		}
+	}
+
+	.card-background {
+		height: 100%;
+		width: 100%;
+		position: absolute;
+		left: 0;
+		top: 0;
+		background-size: cover;
+		z-index: -1;
+	}
+}
