@@ -1,28 +1,45 @@
-import React, { useState, useEffect } from "react";
-import LightGallery from "lightgallery/react";
-import useFetch from "../hooks/useFetch";
+import React from "react";
+// import useFetch from "../hooks/useFetch";
 import { host_url } from "../utils/utils";
+import Grid from '@mui/material/Grid';
 
 export default function Memories() {
-    const { data, error, isLoaded } = useFetch(host_url + "/image");
+    //const { data, error, isLoaded } = useFetch(host_url + "/image");
+
+    const data = [
+        { name: "DSC_0694.jpg", id: "3Y5469EzyslVhGUIITI6" },
+        { name: "DSC_0614.jpg", id: "5hrTNEfX3Cpl4RIIrxr9" },
+        { name: "DSC_0674.jpg", id: "9TIrW5pqtfC9cIKcG5fu" },
+        { name: "DSC_0642.jpg", id: "ANnNgHEr7XJh8persKCy" },
+        { name: "DSC_0662.jpg", id: "PwGLWPa4pgnw1rPS0i1t" },
+        { name: "DSC_0458.jpg", id: "SSRFGiddYEQKjXtvLcJG" },
+        { name: "DSC_0670.jpg", id: "SeteUHhdR8xQCoq7wCOX" },
+        { name: "DSC_0628.jpg", id: "UsB7Lfshe03R79iMtKKm" },
+        { name: "DSC_0627.jpg", id: "kRpZQW8Kh8mUqVk9zNuK" },
+        { name: "DSC_0655.jpg", id: "klEXgZPBhOR6FTWvBSpo" }
+    ];
 
     const getImages = () => {
-        return data.map((item) => {
-            return (
-                <div
-                    key={item.id}
-                    data-lg-size={item.size}
-                    className="gallery-item"
-                    data-src={host_url + "/images/" + item.name}>
-                    <img
-                        style={{ maxWidth: "280px" }}
-                        className="img-responsive"
-                        alt={host_url + "/images/" + item.name}
-                        src={host_url + "/images/" + item.name}
-                    />
-                </div>
-            );
-        });
+        let items = [];
+
+        for (let i = 0; i < data.length; i += 3) {
+            let row = [];
+            for (let j = 0; j < 3 && i + j < data.length; j++) {
+                row.push(
+                    <Grid item xs={4}>
+                        <div className='grid-elements memories-card' style={{ backgroundImage: `url(${host_url + "/images/" + data[i + j].name})` }}>
+                        </div>
+                    </Grid>
+                )
+            }
+            items.push(
+                <Grid container item spacing={3}>
+                    {row}
+                </Grid >
+            )
+        }
+
+        return items;
     };
 
     return (
@@ -49,9 +66,12 @@ export default function Memories() {
                     </p>
                 </div>
             </div>
-            <LightGallery elementClassNames="custom-gallery-wrapper">
-                {getImages()}
-            </LightGallery>
+            <div className="memories-image-container">
+                <Grid item xs={12} md={6}>
+                    {getImages()}
+                </Grid>
+            </div>
+
         </div>
     );
 }
