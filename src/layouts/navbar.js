@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { gsap } from "gsap";
 import { Link } from "react-router-dom";
-import zIndex from "@mui/material/styles/zIndex";
 
 export default function MenuOverlay() {
 
@@ -13,6 +12,7 @@ export default function MenuOverlay() {
     const [isAnimating, updateAnimation] = useState(false);
 
     window.addEventListener('resize', () => {
+        handleResize()
     })
 
     const handleResize = () => {
@@ -100,7 +100,9 @@ export default function MenuOverlay() {
     return (
         <>
             <div className="custom-nav">
-                <div className="nav-item" style={{ zIndex: 100000 }}>Phuong Ha</div>
+                <Link style={{ textDecoration: 'none' }} to={"/"}>
+                    <div className="nav-item" style={{ zIndex: 100000 }}>Phuong Ha</div>
+                </Link>
 
                 <div className="menu-icon" onClick={openMenu} ref={burgerNav}>
                     <span className="line" id={"first-line"}></span>
@@ -109,7 +111,7 @@ export default function MenuOverlay() {
                 </div>
 
                 <div className="navigation-items-window" ref={desktopNav}>
-                    <Link style={{ textDecoration: 'none' }} to={"/writings"}>
+                    <Link style={{ textDecoration: 'none' }} to={"/story"}>
                         <div
                             className="content-wrapper nav-item"
                             id="first-nav-item">

@@ -1,10 +1,10 @@
-import React, { useEffect, useState } from "react"
+import React, { useState } from "react"
 import axios from "axios";
 import { host_url } from "../utils/utils";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { decodeToken } from "../utils/utils";
-import { Button, Grid, TextField } from "@mui/material";
+import { Grid, TextField } from "@mui/material";
 import thumbImage from '../images/DSC_0694.jpg';
 
 export default function LoginPage() {
@@ -12,32 +12,33 @@ export default function LoginPage() {
     const [username, setUserName] = useState("");
     const [password, setPassword] = useState("");
     const [isFetching, setFetch] = useState(false);
-    const [isLoggedIn, setLoggedIn] = useState(false);
+    // const [isLoggedIn, setLoggedIn] = useState(false);
     const navigate = useNavigate();
     const auth = useAuth();
 
-    useEffect(() => {
-        checkToken();
-    }, []);
+    // useEffect(() => {
+    //     checkToken();
+    // }, []);
 
     const relocate = async (roles) => {
         navigate("/");
     }
 
-    const checkToken = async () => {
-        const token = localStorage.getItem('access_token');
-        if (!token) {
-            setLoggedIn(true);
-            return;
-        }
+    // const checkToken = async () => {
+    //     console.log(isLoggedIn)
+    //     const token = localStorage.getItem('access_token');
+    //     if (!token) {
+    //         setLoggedIn(true);
+    //         return;
+    //     }
 
-        const decodedToken = decodeToken(token);
-        if (decodedToken.exp < Date.now()) {
-            relocate(decodedToken.role);
-        } else {
-            setLoggedIn(true);
-        }
-    }
+    //     const decodedToken = decodeToken(token);
+    //     if (decodedToken.exp < Date.now()) {
+    //         relocate(decodedToken.role);
+    //     } else {
+    //         setLoggedIn(true);
+    //     }
+    // }
 
     const handleSubmit = async (e) => {
         e.preventDefault();

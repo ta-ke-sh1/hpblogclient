@@ -7,8 +7,6 @@ export default function BlogCard({ props }) {
     const cardContainer = useRef();
     const imageContainer = useRef();
 
-    var height = (window.innerHeight * 25) / 100;
-
     const handleEnter = () => {
         gsap.to(cardContainer.current, {
             ease: "power",

@@ -1,5 +1,4 @@
 import React, { useState, useRef } from "react"
-const c_tags = ['title', 'daily'];
 
 export default function ImageForm() {
     const inputRef = useRef(null)

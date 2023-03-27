@@ -1,5 +1,5 @@
 import React from "react";
-import { AuthProvider, RequireAuth } from "./hooks/useAuth";
+import { AuthProvider } from "./hooks/useAuth";
 import { Routes, Route } from "react-router-dom";
 
 // Screens
@@ -24,6 +24,7 @@ import './styles/gallery.scss';
 import './styles/form.scss';
 import './styles/fab.scss';
 import './styles/modal.scss'
+import Story from "./layouts/story";
 
 const App = () => {
     return (
@@ -41,6 +42,7 @@ const App = () => {
                 />
                 <Route path="/writings" element={<BlogList />} />
                 <Route path='/memories' element={<Memories />} />
+                <Route path='/story' element={<Story />} />
                 <Route
                     path="/blog/:id"
                     errorElement={<ErrorPage />}
