@@ -1,0 +1,14 @@
+.modal-overlay {
+	z-index: 100;
+	height: fit-content;
+	width: 90vw;
+	max-height: 1000px;
+	max-width: 600px;
+	position: fixed;
+	top: 50%;
+	left: 50%;
+	transform: translate(-50%, -50%);
+	border-radius: 20px;
+	background-color: #f8f8f8;
+	box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+}

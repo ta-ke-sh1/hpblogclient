@@ -2,9 +2,19 @@ import React from "react";
 // import useFetch from "../hooks/useFetch";
 import { host_url } from "../utils/utils";
 import Grid from '@mui/material/Grid';
+import FloatingActionButton from "../components/floatingActionButton";
+import useModal from "../hooks/useModal";
+import Modal from "../components/modals/modal";
+import ImageForm from "../components/form/imageForm";
 
 export default function Memories() {
+    const { isShowing, toggle } = useModal();
     //const { data, error, isLoaded } = useFetch(host_url + "/image");
+
+    const showForm = () => {
+        console.log('Clicked');
+        toggle();
+    }
 
     const data = [
         { name: "DSC_0694.jpg", id: "3Y5469EzyslVhGUIITI6" },
@@ -26,14 +36,14 @@ export default function Memories() {
             let row = [];
             for (let j = 0; j < 3 && i + j < data.length; j++) {
                 row.push(
-                    <Grid item xs={4}>
+                    <Grid key={`item-${i}-${j}`} item xs={4}>
                         <div className='grid-elements memories-card' style={{ backgroundImage: `url(${host_url + "/images/" + data[i + j].name})` }}>
                         </div>
                     </Grid>
                 )
             }
             items.push(
-                <Grid container item spacing={3}>
+                <Grid key={`item-${i}`} container item spacing={3}>
                     {row}
                 </Grid >
             )
@@ -71,7 +81,10 @@ export default function Memories() {
                     {getImages()}
                 </Grid>
             </div>
-
+            <FloatingActionButton props={{ size: '100px', bg_color: '#f53c62', onClick: showForm, isShowing: isShowing }} />
+            <Modal isShowing={isShowing} hide={toggle}>
+                <ImageForm />
+            </Modal>
         </div>
     );
 }

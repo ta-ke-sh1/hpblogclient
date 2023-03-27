@@ -13,8 +13,6 @@ export default function MenuOverlay() {
     const [isAnimating, updateAnimation] = useState(false);
 
     window.addEventListener('resize', () => {
-        var t = gsap.timeline();
-        handleResize();
     })
 
     const handleResize = () => {

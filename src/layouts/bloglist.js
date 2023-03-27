@@ -8,9 +8,13 @@ import { host_url } from "../utils/utils";
 
 import BlogCard from "../components/card/blogCard";
 import { Link } from "react-router-dom";
+import FloatingActionButton from "../components/floatingActionButton";
+import useModal from "../hooks/useModal";
+import Modal from "../components/modals/modal";
+import BlogForm from "../components/form/blogForm";
 
 export default function BlogList() {
-
+    const { isShowing, toggle } = useModal();
     // const { data, isLoading, error } = useFetch(host_url + '/blog')
 
     const data = [
@@ -26,6 +30,11 @@ export default function BlogList() {
     // if (error) {
     //     return <h1>{error.data}</h1>
     // }
+
+    const showForm = () => {
+        console.log('Clicked');
+        toggle();
+    }
 
     return (
         <>
@@ -58,6 +67,10 @@ export default function BlogList() {
                         </Link>
                     ))
                 }
+                <FloatingActionButton props={{ size: '100px', bg_color: '#f53c62', onClick: showForm, isShowing: isShowing }} />
+                <Modal isShowing={isShowing} hide={toggle}>
+                    <BlogForm />
+                </Modal>
             </div>
         </>
     )
