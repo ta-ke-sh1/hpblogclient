@@ -18,7 +18,8 @@ import './styles/gallery.scss';
 import './styles/form.scss';
 import './styles/fab.scss';
 import './styles/modal.scss'
-import AnimatedRoute from "./components/animatedRoute";
+import './styles/locomotive.css'
+import AnimatedRoute from "./components/wrappers/animatedRoute";
 
 const AppWrapper = () => {
     return (

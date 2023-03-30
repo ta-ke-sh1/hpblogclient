@@ -2,11 +2,12 @@ import React from "react";
 // import useFetch from "../hooks/useFetch";
 import { host_url } from "../utils/utils";
 import Grid from '@mui/material/Grid';
-import FloatingActionButton from "../components/floatingActionButton";
+import FloatingActionButton from "../components/buttons/floatingActionButton";
 import useModal from "../hooks/useModal";
 import Modal from "../components/modals/modal";
 import ImageForm from "../components/form/imageForm";
 import { motion as m } from 'framer-motion'
+import ScrollWrapper from "../components/wrappers/scrollWrapper";
 
 export default function Memories() {
     const { isShowing, toggle } = useModal();
@@ -54,47 +55,46 @@ export default function Memories() {
     };
 
     return (
-        <m.div
-            initial={{ y: '100%' }}
-            animate={{ y: '0%' }}
-            exit={{ y: '-100%' }}
-            transition={{
-                duration: 0.75,
-                ease: 'easeOut'
-            }}>
-            <div className="custom-container mt-70">
-                <div className="custom-wrapper h-30 t-center">
-                    <div className="center-div w-40">
-                        <div className="custom-row">
-                            <h1 className="display-font s-48 primary-color ml-5">
-                                my memories{" "}
-                            </h1>
-                            <span className="display-font s-24 primary-color ml-5">
-                                ({data.length})
-                            </span>
+        <ScrollWrapper>
+            <m.div
+
+                initial={{ y: '100%' }}
+                animate={{ y: '0%' }}
+                exit={{ y: '-100%' }}
+                transition={{
+                    duration: 0.75,
+                    ease: 'easeOut'
+                }}>
+                <div className="custom-container mt-70">
+                    <div className="custom-wrapper h-30 t-center">
+                        <div className="center-div w-40">
+                            <div className="custom-row">
+                                <h1 className="display-font s-48 primary-color ml-5">
+                                    my memories{" "}
+                                </h1>
+                                <span className="display-font s-24 primary-color ml-5">
+                                    ({data.length})
+                                </span>
+                            </div>
+                            <br />
+                            <p>
+                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                                Nullam pellentesque massa risus, vitae dictum sem
+                                condimentum eu. Maecenas eu arcu ut elit feugiat
+                                lobortis at id libero. Vestibulum tempus eros ac diam
+                                ullamcorper elementum. Vestibulum ut euismod tortor.
+                                Donec dui velit, tempus ac magna at, aliquam laoreet
+                                sapien.
+                            </p>
                         </div>
-                        <br />
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                            Nullam pellentesque massa risus, vitae dictum sem
-                            condimentum eu. Maecenas eu arcu ut elit feugiat
-                            lobortis at id libero. Vestibulum tempus eros ac diam
-                            ullamcorper elementum. Vestibulum ut euismod tortor.
-                            Donec dui velit, tempus ac magna at, aliquam laoreet
-                            sapien.
-                        </p>
+                    </div>
+                    <div className="memories-image-container" >
+                        <Grid item xs={12} md={6}>
+                            {getImages()}
+                        </Grid>
                     </div>
                 </div>
-                <div className="memories-image-container">
-                    <Grid item xs={12} md={6}>
-                        {getImages()}
-                    </Grid>
-                </div>
-                <FloatingActionButton props={{ size: '100px', bg_color: '#f53c62', onClick: showForm, isShowing: isShowing }} />
-                <Modal isShowing={isShowing} hide={toggle}>
-                    <ImageForm />
-                </Modal>
-            </div>
-        </m.div>
+            </m.div>
+        </ScrollWrapper>
     );
 }

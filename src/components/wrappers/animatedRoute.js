@@ -1,12 +1,12 @@
 import React from "react";
-import Story from "../layouts/story";
+import Story from "../../layouts/story";
 import { AnimatePresence } from "framer-motion";
-import ErrorPage from "../views/ErrorPage";
-import BlogDetails from "../views/blog/details";
-import BlogList from "../layouts/bloglist";
-import LegendBanner from "../layouts/legend";
-import Memories from "../layouts/memories";
-import LoginPage from "../views/login";
+import ErrorPage from "../../views/ErrorPage";
+import BlogDetails from "../../views/blog/details";
+import BlogList from "../../layouts/bloglist";
+import LegendBanner from "../../layouts/legend";
+import Memories from "../../layouts/memories";
+import LoginPage from "../../views/login";
 import { Routes, Route, useLocation } from "react-router-dom";
 
 export default function AnimatedRoute() {

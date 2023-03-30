@@ -1,6 +1,6 @@
 import React, { useRef } from "react";
 import { convertDateToDisplayFormat, fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
-import Tag from "../tag";
+import Tag from "../buttons/tag";
 
 export default function BlogCard({ props }) {
     const cardContainer = useRef();
