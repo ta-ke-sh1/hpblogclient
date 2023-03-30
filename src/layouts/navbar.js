@@ -5,26 +5,6 @@ import { MenuToggle } from "../components/buttons/MenuToggle";
 import { useDimensions } from "../hooks/useDimensions";
 import NavigationMenu from "../components/modals/navigation_menu";
 
-const sidebar = {
-    open: (height = 1000) => ({
-        clipPath: `circle(${height * 2 + 200}px at 40px 40px)`,
-        transition: {
-            type: "spring",
-            stiffness: 20,
-            restDelta: 2
-        }
-    }),
-    closed: {
-        clipPath: "circle(30px at 40px 40px)",
-        transition: {
-            delay: 0.5,
-            type: "spring",
-            stiffness: 400,
-            damping: 40
-        }
-    }
-};
-
 export default function MenuOverlay() {
 
     const [isOpen, toggleOpen] = useCycle(false, true);
@@ -42,7 +22,6 @@ export default function MenuOverlay() {
             <Link style={{ textDecoration: 'none' }} to={"/"}>
                 <div className="nav-item" style={{ zIndex: 100000 }}>Phuong Ha</div>
             </Link>
-            <m.div className="background" variants={sidebar} />
             <NavigationMenu />
             <MenuToggle toggle={() => toggleOpen()} />
 
