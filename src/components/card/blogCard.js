@@ -1,6 +1,5 @@
 import React, { useRef } from "react";
 import { convertDateToDisplayFormat, fromMilisecondsToFormattedDate, host_url } from "../../utils/utils";
-import gsap from "gsap";
 import Tag from "../tag";
 
 export default function BlogCard({ props }) {
@@ -8,27 +7,27 @@ export default function BlogCard({ props }) {
     const imageContainer = useRef();
 
     const handleEnter = () => {
-        gsap.to(cardContainer.current, {
-            ease: "power",
-            duration: 0.6,
-        });
-        gsap.to(imageContainer.current, {
-            ease: "power",
-            duration: 0.9,
-        });
+        // gsap.to(cardContainer.current, {
+        //     ease: "power",
+        //     duration: 0.6,
+        // });
+        // gsap.to(imageContainer.current, {
+        //     ease: "power",
+        //     duration: 0.9,
+        // });
     };
 
     const handleLeave = () => {
-        gsap.to(cardContainer.current, {
-            y: 0,
-            ease: "power",
-            duration: 0.6,
-        });
-        gsap.to(imageContainer.current, {
-            scale: 1,
-            ease: "power",
-            duration: 0.9,
-        });
+        // gsap.to(cardContainer.current, {
+        //     y: 0,
+        //     ease: "power",
+        //     duration: 0.6,
+        // });
+        // gsap.to(imageContainer.current, {
+        //     scale: 1,
+        //     ease: "power",
+        //     duration: 0.9,
+        // });
     };
 
     return (

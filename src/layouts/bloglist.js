@@ -1,20 +1,13 @@
 import React from "react";
-
 // eslint-disable-next-line
 import useFetch from '../hooks/useFetch'
-
 // eslint-disable-next-line
 import { host_url } from "../utils/utils";
-
 import BlogCard from "../components/card/blogCard";
 import { Link } from "react-router-dom";
-import FloatingActionButton from "../components/floatingActionButton";
-import useModal from "../hooks/useModal";
-import Modal from "../components/modals/modal";
-import BlogForm from "../components/form/blogForm";
+import { motion as m } from 'framer-motion'
 
 export default function BlogList() {
-    const { isShowing, toggle } = useModal();
     // const { data, isLoading, error } = useFetch(host_url + '/blog')
 
     const data = [
@@ -31,13 +24,15 @@ export default function BlogList() {
     //     return <h1>{error.data}</h1>
     // }
 
-    const showForm = () => {
-        console.log('Clicked');
-        toggle();
-    }
-
     return (
-        <>
+        <m.div
+            initial={{ y: '100%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{
+                duration: 0.75,
+                ease: 'easeOut'
+            }}>
             <div className="custom-container mt-70">
                 <div className="custom-wrapper h-30 t-center">
                     <div className="center-div w-40">
@@ -67,11 +62,7 @@ export default function BlogList() {
                         </Link>
                     ))
                 }
-                <FloatingActionButton props={{ size: '100px', bg_color: '#f53c62', onClick: showForm, isShowing: isShowing }} />
-                <Modal isShowing={isShowing} hide={toggle}>
-                    <BlogForm />
-                </Modal>
             </div>
-        </>
+        </m.div>
     )
 }

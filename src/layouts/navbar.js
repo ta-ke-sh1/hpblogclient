@@ -1,5 +1,4 @@
 import React, { useEffect, useRef, useState } from "react";
-import { gsap } from "gsap";
 import { Link } from "react-router-dom";
 
 export default function MenuOverlay() {
@@ -17,37 +16,37 @@ export default function MenuOverlay() {
 
     const handleResize = () => {
         if (window.innerWidth < 700) {
-            gsap.to(burgerNav.current, {
-                duration: 0,
-                opacity: 1,
-                zIndex: 100000
-            })
-            gsap.to(desktopNav.current, {
-                duration: 0,
-                opacity: 0,
-                zIndex: 10
-            })
+            // gsap.to(burgerNav.current, {
+            //     duration: 0,
+            //     opacity: 1,
+            //     zIndex: 100000
+            // })
+            // gsap.to(desktopNav.current, {
+            //     duration: 0,
+            //     opacity: 0,
+            //     zIndex: 10
+            // })
         } else {
-            gsap.to(burgerNav.current, {
-                duration: 0,
-                opacity: 0,
-                zIndex: 10
-            })
-            gsap.to(desktopNav.current, {
-                duration: 0,
-                opacity: 1,
-                zIndex: 100
-            })
+            // gsap.to(burgerNav.current, {
+            //     duration: 0,
+            //     opacity: 0,
+            //     zIndex: 10
+            // })
+            // gsap.to(desktopNav.current, {
+            //     duration: 0,
+            //     opacity: 1,
+            //     zIndex: 100
+            // })
         }
     }
 
     useEffect(() => {
         handleResize();
-        gsap.to(aboutNav.current, {
-            duration: 0,
-            zIndex: 1,
-            xPercent: 100,
-        });
+        // gsap.to(aboutNav.current, {
+        //     duration: 0,
+        //     zIndex: 1,
+        //     xPercent: 100,
+        // });
     }, []);
 
     const openMenu = () => {
@@ -64,37 +63,37 @@ export default function MenuOverlay() {
             updateOpenMenu(false);
         }
 
-        gsap.to(aboutNav.current, {
-            duration: 0.6,
-            xPercent: isOpenMenu ? 100 : 0,
-            ease: "easeOut",
-            onComplete: () => updateAnimation(false),
-        });
+        // gsap.to(aboutNav.current, {
+        //     duration: 0.6,
+        //     xPercent: isOpenMenu ? 100 : 0,
+        //     ease: "easeOut",
+        //     onComplete: () => updateAnimation(false),
+        // });
     };
 
     const burgerAnimation = (y, r, duration) => {
         const first = document.getElementById("first-line");
         const second = document.getElementById("second-line");
         const third = document.getElementById("third-line");
-        gsap.to(first, {
-            duration: duration,
-            rotation: r,
-            y: y,
-            ease: "easeOut",
-        });
+        // gsap.to(first, {
+        //     duration: duration,
+        //     rotation: r,
+        //     y: y,
+        //     ease: "easeOut",
+        // });
 
-        gsap.to(second, {
-            duration: duration,
-            opacity: isOpenMenu ? 1 : 0,
-            ease: "easeOut",
-        });
+        // gsap.to(second, {
+        //     duration: duration,
+        //     opacity: isOpenMenu ? 1 : 0,
+        //     ease: "easeOut",
+        // });
 
-        gsap.to(third, {
-            duration: duration,
-            rotation: -r,
-            y: -y,
-            ease: "easeOut",
-        });
+        // gsap.to(third, {
+        //     duration: duration,
+        //     rotation: -r,
+        //     y: -y,
+        //     ease: "easeOut",
+        // });
     };
 
     return (
@@ -103,12 +102,6 @@ export default function MenuOverlay() {
                 <Link style={{ textDecoration: 'none' }} to={"/"}>
                     <div className="nav-item" style={{ zIndex: 100000 }}>Phuong Ha</div>
                 </Link>
-
-                <div className="menu-icon" onClick={openMenu} ref={burgerNav}>
-                    <span className="line" id={"first-line"}></span>
-                    <span className="line" id={"second-line"}></span>
-                    <span className="line" id={"third-line"}></span>
-                </div>
 
                 <div className="navigation-items-window" ref={desktopNav}>
                     <Link style={{ textDecoration: 'none' }} to={"/story"}>
@@ -132,7 +125,13 @@ export default function MenuOverlay() {
                     </Link>
                 </div>
 
-                <div className="navigation-items" ref={aboutNav}>
+                {/* <div className="menu-icon" onClick={openMenu} ref={burgerNav}>
+                    <span className="line" id={"first-line"}></span>
+                    <span className="line" id={"second-line"}></span>
+                    <span className="line" id={"third-line"}></span>
+                </div> */}
+
+                {/* <div className="navigation-items" ref={aboutNav}>
                     <div className="bottom-align">
                         <Link style={{ textDecoration: 'none' }} to={"/writings"}>
                             <div
@@ -154,7 +153,7 @@ export default function MenuOverlay() {
                             </div>
                         </Link>
                     </div>
-                </div>
+                </div> */}
             </div>
         </>
     );

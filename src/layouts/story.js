@@ -1,18 +1,7 @@
 import React from "react";
-import FloatingActionButton from "../components/floatingActionButton";
-import useModal from "../hooks/useModal";
-import Modal from "../components/modals/modal";
-import ImageForm from "../components/form/imageForm";
 
 export default function Story() {
-    const { isShowing, toggle } = useModal();
     //const { data, error, isLoaded } = useFetch(host_url + "/image");
-
-    const showForm = () => {
-        console.log('Clicked');
-        toggle();
-    }
-
     return (
         <div className="custom-container mt-70">
             <div className="custom-wrapper h-30 t-center">
@@ -34,10 +23,6 @@ export default function Story() {
                     </p>
                 </div>
             </div>
-            <FloatingActionButton props={{ size: '100px', bg_color: '#f53c62', onClick: showForm, isShowing: isShowing }} />
-            <Modal isShowing={isShowing} hide={toggle}>
-                <ImageForm />
-            </Modal>
         </div>
     );
 }
