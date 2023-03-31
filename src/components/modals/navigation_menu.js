@@ -1,37 +1,83 @@
-import React from "react";
+import React, { useRef, useEffect } from "react";
 import { motion as m } from "framer-motion";
 import { Link } from "react-router-dom";
 
-
-const container = {
-    open: {
-        x: '-70px',
-        transition: { staggerChildren: 0.07, delayChildren: 0.2 }
-    },
-    closed: {
-        x: '-70px',
-        transition: { staggerChildren: 0.05, staggerDirection: -1 }
-    }
-}
-
-const item = {
-    open: {
-        y: 0,
-        opacity: 1,
-        transition: {
-            y: { stiffness: 1000, velocity: -100 }
-        }
-    },
-    closed: {
-        y: -50,
-        opacity: 0,
-        transition: {
-            y: { stiffness: 1000 }
-        }
-    }
-}
-
 export default function NavigationMenu() {
+
+    const navContainer = useRef();
+
+    const initAnimation = () => {
+        if (window.innerWidth < 1000) {
+            navContainer.current.style.flexDirection = 'column';
+        } else {
+            navContainer.current.style.flexDirection = 'row';
+        }
+    }
+
+    useEffect(() => {
+        initAnimation();
+        window.addEventListener('resize', () => {
+            initAnimation();
+        })
+    }, []);
+
+    const container = window.innerWidth < 1000 ? {
+        open: {
+            x: '-70px',
+            y: '0%',
+            transition: {
+                ease: 'easeOut',
+                staggerChildren: 0.07,
+                delayChildren: 0.2
+            }
+        },
+        closed: {
+            y: '-100%',
+            x: '-70px',
+            transition: {
+                ease: 'easeOut',
+                staggerChildren: 0.05,
+                staggerDirection: -1
+            }
+        }
+    } : {
+        open: {
+            y: '0%',
+            x: '-70px',
+            transition: {
+                ease: 'easeOut',
+                staggerChildren: 0.07,
+                delayChildren: 0.2
+            }
+        },
+        closed: {
+            y: '-100%',
+            x: '-70px',
+            transition: {
+                ease: 'easeOut',
+                staggerChildren: 0.05,
+                staggerDirection: -1
+            }
+        }
+    }
+
+    const item = {
+        open: {
+            y: 0,
+            opacity: 1,
+            transition: {
+                y: { stiffness: 1000, velocity: -100 }
+            }
+        },
+        closed: {
+            y: -50,
+            opacity: 0,
+            transition: {
+                y: { stiffness: 1000 }
+            }
+        }
+    }
+
     return (
         <m.div
             transition={{
@@ -39,7 +85,8 @@ export default function NavigationMenu() {
                 ease: 'easeOut'
             }}
             className="navigation-items-window"
-            variants={container}>
+            variants={container}
+            ref={navContainer}>
             <Link style={{ textDecoration: 'none' }} to={"/story"} >
                 <m.div
                     className="content-wrapper nav-item"
