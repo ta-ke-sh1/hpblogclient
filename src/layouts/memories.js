@@ -14,6 +14,7 @@ export default function Memories() {
 
     useLayoutEffect(() => {
         initListeners();
+        initFilter();
     }, []);
 
     const initListeners = () => {
@@ -56,7 +57,7 @@ export default function Memories() {
     const updateAbsolutePosition = (percentage) => {
         trackContainer.current.setAttribute('data-percentage', percentage)
         gsap.to(trackContainer.current, {
-            transform: `translate(${percentage}%, -50%)`,
+            transform: `translate(${percentage}%, -40%)`,
             duration: 2,
             ease: "power2.out",
             fill: 'forwards',
@@ -68,6 +69,27 @@ export default function Memories() {
                 duration: 2,
                 ease: "power2.out",
                 fill: 'forwards'
+            })
+        }
+    }
+
+    const initFilter = () => {
+        const item = document.getElementsByClassName(`image`)
+        for (let i = 0; i < item.length; i++) {
+
+            item[i].addEventListener('mouseenter', () => {
+                gsap.to(item[i], {
+                    filter: 'grayscale(0)',
+                    duration: 0.6,
+                    ease: "power2.out",
+                })
+            })
+
+            item[i].addEventListener("mouseleave", () => {
+                gsap.to(item[i], {
+                    filter: 'grayscale(100)',
+                    duration: 0.6,
+                })
             })
         }
     }
@@ -118,7 +140,13 @@ export default function Memories() {
                 </div>
             </div>
             <div className="image-track" ref={trackContainer} data-mouse-down-at='0' data-prev-percentage="0" data-percentage='0' onMouseLeave={() => handleOnUp()}>
-                {data.map((image, index) => <img className="image" key={`image-${index}`} src={`${host_url + "/images/" + image.name}`} alt={image.id} draggable='false' />)}
+                {data.map((image, index) => <img
+                    className="image"
+                    id={`image-${index}`}
+                    key={`image-${index}`}
+                    src={`${host_url + "/images/" + image.name}`}
+                    alt={image.id}
+                    draggable='false' />)}
             </div>
         </m.div>
     );
