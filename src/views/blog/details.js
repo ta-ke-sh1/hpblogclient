@@ -1,8 +1,15 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 import { motion as m } from 'framer-motion'
 
 export default function BlogDetails() {
+
+    const { id } = useParams();
+
+    useEffect(() => {
+        console.log(id)
+    }, [])
+
     const data = {
         id: "B0TLpP15YCeGxsEeshh2",
         image: ["image1.jpg"],
@@ -14,8 +21,6 @@ export default function BlogDetails() {
         location: "Ha Noi"
     }
 
-    let { id } = useParams();
-    console.log(id);
 
     return (
         <m.div

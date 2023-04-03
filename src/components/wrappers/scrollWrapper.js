@@ -29,7 +29,7 @@ export default function ScrollWrapper({ children }) {
             containerRef={containerRef}>
 
             <main data-scroll-container ref={containerRef}>
-                <div data-scroll-section style={{ paddingBottom: '140px' }}>
+                <div data-scroll-section>
                     {children}
                 </div>
             </main>

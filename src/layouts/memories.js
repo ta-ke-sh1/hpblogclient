@@ -1,21 +1,75 @@
-import React from "react";
+/* eslint-disable react-hooks/exhaustive-deps */
+/* eslint-disable no-unused-vars */
+import React, { useLayoutEffect, useRef, useState } from "react";
 // import useFetch from "../hooks/useFetch";
 import { host_url } from "../utils/utils";
-import Grid from '@mui/material/Grid';
-import FloatingActionButton from "../components/buttons/floatingActionButton";
-import useModal from "../hooks/useModal";
-import Modal from "../components/modals/modal";
-import ImageForm from "../components/form/imageForm";
 import { motion as m } from 'framer-motion'
-import ScrollWrapper from "../components/wrappers/scrollWrapper";
+import gsap from 'gsap';
 
 export default function Memories() {
-    const { isShowing, toggle } = useModal();
     //const { data, error, isLoaded } = useFetch(host_url + "/image");
 
-    const showForm = () => {
-        console.log('Clicked');
-        toggle();
+    const trackContainer = useRef(null);
+    const container = useRef(null);
+
+    useLayoutEffect(() => {
+        initListeners();
+    }, []);
+
+    const initListeners = () => {
+        container.current.onmousemove = (e) => handleMouseMove(e)
+        container.current.onmousedown = (e) => handleMouseDown(e)
+        container.current.onmouseup = () => handleOnUp();
+        container.current.addEventListener('mousewheel', (e) => {
+            handleMouseScroll(e)
+        })
+        console.log('init')
+    }
+
+    const handleMouseScroll = (e) => {
+        const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute('data-prev-percentage')) + e.wheelDelta / 120
+        const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, -20), -80);
+        updateAbsolutePosition(nextPercentage);
+        trackContainer.current.setAttribute('data-prev-percentage', parseFloat(trackContainer.current.getAttribute('data-percentage')))
+    }
+
+    const handleOnUp = () => {
+        trackContainer.current.setAttribute('data-mouse-down-at', '0')
+        trackContainer.current.setAttribute('data-prev-percentage', parseFloat(trackContainer.current.getAttribute('data-percentage')))
+    }
+
+    const handleMouseDown = (e) => {
+        trackContainer.current.setAttribute('data-mouse-down-at', e.clientX)
+    }
+
+    const handleMouseMove = (e) => {
+        if (trackContainer.current.getAttribute('data-mouse-down-at') === '0') return;
+        const
+            mouseDelta = parseFloat(trackContainer.current.getAttribute('data-mouse-down-at')) - e.clientX,
+            maxDelta = window.innerWidth / 2;
+        const percentage = (mouseDelta / maxDelta) * -30,
+            nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute('data-prev-percentage')) + percentage,
+            nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, -20), -80);
+        updateAbsolutePosition(nextPercentage);
+    }
+
+    const updateAbsolutePosition = (percentage) => {
+        trackContainer.current.setAttribute('data-percentage', percentage)
+        gsap.to(trackContainer.current, {
+            transform: `translate(${percentage}%, -50%)`,
+            duration: 2,
+            ease: "power2.out",
+            fill: 'forwards',
+        })
+
+        for (const image of trackContainer.current.getElementsByClassName("image")) {
+            gsap.to(image, {
+                objectPosition: `${120 + percentage}% center`,
+                duration: 2,
+                ease: "power2.out",
+                fill: 'forwards'
+            })
+        }
     }
 
     const data = [
@@ -31,70 +85,41 @@ export default function Memories() {
         { name: "DSC_0655.jpg", id: "klEXgZPBhOR6FTWvBSpo" }
     ];
 
-    const getImages = () => {
-        let items = [];
-
-        for (let i = 0; i < data.length; i += 3) {
-            let row = [];
-            for (let j = 0; j < 3 && i + j < data.length; j++) {
-                row.push(
-                    <Grid key={`item-${i}-${j}`} item xs={4}>
-                        <div className='grid-elements memories-card' style={{ backgroundImage: `url(${host_url + "/images/" + data[i + j].name})` }}>
-                        </div>
-                    </Grid>
-                )
-            }
-            items.push(
-                <Grid key={`item-${i}`} container item spacing={3}>
-                    {row}
-                </Grid >
-            )
-        }
-
-        return items;
-    };
-
     return (
-        <ScrollWrapper>
-            <m.div
-
-                initial={{ y: '100%' }}
-                animate={{ y: '0%' }}
-                exit={{ y: '-100%' }}
-                transition={{
-                    duration: 0.75,
-                    ease: 'easeOut'
-                }}>
-                <div className="custom-container mt-70">
-                    <div className="custom-wrapper h-30 t-center">
-                        <div className="center-div w-40">
-                            <div className="custom-row">
-                                <h1 className="display-font s-48 primary-color ml-5">
-                                    my memories{" "}
-                                </h1>
-                                <span className="display-font s-24 primary-color ml-5">
-                                    ({data.length})
-                                </span>
-                            </div>
-                            <br />
-                            <p>
-                                Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-                                Nullam pellentesque massa risus, vitae dictum sem
-                                condimentum eu. Maecenas eu arcu ut elit feugiat
-                                lobortis at id libero. Vestibulum tempus eros ac diam
-                                ullamcorper elementum. Vestibulum ut euismod tortor.
-                                Donec dui velit, tempus ac magna at, aliquam laoreet
-                                sapien.
-                            </p>
+        <m.div
+            ref={container}
+            initial={{ y: '100%' }}
+            animate={{ y: '0%' }}
+            exit={{ y: '-100%' }}
+            transition={{
+                duration: 0.75,
+                ease: 'easeOut'
+            }}>
+            <div className="custom-container mt-70">
+                <div className="custom-wrapper h-30 t-center">
+                    <div className="center-div w-40">
+                        <div className="custom-row">
+                            <h1 className="display-font s-48 primary-color ml-5">
+                                my memories{" "}
+                            </h1>
+                            <span className="display-font s-24 primary-color ml-5">
+                                ({data.length})
+                            </span>
                         </div>
-                    </div>
-                    <div className="memories-image-container" >
-                        <Grid item xs={12} md={6}>
-                            {getImages()}
-                        </Grid>
+                        <br />
+                        <p>
+                            Lorem ipsum dolor sit amet, consectetur adipiscing elit.
+                            Nullam pellentesque massa risus, vitae dictum sem
+                            condimentum eu. Maecenas eu arcu ut elit feugiat
+                            lobortis at id libero. Vestibulum tempus eros ac diam
+                            ullamcorper elementum.
+                        </p>
                     </div>
                 </div>
-            </m.div>
-        </ScrollWrapper>
+            </div>
+            <div className="image-track" ref={trackContainer} data-mouse-down-at='0' data-prev-percentage="0" data-percentage='0' onMouseLeave={() => handleOnUp()}>
+                {data.map((image, index) => <img className="image" key={`image-${index}`} src={`${host_url + "/images/" + image.name}`} alt={image.id} draggable='false' />)}
+            </div>
+        </m.div>
     );
 }
