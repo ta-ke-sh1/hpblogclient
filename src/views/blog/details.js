@@ -2,6 +2,7 @@ import React, { useLayoutEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import { motion as m } from "framer-motion";
 import { Grid } from "@mui/material";
+import { convertDateToDisplayFormat } from "../../utils/utils";
 
 const data = {
     id: "B0TLpP15YCeGxsEeshh2",
@@ -36,72 +37,24 @@ export default function BlogDetails({ props }) {
             }}>
             <div className="custom-container mt-70">
                 <Grid container spacing={4} className="blog-container">
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <h1>{data.title}</h1>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
+                    <Grid item xs={12} md={6}>
+                        <div className="blog-item text">
                             <img
+                                alt='flower'
                                 className="blog-img"
                                 src="https://images.pexels.com/photos/10551237/pexels-photo-10551237.jpeg"
                             />
                         </div>
                     </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <div className="blog-p">{content[0]}</div>
+                    <Grid item xs={12} md={6}>
+                        <div className="blog-item text">
+                            <div className="center-positioned">
+                                <h1 className="display-font primary-color s-64">{data.title}</h1>
+                                <p>{convertDateToDisplayFormat(data.date)}</p>
+                                <p>{content[0]}</p>
+                            </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <img
-                                className="blog-img"
-                                src="https://images.pexels.com/photos/6850472/pexels-photo-6850472.jpeg"
-                            />
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <div className="blog-p">{content[3]}</div>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <div className="blog-p">{content[2]}</div>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <img
-                                className="blog-img"
-                                src="https://images.pexels.com/photos/16180905/pexels-photo-16180905.jpeg"
-                            />
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <div className="blog-p">{content[4]}</div>
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}>
-                        <div className="blog-item">
-                            <img
-                                className="blog-img"
-                                src="https://images.pexels.com/photos/8143243/pexels-photo-8143243.jpeg?auto=compress&cs=tinysrgb&w=1600&lazy=load"
-                            />
-                        </div>
-                    </Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}></Grid>
-                    <Grid item xs={12} md={4}></Grid>
                 </Grid>
             </div>
         </m.div>
