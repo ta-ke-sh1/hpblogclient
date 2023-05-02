@@ -15,6 +15,7 @@ export default function Memories() {
     const [isScrolling, setScrolling] = useState(false);
 
     const [item, setItem] = useState([]);
+    const titlesContainer = useRef(null);
 
     const min_left = 27.5;
     const max_right = 100 - min_left;
@@ -26,12 +27,15 @@ export default function Memories() {
 
     const initBorders = () => {
         const items = document.querySelectorAll(`.image`);
+        const titles = document.querySelectorAll(`.details-container`);
         for (let i = 0; i < items.length; i++) {
             gsap.to(items[i], {
                 borderRadius: "15vmin",
                 duration: 0,
-                filter: "grayscale(100)",
             });
+            gsap.to(titles[i], {
+                transform: `translatey(${i * 20}px)`
+            })
         }
         setItem(items);
     };
@@ -51,7 +55,7 @@ export default function Memories() {
             parseFloat(
                 trackContainer.current.getAttribute("data-prev-percentage")
             ) +
-            e.wheelDelta / 120;
+            e.wheelDelta / 240;
         const nextPercentage = Math.max(
             Math.min(nextPercentageUnconstrained, -min_left),
             -max_right
@@ -79,9 +83,9 @@ export default function Memories() {
         if (trackContainer.current.getAttribute("data-mouse-down-at") === "0")
             return;
         const mouseDelta =
-                parseFloat(
-                    trackContainer.current.getAttribute("data-mouse-down-at")
-                ) - e.clientX,
+            parseFloat(
+                trackContainer.current.getAttribute("data-mouse-down-at")
+            ) - e.clientX,
             maxDelta = window.innerWidth / 2;
         const percentage = (mouseDelta / maxDelta) * -min_left,
             nextPercentageUnconstrained =
@@ -130,30 +134,33 @@ export default function Memories() {
             borderRadius: "2vmin",
             duration: 0.7,
             ease: "power2.out",
-            filter: "grayscale(0)",
         });
+
+        gsap.to(titlesContainer.current, {
+            transform: `translatey(${-index * 40}px)`,
+            duration: 1.,
+        })
     };
 
     const animateOut = (index) => {
         gsap.to(item[index], {
             borderRadius: "15vmin",
-            duration: 0.7,
+            duration: 1.7,
             ease: "power2.out",
-            filter: "grayscale(100)",
         });
     };
 
     const data = [
-        { name: "DSC_0694.jpg", id: "3Y5469EzyslVhGUIITI6" },
-        { name: "DSC_0614.jpg", id: "5hrTNEfX3Cpl4RIIrxr9" },
-        { name: "DSC_0674.jpg", id: "9TIrW5pqtfC9cIKcG5fu" },
-        { name: "DSC_0642.jpg", id: "ANnNgHEr7XJh8persKCy" },
-        { name: "DSC_0662.jpg", id: "PwGLWPa4pgnw1rPS0i1t" },
-        { name: "DSC_0458.jpg", id: "SSRFGiddYEQKjXtvLcJG" },
-        { name: "DSC_0670.jpg", id: "SeteUHhdR8xQCoq7wCOX" },
-        { name: "DSC_0628.jpg", id: "UsB7Lfshe03R79iMtKKm" },
-        { name: "DSC_0627.jpg", id: "kRpZQW8Kh8mUqVk9zNuK" },
-        { name: "DSC_0655.jpg", id: "klEXgZPBhOR6FTWvBSpo" },
+        { name: "DSC_0694.jpg", id: "3Y5469EzyslVhGUIITI6", "title": "Title 1", "date": "2022/07/01" },
+        { name: "DSC_0614.jpg", id: "5hrTNEfX3Cpl4RIIrxr9", "title": "Title 2", "date": "2022/08/12" },
+        { name: "DSC_0674.jpg", id: "9TIrW5pqtfC9cIKcG5fu", "title": "Title 3", "date": "2022/09/24" },
+        { name: "DSC_0642.jpg", id: "ANnNgHEr7XJh8persKCy", "title": "Title 4", "date": "2022/10/07" },
+        { name: "DSC_0662.jpg", id: "PwGLWPa4pgnw1rPS0i1t", "title": "Title 5", "date": "2022/11/15" },
+        { name: "DSC_0458.jpg", id: "SSRFGiddYEQKjXtvLcJG", "title": "Title 6", "date": "2022/12/11" },
+        { name: "DSC_0670.jpg", id: "SeteUHhdR8xQCoq7wCOX", "title": "Title 7", "date": "2023/01/14" },
+        { name: "DSC_0628.jpg", id: "UsB7Lfshe03R79iMtKKm", "title": "Title 8", "date": "2023/01/17" },
+        { name: "DSC_0627.jpg", id: "kRpZQW8Kh8mUqVk9zNuK", "title": "Title 9", "date": "2023/02/04" },
+        { name: "DSC_0655.jpg", id: "klEXgZPBhOR6FTWvBSpo", "title": "Title 10", "date": "2023/03/01" },
     ];
 
     return (
@@ -167,28 +174,6 @@ export default function Memories() {
                 duration: 0.75,
                 ease: "easeOut",
             }}>
-            <div className="custom-container mt-70">
-                <div className="custom-wrapper h-30 t-center">
-                    <div className="center-div w-40">
-                        <div className="custom-row">
-                            <h1 className="display-font s-48 primary-color ml-5">
-                                my memories{" "}
-                            </h1>
-                            <span className="display-font s-24 primary-color ml-5">
-                                ({data.length})
-                            </span>
-                        </div>
-                        <br />
-                        <p>
-                            Lorem ipsum dolor sit amet, consectetur adipiscing
-                            elit. Nullam pellentesque massa risus, vitae dictum
-                            sem condimentum eu. Maecenas eu arcu ut elit feugiat
-                            lobortis at id libero. Vestibulum tempus eros ac
-                            diam ullamcorper elementum.
-                        </p>
-                    </div>
-                </div>
-            </div>
             <div
                 className="image-track"
                 ref={trackContainer}
@@ -208,6 +193,22 @@ export default function Memories() {
                         draggable="false"
                     />
                 ))}
+            </div>
+            <div className="overflow">
+                <div className="bottom-ui-container" ref={titlesContainer}>
+                    {data.map((title, index) => (
+                        <>
+                            <div className="details-container" key={'title-' + index} id={'title-' + index}>
+                                <div className="details-text">
+                                    {title.title}
+                                </div>
+                                <div className="details-date">
+                                    {title.date}
+                                </div>
+                            </div>
+                        </>
+                    ))}
+                </div>
             </div>
         </m.div>
     );

@@ -24,7 +24,7 @@ export default function BlogDetails({ props }) {
     useLayoutEffect(() => {
         console.log(id);
         setContent(data.content.split("\n"));
-    }, []);
+    }, [id]);
 
     return (
         <m.div

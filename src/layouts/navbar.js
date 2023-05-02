@@ -20,7 +20,7 @@ export default function MenuOverlay() {
             custom={height}>
 
             <Link style={{ textDecoration: 'none' }} to={"/"}>
-                <div className="nav-item" style={{ zIndex: 100000 }}>Phuong Ha</div>
+                <div className="nav-item" style={{ zIndex: 100000 }}>Trung.</div>
             </Link>
             <NavigationMenu />
             <MenuToggle toggle={() => toggleOpen()} />

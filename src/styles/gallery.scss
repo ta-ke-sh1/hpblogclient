@@ -27,3 +27,41 @@
 		object-position: 100% center;
 	}
 }
+.overflow {
+	position: absolute;
+	width: 100vw;
+	left: 0;
+	bottom: 2vh;
+	overflow: hidden;
+	height: 20px;
+	padding: 0 1vw;
+}
+
+.bottom-ui-container {
+	display: flex;
+	flex-direction: column;
+}
+
+.details-container {
+	position: relative;
+	height: 20px;
+	display: flex;
+	width: 100%;
+	justify-content: space-between;
+
+	.details-text {
+		float: left;
+		font-family: "med-text";
+		font-size: 20px;
+		line-height: 20px;
+		user-select: none;
+	}
+
+	.details-date {
+		float: right;
+		font-family: "med-text";
+		font-size: 20px;
+		line-height: 20px;
+		user-select: none;
+	}
+}
