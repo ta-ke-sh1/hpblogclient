@@ -18,7 +18,7 @@ export default function AnimatedRoute() {
                 <Route path="/" element={<Memories />} />
                 <Route path="/story" element={<Story />} />
                 <Route
-                    path="/blog/:id"
+                    path="/project/:id"
                     errorElement={<ErrorPage />}
                     element={
                         <>

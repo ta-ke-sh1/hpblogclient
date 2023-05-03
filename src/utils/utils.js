@@ -3,6 +3,8 @@ import jwt_decode from "jwt-decode";
 
 export const host_url = "http://localhost:5000";
 
+export const image_path = host_url + "/images";
+
 export const fromMilisecondsToFormattedDate = (milisecondsSinceEpoch) => {
     return moment(milisecondsSinceEpoch * 1000).format("YYYY-M-D");
 };

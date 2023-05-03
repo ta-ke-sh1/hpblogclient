@@ -12,11 +12,11 @@
 
 .image-track {
 	display: flex;
-	gap: 4vmin;
+	gap: 2.5vmin;
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-27.5%, -50%);
+	transform: translate(-42.5%, -50%);
 	user-select: none;
 	z-index: 100000000;
 
@@ -27,41 +27,55 @@
 		object-position: 100% center;
 	}
 }
-.overflow {
-	position: absolute;
-	width: 100vw;
-	left: 0;
-	bottom: 2vh;
-	overflow: hidden;
-	height: 20px;
-	padding: 0 1vw;
-}
 
 .bottom-ui-container {
-	display: flex;
+	display: inline-block;
 	flex-direction: column;
 }
+.dot {
+	width: 10px;
+	height: 10px;
+	margin: auto;
+	margin-left: 10px;
+	margin-right: 20px;
+	border-radius: 20px;
+	background-color: #f53c62;
+}
 
-.details-container {
+#right {
+	align-items: end;
+}
+
+.bottom-div {
+	position: absolute;
+	left: 0;
+	bottom: 2vmin;
+}
+
+.grid-wrapper {
 	position: relative;
-	height: 20px;
-	display: flex;
-	width: 100%;
-	justify-content: space-between;
+	width: 100vw;
 
-	.details-text {
-		float: left;
-		font-family: "med-text";
-		font-size: 20px;
-		line-height: 20px;
-		user-select: none;
-	}
+	.overflow-text {
+		overflow: hidden;
+		height: 3.5rem;
+		padding: 0 1vw;
+		display: inline-flex;
+		width: 100%;
 
-	.details-date {
-		float: right;
-		font-family: "med-text";
-		font-size: 20px;
-		line-height: 20px;
-		user-select: none;
+		.details-container-text {
+			position: relative;
+			height: 3.5rem;
+			display: flex;
+			width: 100%;
+
+			.details-text {
+				float: left;
+				font-family: "med-text";
+				font-size: 3.25rem;
+				line-height: 3.5rem;
+				user-select: none;
+			}
+		}
 	}
 }
