@@ -13,6 +13,8 @@ export default function Memories() {
     const trackContainer = useRef(null);
     const container = useRef(null);
 
+    const [isMouseDown, setMouseDown] = useState(false);
+
     const [isScrolling, setScrolling] = useState(false);
 
     const [item, setItem] = useState([]);
@@ -20,8 +22,10 @@ export default function Memories() {
     const titlesContainer = useRef(null);
     const yearContainer = useRef(null);
 
-    const min_left = 42.5;
+    const min_left = 32.5;
     const max_right = 100 - min_left;
+
+    const line_height = 2.5;
 
     useLayoutEffect(() => {
         initListeners();
@@ -40,7 +44,7 @@ export default function Memories() {
         }
         if (window.innerWidth < 800) {
             gsap.to(trackContainer.current, {
-                transform: 'translate(-20%, -50%)'
+                transform: 'translate(-20%, -32.5%)'
             })
         }
         setItem(items);
@@ -49,8 +53,7 @@ export default function Memories() {
     const initLineBorder = (items) => {
         for (let i = 0; i < items.length; i++) {
             gsap.to(items[i], {
-                borderTop: i < items.length - 1 ? window.innerWidth < 600 ? '1px solid black' : '0px solid black' : '0px solid black',
-                borderBottom: window.innerWidth < 600 ? '1px solid black' : '0px solid black',
+                borderTop: window.innerWidth < 600 ? '1px solid black' : '0px solid black',
                 duration: 0,
             });
         }
@@ -94,6 +97,7 @@ export default function Memories() {
     };
 
     const handleOnUp = () => {
+        setMouseDown(false);
         trackContainer.current.setAttribute("data-mouse-down-at", "0");
         trackContainer.current.setAttribute(
             "data-prev-percentage",
@@ -104,12 +108,13 @@ export default function Memories() {
             duration: 1.,
         });
         gsap.to(yearContainer.current, {
-            transform: `translatey(${-3.5}rem)`,
+            transform: `translatey(${-line_height}rem)`,
             duration: 1.,
         });
     };
 
     const handleMouseDown = (e) => {
+        setMouseDown(true);
         trackContainer.current.setAttribute("data-mouse-down-at", e.clientX);
     };
 
@@ -143,7 +148,7 @@ export default function Memories() {
         else {
             setScrolling(true);
             gsap.to(trackContainer.current, {
-                transform: `translate(${percentage}%, -50%)`,
+                transform: `translate(${percentage}%, -32.5%)`,
                 duration: 2,
                 ease: "power2.out",
                 fill: "forwards",
@@ -170,6 +175,7 @@ export default function Memories() {
     };
 
     const animateIn = (index) => {
+        if (isMouseDown) return;
         gsap.to(item[index], {
             borderRadius: "15vmin",
             duration: 1.2,
@@ -177,17 +183,18 @@ export default function Memories() {
         });
 
         gsap.to(titlesContainer.current, {
-            transform: `translatey(${-(index + 1) * 3.5}rem)`,
+            transform: `translatey(${-(index + 1) * line_height}rem)`,
             duration: 1.,
         })
 
         gsap.to(yearContainer.current, {
-            transform: `translatey(${-(index + 1) * 3.5}rem)`,
+            transform: `translatey(${-(index + 1) * line_height}rem)`,
             duration: 1.,
         })
     };
 
     const animateOut = (index) => {
+        if (isMouseDown) return;
         gsap.to(item[index], {
             borderRadius: "2vmin",
             duration: 1.2,
@@ -224,8 +231,9 @@ export default function Memories() {
                 data-percentage="0"
                 onMouseLeave={() => handleOnUp()}>
                 {data.map((image, index) => (
-                    <Link to={'/project/' + image.title}>
+                    <>
                         <img
+                            filter="url(#nnnoise-filter)"
                             onMouseEnter={() => animateIn(index)}
                             onMouseLeave={() => animateOut(index)}
                             className="image"
@@ -235,23 +243,35 @@ export default function Memories() {
                             alt={image.id}
                             draggable="false"
                         />
-                    </Link>
+                    </>
+
                 ))}
             </div>
             <div className="bottom-div">
                 <Grid container justify="space-between">
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={2}>
                         <div className="grid-wrapper">
                             <div className="overflow-text" id="left">
-                                <div className="dot"></div>
+                                <div className="bottom-ui-container">
+                                    <div className="details-container-text">
+                                        <div className="details-text med">
+                                            Project
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={2}>
+                        <div className="grid-wrapper">
+                            <div className="overflow-text">
                                 <div className="bottom-ui-container" ref={titlesContainer}>
-                                    <div className="details-container-text" id={'title-text-container-default'}>
+                                    <div className="details-container-text">
                                         <div className="details-text">
-                                            Trung.
+                                            Portfolio - Vol.1
                                         </div>
                                     </div>
                                     {data.map((title, index) => (
-
                                         <div className="details-container-text" key={'title-' + index} id={'title-text-container-' + index}>
                                             <div className="details-text">
                                                 {title.title}
@@ -263,16 +283,26 @@ export default function Memories() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} sm={3}></Grid>
-                    <Grid item xs={12} sm={3}>
+                    <Grid item xs={12} sm={2} display={'flex'} justifyContent="flex-end">
                         <div className="grid-wrapper">
-                            <div className="overflow-text" >
-                                <div className="dot"></div>
-                                <div className="bottom-ui-container" ref={yearContainer} style={
-                                    { transform: `translatey(${-60}px)`, }
-                                }>
+                            <div className="overflow-text" id="left">
+                                <div className="bottom-ui-container">
+                                    <div className="details-container-text">
+                                        <div className="details-text med">
+                                            Year
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </Grid>
+                    <Grid item xs={12} sm={2} display={'inline-flex'}>
+                        <div className="grid-wrapper">
+                            <div className="overflow-text">
+                                <div className="bottom-ui-container" ref={yearContainer}>
                                     <div className="details-container-text" id={'title-text-container-default'}>
                                         <div className="details-text">
+                                            2023
                                         </div>
                                     </div>
                                     {data.map((title, index) => (
@@ -286,7 +316,6 @@ export default function Memories() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} sm={3}></Grid>
                 </Grid>
             </div>
 

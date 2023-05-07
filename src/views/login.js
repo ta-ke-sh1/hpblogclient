@@ -5,7 +5,6 @@ import { useNavigate } from "react-router-dom";
 import { useAuth } from "../hooks/useAuth";
 import { decodeToken } from "../utils/utils";
 import { Grid, TextField } from "@mui/material";
-import thumbImage from '../images/DSC_0694.jpg';
 
 export default function LoginPage() {
 
@@ -88,9 +87,6 @@ export default function LoginPage() {
             }}>
                 <Grid item xs={12} md={6} >
                     <div className="login-image-container">
-                        <div style={{
-                            backgroundImage: `url(${thumbImage})`,
-                        }} className="login-image" />
                     </div>
                 </Grid>
                 <Grid item xs={12} md={6}  >

@@ -1,15 +1,14 @@
-.blog-container{
+.blog-container {
+	.blog-item {
+		padding: 10vmin;
+	}
 
-   .blog-item{
-      padding: 10vmin;
-   }
+	.blog-img {
+		width: auto;
+		height: 700px;
+	}
 
-   .blog-img{
-      width: auto;
-      height: 700px;
-   }
-
-   .blog-p{
-      text-align: justify;
-   }
+	.blog-p {
+		text-align: justify;
+	}
 }

@@ -1,10 +1,8 @@
 .custom-nav {
-	display: flex;
 	background-color: #f8f8f8;
 	position: fixed;
 	top: 0;
-	width: 100vw;
-	z-index: 100;
+	width: 100%;
 }
 
 .burger-btn {
@@ -22,14 +20,21 @@
 	height: 50px;
 	border-radius: 50%;
 	background: transparent;
-	z-index: 10000000;
+	z-index: 10000;
 }
 
 .nav-item {
 	padding: 24px;
 	color: #f53c62;
 	font-family: "med-text";
-	font-size: 20px;
+	font-size: 1.25rem;
+}
+
+.nav-paragraph {
+	text-align: justify;
+	padding: 24px;
+	font-family: "reg-text";
+	font-size: 1.25rem;
 }
 
 .menu-box {
@@ -38,7 +43,6 @@
 	position: absolute;
 	top: 0px;
 	right: 0px;
-	z-index: 1002;
 	background-color: #f8f8f8;
 }
 
@@ -49,7 +53,6 @@
 	right: 0px;
 	height: fit-content;
 	width: fit-content;
-	z-index: 1000000;
 	background-color: #f8f8f8;
 
 	.nav-item {
@@ -64,7 +67,7 @@
 	position: absolute;
 	background-color: #f8f8f8;
 	right: 0;
-	z-index: 1000;
+	z-index: 10;
 
 	.nav-content {
 		height: fit-content;

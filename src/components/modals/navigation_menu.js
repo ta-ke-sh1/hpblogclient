@@ -21,10 +21,10 @@ export default function NavigationMenu() {
         })
     }, []);
 
-    const container = window.innerWidth < 1000 ? {
+    const container = {
         open: {
-            x: '-70px',
-            y: '0%',
+            y: 0,
+            opacity: 1,
             transition: {
                 ease: 'easeOut',
                 staggerChildren: 0.07,
@@ -32,27 +32,8 @@ export default function NavigationMenu() {
             }
         },
         closed: {
-            y: '-100%',
-            x: '-70px',
-            transition: {
-                ease: 'easeOut',
-                staggerChildren: 0.05,
-                staggerDirection: -1
-            }
-        }
-    } : {
-        open: {
-            y: '0%',
-            x: '-70px',
-            transition: {
-                ease: 'easeOut',
-                staggerChildren: 0.07,
-                delayChildren: 0.2
-            }
-        },
-        closed: {
-            y: '-100%',
-            x: '-70px',
+            y: -120,
+            opacity: 0,
             transition: {
                 ease: 'easeOut',
                 staggerChildren: 0.05,
@@ -70,7 +51,7 @@ export default function NavigationMenu() {
             }
         },
         closed: {
-            y: -50,
+            y: -120,
             opacity: 0,
             transition: {
                 y: { stiffness: 1000 }
@@ -81,29 +62,29 @@ export default function NavigationMenu() {
     return (
         <m.div
             transition={{
-                duration: 0.5,
+                duration: 2.5,
                 ease: 'easeOut'
             }}
-            className="navigation-items-window"
+            className="navigation-items"
             variants={container}
             ref={navContainer}>
             <Link style={{ textDecoration: 'none' }} to={"/story"} >
                 <m.div
                     className="content-wrapper nav-item"
                     id="first-nav-item" variants={item}>
-                    <div className="paragraph">my story</div>
+                    <div className="paragraph">Works (8)</div>
                 </m.div>
             </Link>
             <Link style={{ textDecoration: 'none' }} to={"/writings"}>
                 <m.div className="content-wrapper" id="first-second-item" variants={item}>
                     <div className="paragraph nav-item" >
-                        my writings
+                        About
                     </div>
                 </m.div>
             </Link>
             <Link style={{ textDecoration: 'none' }} to={"/memories"}>
                 <m.div className="content-wrapper" id="first-third-item" variants={item}>
-                    <div className="paragraph nav-item">my memories</div>
+                    <div className="paragraph nav-item">Contact</div>
                 </m.div>
             </Link>
         </m.div>
