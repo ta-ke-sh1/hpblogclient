@@ -24,10 +24,11 @@
 }
 
 .nav-item {
-	padding: 24px;
-	color: #f53c62;
-	font-family: "med-text";
+	padding: 24px 0px 0px 24px;
 	font-size: 1.25rem;
+	line-height: 1.25rem;
+	color: black;
+	z-index: 10000;
 }
 
 .nav-paragraph {
@@ -67,13 +68,12 @@
 	position: absolute;
 	background-color: #f8f8f8;
 	right: 0;
-	z-index: 10;
+	z-index: -10;
 
 	.nav-content {
 		height: fit-content;
 		font-family: editorialMedium;
 		a {
-			color: #f53c62;
 			text-decoration: none;
 		}
 	}

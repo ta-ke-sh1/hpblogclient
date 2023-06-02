@@ -1,14 +1,28 @@
 .blog-container {
+	z-index: -100;
+	margin-top: 100px;
+	overflow: scroll;
+	height: 100vh;
+
 	.blog-item {
-		padding: 10vmin;
-	}
+		width: 50%;
 
-	.blog-img {
-		width: auto;
-		height: 700px;
+		p {
+			text-align: justify;
+			font-family: "reg-text";
+		}
 	}
+}
 
-	.blog-p {
-		text-align: justify;
-	}
+.blog-img {
+	width: 100%;
+	height: auto;
+}
+
+.blog-details-content {
+	position: absolute;
+	z-index: 1000;
+	background-color: white;
+	top: 10%;
+	left: 0;
 }

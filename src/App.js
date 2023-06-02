@@ -4,6 +4,7 @@ import { AuthProvider } from "./hooks/useAuth";
 // Screens
 import Navbar from "./layouts/navbar.js";
 import AnimatedRoute from "./components/wrappers/animatedRoute";
+import Cursor from "./components/cursor/cursor";
 
 // Styles
 import "bootstrap/dist/css/bootstrap.min.css";
@@ -20,12 +21,15 @@ import "./styles/form.scss";
 import "./styles/fab.scss";
 import "./styles/modal.scss";
 import "./styles/blog.scss";
+import "./styles/cursor.scss"
+
 
 const AppWrapper = () => {
     return (
         <>
-            <Navbar />
             <AuthProvider>
+                <Cursor />
+                <Navbar />
                 <AnimatedRoute />
             </AuthProvider>
         </>

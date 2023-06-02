@@ -13,3 +13,8 @@ body::-webkit-scrollbar {
 .overflow-hidden {
 	overflow: hidden;
 }
+
+.sticky {
+	position: sticky;
+	top: 0;
+}

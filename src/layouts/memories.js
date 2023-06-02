@@ -6,12 +6,15 @@ import { host_url, image_path } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
 import { Grid } from "@mui/material";
-import { Link } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import $ from 'jquery';
+
 export default function Memories() {
     //const { data, error, isLoaded } = useFetch(host_url + "/image");
-
+    const navigate = useNavigate();
     const trackContainer = useRef(null);
     const container = useRef(null);
+    const arrow = useRef(null);
 
     const [isMouseDown, setMouseDown] = useState(false);
 
@@ -36,15 +39,13 @@ export default function Memories() {
     }, []);
 
     const initBorders = (items) => {
-        for (let i = 0; i < items.length; i++) {
-            gsap.to(items[i], {
-                borderRadius: "2vmin",
-                duration: 0,
-            });
-        }
         if (window.innerWidth < 800) {
             gsap.to(trackContainer.current, {
-                transform: 'translate(-20%, -32.5%)'
+                transform: `translate(${-min_left / 2}%, -50%)`
+            })
+        } else {
+            gsap.to(trackContainer.current, {
+                transform: `translate(-${min_left}%, -50%)`
             })
         }
         setItem(items);
@@ -90,19 +91,16 @@ export default function Memories() {
             -max_right
         );
         updateAbsolutePosition(nextPercentage);
-        trackContainer.current.setAttribute(
-            "data-prev-percentage",
-            parseFloat(trackContainer.current.getAttribute("data-percentage"))
-        );
+        if (trackContainer.current) {
+            trackContainer.current.setAttribute(
+                "data-prev-percentage",
+                parseFloat(trackContainer.current.getAttribute("data-percentage"))
+            );
+        }
+
     };
 
-    const handleOnUp = () => {
-        setMouseDown(false);
-        trackContainer.current.setAttribute("data-mouse-down-at", "0");
-        trackContainer.current.setAttribute(
-            "data-prev-percentage",
-            parseFloat(trackContainer.current.getAttribute("data-percentage"))
-        );
+    const containerMouseLeave = () => {
         gsap.to(titlesContainer.current, {
             transform: `translatey(${0}rem)`,
             duration: 1.,
@@ -111,64 +109,69 @@ export default function Memories() {
             transform: `translatey(${-line_height}rem)`,
             duration: 1.,
         });
+    }
+
+    const handleOnUp = () => {
+        setMouseDown(false);
+        if (trackContainer.current) {
+            trackContainer.current.setAttribute("data-mouse-down-at", "0");
+            trackContainer.current.setAttribute(
+                "data-prev-percentage",
+                parseFloat(trackContainer.current.getAttribute("data-percentage"))
+            );
+        }
+
     };
 
     const handleMouseDown = (e) => {
         setMouseDown(true);
-        trackContainer.current.setAttribute("data-mouse-down-at", e.clientX);
+        if (trackContainer.current) {
+            trackContainer.current.setAttribute("data-mouse-down-at", e.clientX);
+        }
     };
 
     const handleMouseMove = (e) => {
-        if (trackContainer.current.getAttribute("data-mouse-down-at") === "0")
-            return;
-        const mouseDelta =
-            parseFloat(
-                trackContainer.current.getAttribute("data-mouse-down-at")
-            ) - e.clientX,
-            maxDelta = window.innerWidth / 2;
-        const percentage = (mouseDelta / maxDelta) * -min_left;
-        const nextPercentageUnconstrained =
-            parseFloat(
-                trackContainer.current.getAttribute("data-prev-percentage")
-            ) + percentage,
-            nextPercentage = window.innerWidth < 1000 ? Math.max(
-                Math.min(nextPercentageUnconstrained, -20),
-                -80
-            ) : Math.max(
-                Math.min(nextPercentageUnconstrained, -min_left),
-                -max_right
-            );
-        updateAbsolutePosition(nextPercentage);
+        if (trackContainer.current) {
+            if (trackContainer.current.getAttribute("data-mouse-down-at") === "0")
+                return;
+            const mouseDelta =
+                parseFloat(
+                    trackContainer.current.getAttribute("data-mouse-down-at")
+                ) - e.clientX,
+                maxDelta = window.innerWidth / 2;
+            const percentage = (mouseDelta / maxDelta) * -min_left;
+            const nextPercentageUnconstrained =
+                parseFloat(
+                    trackContainer.current.getAttribute("data-prev-percentage")
+                ) + percentage,
+                nextPercentage = window.innerWidth < 1000 ? Math.max(
+                    Math.min(nextPercentageUnconstrained, -20),
+                    -80
+                ) : Math.max(
+                    Math.min(nextPercentageUnconstrained, -min_left),
+                    -max_right
+                );
+            updateAbsolutePosition(nextPercentage);
+        }
     };
 
     const updateAbsolutePosition = (percentage) => {
-        trackContainer.current.setAttribute("data-percentage", percentage);
+        if (trackContainer.current) {
+            trackContainer.current.setAttribute("data-percentage", percentage);
 
-        if (isScrolling) return;
-        else {
-            setScrolling(true);
-            gsap.to(trackContainer.current, {
-                transform: `translate(${percentage}%, -32.5%)`,
-                duration: 2,
-                ease: "power2.out",
-                fill: "forwards",
-                onComplete: () => {
-                    setTimeout(function () {
-                        setScrolling(false);
-                    }, 3500);
-                },
-            });
-
-            var min = window.innerWidth < 1000 ? 20 : min_left;
-
-            for (const image of trackContainer.current.getElementsByClassName(
-                "image"
-            )) {
-                gsap.to(image, {
-                    objectPosition: `${100 + min + percentage}% center`,
+            if (isScrolling) return;
+            else {
+                setScrolling(true);
+                gsap.to(trackContainer.current, {
+                    transform: `translate(${percentage}%, -50%)`,
                     duration: 2,
                     ease: "power2.out",
                     fill: "forwards",
+                    onComplete: () => {
+                        setTimeout(function () {
+                            setScrolling(false);
+                        }, 3500);
+                    },
                 });
             }
         }
@@ -176,11 +179,11 @@ export default function Memories() {
 
     const animateIn = (index) => {
         if (isMouseDown) return;
-        gsap.to(item[index], {
-            borderRadius: "15vmin",
-            duration: 1.2,
-            ease: "power2.out",
-        });
+        var image = document.getElementById(`image-div-${index}`)
+
+        gsap.to(image, {
+            duration: 2
+        })
 
         gsap.to(titlesContainer.current, {
             transform: `translatey(${-(index + 1) * line_height}rem)`,
@@ -195,12 +198,17 @@ export default function Memories() {
 
     const animateOut = (index) => {
         if (isMouseDown) return;
-        gsap.to(item[index], {
-            borderRadius: "2vmin",
-            duration: 1.2,
-            ease: "power2.out",
-        });
+
+        var image = document.getElementById(`image-div-${index}`)
+        gsap.to(image, {
+
+            duration: 2
+        })
     };
+
+    const handleNavigate = (index) => {
+        navigate('/project/' + index);
+    }
 
     const data = [
         { name: "DSC_0694.jpg", id: "3Y5469EzyslVhGUIITI6", "title": "Ftnss Trckr", "year": "2023" },
@@ -216,9 +224,9 @@ export default function Memories() {
         <m.div
             style={{ overflow: "hidden", height: "100vh" }}
             ref={container}
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-100%" }}
+            initial={{ opacity: 0 }}
+            animate={{ opacity: 1 }}
+            exit={{ opacity: 0 }}
             transition={{
                 duration: 0.75,
                 ease: "easeOut",
@@ -229,26 +237,33 @@ export default function Memories() {
                 data-mouse-down-at="0"
                 data-prev-percentage="0"
                 data-percentage="0"
-                onMouseLeave={() => handleOnUp()}>
+                onMouseUp={() => handleOnUp()}
+                onMouseLeave={() => containerMouseLeave()}>
                 {data.map((image, index) => (
                     <>
-                        <img
-                            filter="url(#nnnoise-filter)"
+                        <div
                             onMouseEnter={() => animateIn(index)}
                             onMouseLeave={() => animateOut(index)}
-                            className="image"
+                            onClick={() => handleNavigate(index)}
+                            className="img-container"
                             id={`image-${index}`}
-                            key={`image-${index}`}
-                            src={`${image_path + "/" + image.name}`}
-                            alt={image.id}
-                            draggable="false"
-                        />
+                            key={`image-${index}`}>
+                            <img
+                                preserveAspectRatio="xMidYMid slice"
+                                id={`image-div-${index}`}
+                                className="image"
+                                width={'100%'}
+                                height={'100%'}
+                                src={`${image_path + "/" + image.name}`}
+                                alt={image.id}
+                                draggable="false"
+                            />
+                        </div>
                     </>
-
                 ))}
             </div>
             <div className="bottom-div">
-                <Grid container justify="space-between">
+                <Grid container justify="space-between" columns={12}>
                     <Grid item xs={12} sm={2}>
                         <div className="grid-wrapper">
                             <div className="overflow-text" id="left">
@@ -296,7 +311,7 @@ export default function Memories() {
                             </div>
                         </div>
                     </Grid>
-                    <Grid item xs={12} sm={2} display={'inline-flex'}>
+                    <Grid item xs={12} sm={2} display={'flex'}>
                         <div className="grid-wrapper">
                             <div className="overflow-text">
                                 <div className="bottom-ui-container" ref={yearContainer}>
@@ -315,6 +330,16 @@ export default function Memories() {
                                 </div>
                             </div>
                         </div>
+                    </Grid>
+                    <Grid
+                        display="flex"
+                        justifyContent="space-between"
+                        item xs={12} sm={4} >
+                        <div style={{ zIndex: 10 }} display={'inline-flex'} className="ideas-row-text med">Scroll / Drag</div>
+                        <div className="arrow-row" id="arrow" ref={arrow}>
+                            <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 421.37 130.81"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" /><polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" /></g></g></svg>
+                        </div>
+                        <div style={{ zIndex: 10 }} display={'inline-flex'} className="ideas-row-text med">Explore</div>
                     </Grid>
                 </Grid>
             </div>
