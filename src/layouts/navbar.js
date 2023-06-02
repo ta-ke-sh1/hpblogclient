@@ -41,7 +41,7 @@ export default function MenuOverlay() {
                     <m.div ref={burgerRef} animate={isOpen ? "open" : 'closed'}>
                         <Grid container columns={12}>
                             <Grid item xs={12} sm={2}>
-                                <Link style={{ textDecoration: 'none' }} to={"/"}>
+                                <Link style={{ textDecoration: 'none' }} to={"/"} className="nav-link">
                                     <div className="nav-item med" style={{ zIndex: 10, color: 'black' }}> Trung.</div>
                                 </Link>
                             </Grid>
