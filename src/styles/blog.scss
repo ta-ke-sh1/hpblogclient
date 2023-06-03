@@ -14,15 +14,56 @@
 	}
 }
 
-.blog-img {
-	width: 100%;
-	height: auto;
+.blog-text{
+	position: fixed;
+	left: 2%;
+	bottom: 2%;
+	user-select: none;
+	font-size: 1.25rem;
 }
 
-.blog-details-content {
-	position: absolute;
-	z-index: 1000;
-	background-color: white;
-	top: 10%;
-	left: 0;
+.navigation-guide{
+	position: fixed;
+	right: 2%;
+	bottom: 2%;
+	user-select: none;
+	font-size: 1.25rem;
 }
+
+.blog-details-wrapper{
+	position: relative;
+	height: 100vh;
+	width: 100vw;
+	overflow: scroll;
+
+	&::-webkit-scrollbar {
+		display: none;
+	 }
+
+	.blog-details-content {
+		position: absolute;
+		top: 50%;
+		left: 50%;
+		transform: translate(-50%, -35%);
+		height: 1000px;
+	
+		.track{
+			height: 500px;
+			height: fit-content;
+
+			.blog-img {
+				user-select: none;
+				width: 40vw;
+				height: 10vh;
+				margin-bottom: 5vh;
+				box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
+
+				background-position: top center;
+				background-repeat: no-repeat; /* Do not repeat the image */
+  				background-size: cover; 
+			}
+		}
+	}
+}
+
+
