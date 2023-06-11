@@ -67,6 +67,7 @@ export default function MenuOverlay() {
                   create things.
                 </div>
               </Grid>
+              <Grid item xs={12} sm={2}></Grid>
             </Grid>
 
             {/* <NavigationMenu /> */}

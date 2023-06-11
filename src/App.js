@@ -22,6 +22,7 @@ import "./styles/fab.scss";
 import "./styles/modal.scss";
 import "./styles/blog.scss";
 import "./styles/cursor.scss"
+import "./styles/aboutMe.scss"
 
 
 const AppWrapper = () => {

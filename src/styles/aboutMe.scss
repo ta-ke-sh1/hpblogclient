@@ -1,0 +1,18 @@
+.about-container {
+	margin-top: 25vh;
+	padding: 4%;
+	font-size: 1.25rem;
+	line-height: 1.75rem;
+}
+
+#about-img {
+	height: 500px;
+	width: 100%;
+	background-size: cover;
+	background-position: center center;
+	border-radius: 8px;
+}
+
+.invisible {
+	opacity: 0;
+}
