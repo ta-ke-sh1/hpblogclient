@@ -30,14 +30,6 @@
 	pointer-events: none;
 }
 
-body *,
-body button {
-	cursor: none !important;
-}
-
-html:hover {
-	cursor: none;
-}
 
 .noselect {
 	-webkit-touch-callout: none;

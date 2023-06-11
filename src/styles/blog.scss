@@ -14,7 +14,7 @@
 	}
 }
 
-.blog-text{
+.blog-text {
 	position: fixed;
 	left: 2%;
 	bottom: 2%;
@@ -22,7 +22,7 @@
 	font-size: 1.25rem;
 }
 
-.navigation-guide{
+.navigation-guide {
 	position: fixed;
 	right: 2%;
 	bottom: 2%;
@@ -30,7 +30,7 @@
 	font-size: 1.25rem;
 }
 
-.blog-details-wrapper{
+.blog-details-wrapper {
 	position: relative;
 	height: 100vh;
 	width: 100vw;
@@ -38,32 +38,71 @@
 
 	&::-webkit-scrollbar {
 		display: none;
-	 }
+	}
 
 	.blog-details-content {
 		position: absolute;
-		top: 50%;
-		left: 50%;
-		transform: translate(-50%, -35%);
-		height: 1000px;
-	
-		.track{
+		top: 33%;
+		left: 18vw;
+		padding-bottom: 33vh;
+		min-width: 30%;
+
+		.track {
 			height: 500px;
 			height: fit-content;
+		}
+	}
+}
 
-			.blog-img {
-				user-select: none;
-				width: 40vw;
-				height: 10vh;
-				margin-bottom: 5vh;
+.blog-title {
+	font-family: "pixel-text";
+}
+
+.blog-image-container {
+	position: absolute;
+	right: 0;
+	top: 0;
+	height: 100vh;
+	width: 50vw;
+	position: fixed;
+	pointer-events: none;
+
+	.poster-holder {
+		position: relative;
+		height: 100%;
+		width: 100%;
+
+		.blog-img {
+			position: absolute;
+			left: 50%;
+			top: 50%;
+			transform: translate(-50%, -50%);
+			user-select: none;
+			height: 64vmin;
+			width: 48vmin;
+
+			.img-div {
+				height: 100%;
+				width: auto;
 				box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
-
-				background-position: top center;
-				background-repeat: no-repeat; /* Do not repeat the image */
-  				background-size: cover; 
+				border: 12px solid white;
 			}
 		}
 	}
 }
 
+.poster-title {
+	display: flex;
 
+	.blog-title {
+		mix-blend-mode: difference;
+	}
+
+	.title-number {
+		margin-left: 4px;
+	}
+}
+
+#svg-cursor-icon {
+	fill: white;
+}
