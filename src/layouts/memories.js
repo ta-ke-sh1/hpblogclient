@@ -14,7 +14,6 @@ export default function Memories() {
   const container = useRef(null);
   const arrow = useRef(null);
 
-
   const [isMouseDown, setMouseDown] = useState(false);
 
   const [isTransitioning, setTransitioning] = useState(false);
@@ -24,44 +23,45 @@ export default function Memories() {
   const titlesContainer = useRef(null);
   const yearContainer = useRef(null);
 
-  const min_left = 22.5;
+  const min_left = 7;
   const max_right = 100 - min_left;
 
   const line_height = 2.5;
 
   useLayoutEffect(() => {
-
     initListeners();
     const images = document.querySelectorAll(`.image`);
     initBorders(images);
     const items = document.querySelectorAll(`.overflow-text`);
     initLineBorder(items);
 
-    let icon = document.getElementById('svg-cursor-icon')
+    let icon = document.getElementById("svg-cursor-icon");
     gsap.to(icon, {
-      transform: 'rotate(90deg)',
+      transform: "rotate(90deg)",
       duration: 0.4,
       ease: "power",
-    })
+    });
 
   }, []);
 
   const trackOnMouseEnter = () => {
-    let outer = document.getElementById('outer-circle')
-    let text = document.getElementById('cursor-text')
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
     if (!isTransitioning) {
       cursorMagnify(outer, text);
     }
-  }
+  };
 
   const initBorders = (items) => {
     if (window.innerWidth < 800) {
       gsap.to(trackContainer.current, {
-        transform: `translate(${-min_left / 2}%, -50%)`,
+        transform: `translate(${-min_left}%, -50%)`,
+        duration: 0,
       });
     } else {
       gsap.to(trackContainer.current, {
         transform: `translate(-${min_left}%, -50%)`,
+        duration: 0,
       });
     }
     setItem(items);
@@ -103,13 +103,13 @@ export default function Memories() {
   };
 
   const containerMouseLeave = () => {
-    if (titlesContainer.current.innerHTML !== "portfolio. 1") {
-      textShuffle(titlesContainer.current, "portfolio. 1", interval_1, 20);
+    if (titlesContainer.current.innerHTML !== "folio. 01") {
+      textShuffle(titlesContainer.current, "folio. 01", interval_1, 30);
       textShuffle(yearContainer.current, "2023", interval_2, 100);
     }
 
-    let outer = document.getElementById('outer-circle')
-    let text = document.getElementById('cursor-text')
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
     if (!isTransitioning) {
       cursorNormal(outer, text);
     }
@@ -166,7 +166,7 @@ export default function Memories() {
       duration: 2,
     });
 
-    textShuffle(titlesContainer.current, data[index].title, interval_1, 20);
+    textShuffle(titlesContainer.current, data[index].title, interval_1, 30, 2);
     textShuffle(yearContainer.current, data[index].year, interval_2, 100);
   };
 
@@ -180,8 +180,8 @@ export default function Memories() {
   };
 
   const handleNavigate = (index) => {
-    let outer = document.getElementById('outer-circle')
-    let text = document.getElementById('cursor-text')
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
     setTransitioning(true);
     cursorNormal(outer, text);
     navigate("/project/" + index);
@@ -198,7 +198,7 @@ export default function Memories() {
     {
       name: "28",
       id: "9TIrW5pqtfC9cIKcG5fu",
-      title: "Expense Manager",
+      title: "expnse trckr",
       year: "2022",
     },
     {
@@ -259,22 +259,20 @@ export default function Memories() {
         ))}
       </div>
       <div className="bottom-div">
-        <Grid container justify="space-between" columns={12}>
-          <Grid item xs={12} sm={2}>
-            <div className="details-text med">Project</div>
-          </Grid>
-          <Grid item xs={12} sm={2}>
-            <div className="details-text med" ref={titlesContainer}>
-              Project
+        <Grid container columns={12}>
+          <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
+            <div className="ideas-row-text med" style={{ marginLeft: "1.5vw" }}>
+              [ Project :
+            </div>
+            <div className="ideas-row-text med" >
+              <span ref={titlesContainer}>folio. 01</span> ]
             </div>
           </Grid>
-          <Grid item xs={12} sm={2} display={"flex"} justifyContent="flex-end">
-            <div className="details-text med">Year</div>
+          <Grid item xs={12} sm={1}>
+
           </Grid>
-          <Grid item xs={12} sm={2}>
-            <div className="details-text med" ref={yearContainer}>
-              Year
-            </div>
+          <Grid item xs={12} sm={4}>
+            <div className="ideas-row-text med">[ Year : <span ref={yearContainer}>2023</span> ] </div>
           </Grid>
           <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
             <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">

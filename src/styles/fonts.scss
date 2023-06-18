@@ -5,12 +5,12 @@
 
 @font-face {
 	font-family: "med-text";
-	src: url("./fonts/HaasGrotDisp65Medium.otf") format("opentype");
+	src: url("./fonts/RobotoMono-Bold.ttf") format("opentype");
 }
 
 @font-face {
 	font-family: "reg-text";
-	src: url("./fonts/HaasGrotDisp55Roman.otf") format("opentype");
+	src: url("./fonts/RobotoMono-Regular.ttf") format("truetype");
 }
 
 @font-face {
@@ -48,4 +48,8 @@ body {
 
 .med {
 	font-family: "med-text";
+}
+
+.pixel {
+	font-family: "pixel-text";
 }

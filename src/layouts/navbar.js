@@ -42,8 +42,7 @@ export default function MenuOverlay() {
               <Grid item xs={12} sm={2}>
                 <Link style={{ textDecoration: "none" }} to={"/"} className="nav-link">
                   <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
-                    {" "}
-                    Trung.
+                    [ Trung. ]
                   </div>
                 </Link>
               </Grid>
@@ -51,20 +50,15 @@ export default function MenuOverlay() {
                 <div className="nav-item med" style={{ zIndex: 10, color: "black" }}></div>
               </Grid>
               <Grid item xs={12} sm={2}>
-                <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
-                  Collected Works
-                </div>
-                <div className="nav-item reg" style={{ zIndex: 10, color: "black" }}>
-                  2016-2023
-                </div>
+                <Link style={{ textDecoration: "none" }} to={"/about"} className="nav-link"><div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
+                  [ About ]
+                </div></Link>
+
               </Grid>
               <Grid item xs={12} sm={2}></Grid>
               <Grid item xs={12} sm={2}>
                 <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
-                  I just like to
-                </div>
-                <div className="nav-item reg" style={{ zIndex: 10, color: "black" }}>
-                  create things.
+                  [ Contact ]
                 </div>
               </Grid>
               <Grid item xs={12} sm={2}></Grid>
