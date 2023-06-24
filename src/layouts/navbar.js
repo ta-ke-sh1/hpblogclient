@@ -57,9 +57,6 @@ export default function MenuOverlay() {
               </Grid>
               <Grid item xs={12} sm={2}></Grid>
               <Grid item xs={12} sm={2}>
-                <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
-                  [ Contact ]
-                </div>
               </Grid>
               <Grid item xs={12} sm={2}></Grid>
             </Grid>

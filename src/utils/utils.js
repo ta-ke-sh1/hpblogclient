@@ -80,7 +80,7 @@ export const getDeviceType = () => {
 
 export const textShuffle = (sourceElement, content, interval, duration) => {
   let iteration = 0;
-  const letters = "0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZ";
+  const letters = "0123456789abcdefghijklmnoupqrstuvxyz!#$%^&*()_+-=<>?/";
   clearInterval(interval);
 
   interval = setInterval(() => {
@@ -88,10 +88,13 @@ export const textShuffle = (sourceElement, content, interval, duration) => {
       .split("")
       .map((letter, i) => {
         if (i < iteration) {
-          return content[i].toLowerCase();
+          if (!"!#$%^&*()_+-=<>?/".split("").includes(content[i])) {
+            return content[i].toLowerCase();
+          }
+          return content[i];
         }
 
-        return letters[Math.floor(Math.random() * 36)].toLowerCase();
+        return letters[Math.floor(Math.random() * 54)];
       })
       .join("");
 
