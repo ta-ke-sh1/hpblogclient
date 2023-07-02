@@ -14,6 +14,12 @@
 	pointer-events: none;
 	color: black;
 	opacity: 0;
+
+	.icon-wrapper {
+		position: relative;
+		width: 100%;
+		height: 100%;
+	}
 }
 
 .outer-circle {
@@ -30,7 +36,6 @@
 	pointer-events: none;
 }
 
-
 .noselect {
 	-webkit-touch-callout: none;
 	/* iOS Safari */
@@ -44,4 +49,11 @@
 	/* Internet Explorer/Edge */
 	user-select: none;
 	/* Non-prefixed version, currently supported by Chrome, Edge, Opera and Firefox */
+}
+
+#svg-can-drag {
+	opacity: 0;
+	position: absolute;
+	left: 0;
+	top: 0;
 }

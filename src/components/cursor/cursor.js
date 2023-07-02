@@ -1,5 +1,6 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
+import { BothWays, CanDragIcon } from "./commonIcon";
 
 export default function CustomCursor(ref) {
   const outer = useRef(null);
@@ -25,10 +26,17 @@ export default function CustomCursor(ref) {
       duration: 0.6,
       ease: "power",
     });
-  };
+  }
 
   const onMouseLeave = () => {
     gsap.to(outer.current, {
+      opacity: 0,
+      scale: 0,
+      duration: 0.3,
+      ease: "none",
+    });
+
+    gsap.to(text.current, {
       opacity: 0,
       scale: 0,
       duration: 0.3,
@@ -48,7 +56,11 @@ export default function CustomCursor(ref) {
   return (
     <div>
       <span id="cursor-text" className="cursor-text reg" ref={text}>
-        <svg xmlns="http://www.w3.org/2000/svg" id="svg-cursor-icon" height={100} width={100} viewBox="0 0 63.68 100.09"><g id="Layer_2" data-name="Layer 2"><g id="Layer_1-2" data-name="Layer 1"><polygon points="33.49 93.71 33.53 6.38 61.33 34.18 63.68 31.82 31.86 0 0.04 31.82 2.4 34.18 30.2 6.38 30.16 93.71 2.36 65.91 0 68.27 31.82 100.09 63.64 68.27 61.28 65.91 33.49 93.71" /></g></g></svg>
+        <div className="icon-wrapper">
+          <BothWays />
+          <CanDragIcon />
+        </div>
+
       </span>
       <span id="outer-circle" className="outer-circle" ref={outer}></span>
     </div>

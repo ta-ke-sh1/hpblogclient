@@ -30,6 +30,8 @@ export default function AnimatedRoute() {
               children={
                 <>
                   <Story />
+                  <Story />
+                  <Story />
                 </>
               }
               title={"Testing"}
