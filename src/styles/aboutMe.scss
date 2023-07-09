@@ -7,6 +7,13 @@
 	overflow: hidden;
 	position: relative;
 
+	.contact-container {
+		position: absolute;
+		width: 100%;
+		top: 50%;
+		transform: translateY(-50%);
+	}
+
 	.title {
 		line-height: 4.5rem;
 		font-size: 4rem;
@@ -21,12 +28,20 @@
 	}
 }
 
-#about-img {
-	height: 500px;
-	width: 100%;
-	background-size: cover;
-	background-position: center center;
-	border-radius: 8px;
+.about-image-container {
+	position: relative;
+	padding-right: 50px;
+	height: fit-content;
+
+	#about-img {
+		height: 700px;
+		width: 100%;
+		background-size: cover;
+		background-position: center center;
+		position: absolute;
+		right: 50px;
+		transform: translateY(-25%);
+	}
 }
 
 .invisible {
@@ -43,6 +58,7 @@
 	.control {
 		padding: 22px 0;
 		position: relative;
+
 		.story-title {
 			position: absolute;
 			top: 5px;
@@ -92,4 +108,8 @@
 	.content::-webkit-scrollbar {
 		display: none;
 	}
+}
+
+.details-text {
+	width: fit-content;
 }

@@ -51,6 +51,13 @@ export default function CustomCursor(ref) {
       duration: 0.3,
       ease: "none",
     });
+
+    gsap.to(text.current, {
+      opacity: 0,
+      scale: 1,
+      duration: 0.3,
+      ease: "none",
+    });
   };
 
   return (

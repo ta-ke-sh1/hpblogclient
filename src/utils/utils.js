@@ -161,3 +161,19 @@ export const cursorMagnify2 = (outer, text) => {
     ease: "none",
   });
 };
+
+export const hightlightSpanOver = (element) => {
+  gsap.to(element, {
+    color: "#f53c62",
+    duration: 0.1,
+    ease: "power"
+  })
+}
+
+export const removeHighlighSpanOver = (element) => {
+  gsap.to(element, {
+    color: "black",
+    duration: 0.1,
+    ease: "power"
+  })
+}

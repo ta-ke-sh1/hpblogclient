@@ -160,11 +160,18 @@ export default function Memories() {
 
   const animateIn = (index) => {
     if (isMouseDown) return;
-    var image = document.getElementById(`image-div-${index}`);
+    let image = document.getElementById(`image-div-${index}`);
+    let text = document.getElementById("cursor-text");
 
     gsap.to(image, {
       duration: 2,
     });
+
+    gsap.to(text, {
+      opacity: 1,
+      duration: 0.3,
+      ease: "power"
+    })
 
     textShuffle(titlesContainer.current, data[index].title, interval_1, 30, 2);
     textShuffle(yearContainer.current, data[index].year, interval_2, 100);
