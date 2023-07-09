@@ -177,3 +177,31 @@ export const removeHighlighSpanOver = (element) => {
     ease: "power"
   })
 }
+
+export const dragIconOnMouseDown = () => {
+  console.log("Down");
+  let arrow = document.getElementById('svg-cursor-icon')
+  let dragIcon = document.getElementById('svg-can-drag')
+  gsap.to(arrow, {
+    opacity: 0,
+    duration: 0.2
+  })
+  gsap.to(dragIcon, {
+    opacity: 1,
+    duration: 0.2
+  })
+};
+
+export const dragIconOnMouseUp = () => {
+  console.log("Up");
+  let arrow = document.getElementById('svg-cursor-icon')
+  let dragIcon = document.getElementById('svg-can-drag')
+  gsap.to(arrow, {
+    opacity: 1,
+    duration: 0.2
+  })
+  gsap.to(dragIcon, {
+    opacity: 0,
+    duration: 0.2
+  })
+};

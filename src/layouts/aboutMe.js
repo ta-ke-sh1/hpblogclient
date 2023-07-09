@@ -1,7 +1,7 @@
 import { Grid } from "@mui/material";
 import { useEffect, useRef, useState } from "react";
 import StoryCard from "../components/card/storyCard";
-import { randomInteger } from "../utils/utils";
+import { dragIconOnMouseDown, dragIconOnMouseUp, randomInteger } from "../utils/utils";
 import { gsap } from "gsap";
 import { hightlightSpanOver, removeHighlighSpanOver } from "../utils/utils";
 
@@ -104,34 +104,6 @@ export default function AboutMe() {
     timeline.current.reverse();
   };
 
-  const trackOnMouseDown = () => {
-    console.log("Down");
-    let arrow = document.getElementById('svg-cursor-icon')
-    let dragIcon = document.getElementById('svg-can-drag')
-    gsap.to(arrow, {
-      opacity: 0,
-      duration: 0.2
-    })
-    gsap.to(dragIcon, {
-      opacity: 1,
-      duration: 0.2
-    })
-  };
-
-  const trackOnMouseUp = () => {
-    console.log("Up");
-    let arrow = document.getElementById('svg-cursor-icon')
-    let dragIcon = document.getElementById('svg-can-drag')
-    gsap.to(arrow, {
-      opacity: 1,
-      duration: 0.2
-    })
-    gsap.to(dragIcon, {
-      opacity: 0,
-      duration: 0.2
-    })
-  };
-
   const navItemMouseEnter = (id) => {
     hightlightSpanOver(document.getElementById("dot-sign-" + id))
   }
@@ -144,7 +116,7 @@ export default function AboutMe() {
   return (
     <div className="about-container">
       <div style={{
-      }} ref={overContainer} onMouseOver={() => trackOnMouseEnter()} onMouseLeave={() => trackOnMouseLeave()} onMouseDown={() => trackOnMouseDown()} onMouseUp={() => trackOnMouseUp()} >
+      }} ref={overContainer} onMouseOver={() => trackOnMouseEnter()} onMouseLeave={() => trackOnMouseLeave()} onMouseDown={() => dragIconOnMouseDown()} onMouseUp={() => dragIconOnMouseUp()} >
         {cards}
       </div>
       <div className="contact-container">

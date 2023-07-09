@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { cursorMagnify, cursorNormal, textShuffle } from "../utils/utils";
+import { cursorMagnify, cursorNormal, dragIconOnMouseDown, dragIconOnMouseUp, textShuffle } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
 import { Grid } from "@mui/material";
@@ -117,6 +117,7 @@ export default function Memories() {
 
   const handleOnUp = () => {
     setMouseDown(false);
+    dragIconOnMouseUp();
     if (trackContainer.current) {
       trackContainer.current.setAttribute("data-mouse-down-at", "0");
       trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
@@ -125,6 +126,7 @@ export default function Memories() {
 
   const handleMouseDown = (e) => {
     setMouseDown(true);
+    dragIconOnMouseDown();
     if (trackContainer.current) {
       trackContainer.current.setAttribute("data-mouse-down-at", e.clientX);
     }
@@ -134,7 +136,7 @@ export default function Memories() {
     if (trackContainer.current) {
       if (trackContainer.current.getAttribute("data-mouse-down-at") === "0") return;
       const mouseDelta = parseFloat(trackContainer.current.getAttribute("data-mouse-down-at")) - e.clientX,
-        maxDelta = window.innerWidth / 2;
+        maxDelta = window.innerWidth / 8;
       const percentage = (mouseDelta / maxDelta) * -min_left;
       const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + percentage,
         nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left), -max_right);
