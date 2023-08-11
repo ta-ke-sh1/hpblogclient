@@ -1,13 +1,12 @@
-import { createElement, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { gsap } from "gsap";
-import { randomInteger } from "../../utils/utils";
 import { Grid } from "@mui/material";
 import Draggable from "react-draggable";
-import { BothWays, CanDragIcon } from "../cursor/commonIcon";
+import { BothWays } from "../cursor/commonIcon";
+import MarqueTrack from "../marques/Marque";
 
 export default function StoryCard(props) {
   const storyCard = useRef(null);
-  const svgContainer = useRef(null);
 
   useEffect(() => {
     gsap.to(storyCard.current, {
@@ -15,92 +14,97 @@ export default function StoryCard(props) {
       top: props.pos.y,
       duration: 0,
     });
-
-    marqueeInit();
   });
 
-
-
-  const marqueeInit = () => {
-    gsap.set(svgContainer.current.children, {
-      x: (i) => i * 240,
+  const cursorNormal = (outer, text) => {
+    gsap.to(outer, {
+      scale: 1,
+      duration: 0.4,
+      ease: "power",
     });
-
-    gsap.to(svgContainer.current.children, {
-      duration: randomInteger(18, 48),
-      ease: "none",
-      x: "+=2400", //move each box 500px to right
-      modifiers: {
-        x: gsap.utils.unitize((x) => parseFloat(x) % 2400), //force x value to be between 0 and 500 using modulus
-      },
-      repeat: -1,
+    gsap.to(text, {
+      opacity: 0,
+      duration: 0.2,
+      ease: "power",
     });
   };
 
+  const cursorMagnify = (outer, text) => {
+    gsap.to(outer, {
+      scale: 4,
+      duration: 0.4,
+      ease: "power",
+    });
+    gsap.to(text, {
+      opacity: 1,
+      duration: 0.2,
+      ease: "power",
+    });
+  };
 
+  const trackOnMouseEnter = () => {
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
+    cursorMagnify(outer, text);
+  };
 
+  const trackOnMouseLeave = () => {
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
+    cursorNormal(outer, text);
+  };
+
+  const trackOnMouseDown = () => {
+    console.log("Down");
+  };
+
+  const trackOnMouseUp = () => {
+    console.log("Up");
+    document.getElementById("cursor-text").appendChild(document.createElement(<BothWays />));
+  };
+
+  const handleClose = () => {
+    gsap.to(storyCard.current, {
+      opacity: 0,
+      pointerEvents: "none",
+      duration: 0,
+    });
+  };
 
   return (
-    <Draggable >
-      <div className={"story-card " + props.className} ref={storyCard} style={{ width: props.width + "vw", zIndex: 100 }}>
+    <Draggable onMouseDown={() => trackOnMouseDown()} onMouseUp={() => trackOnMouseUp()}>
+      <div className={"story-card " + props.className} onMouseEnter={() => trackOnMouseEnter()} onMouseLeave={() => trackOnMouseLeave()} ref={storyCard} style={{ width: props.width + "vw" }}>
+        <div className="control">
+          <div className="story-title">{props.title}.txt</div>
+          <button onClick={() => handleClose()}>
+            <svg xmlns="http://www.w3.org/2000/svg" width={20} height={20} viewBox="0 0 71.21 71.21">
+              <g id="Layer_2" data-name="Layer 2">
+                <g id="Layer_1-2" data-name="Layer 1">
+                  <polygon className="cls-1" points="71.21 8.9 62.31 0 35.61 26.7 8.9 0 0 8.9 26.7 35.61 0 62.31 8.9 71.21 35.61 44.51 62.31 71.21 71.21 62.31 44.51 35.61 71.21 8.9" />
+                </g>
+              </g>
+            </svg>
+          </button>
+        </div>
         <div className="content" style={{ maxHeight: props.height + "vh" }}>
-          <div className="marque-track" style={{ width: props.width + "vw" }}>
-            <div className="svgs" style={{ position: "relative", left: "-220px" }} ref={svgContainer}>
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-              <Svg />
-            </div>
-          </div>
+          <MarqueTrack width={props.width} />
           <div className="content-padding">
-
-            <Grid container>
-              <Grid item xs={4}>
-                {" "}
-                <p className="paragraph">
-                  Previously studied Business Japanese at Foreign Trade University of Vietnam, yet somewhere along the line I realized that it was not the right path for me. So I enrolled into University of Greenwich and studied software engineering, mainly because I had been
-                  tinkering with computer since the age of 3.
-                </p>
+            <>
+              <div style={{ marginBottom: "15px" }}></div>
+              <Grid container>
+                <Grid item xs={4}>
+                  {" "}
+                  <p className="paragraph">
+                    Previously studied Business Japanese at Foreign Trade University of Vietnam, yet somewhere along the line I realized that it was not the right path for me. So I enrolled into University of Greenwich and studied software engineering, mainly because I had been
+                    tinkering with computer since the age of 3.
+                  </p>
+                </Grid>
+                <Grid item xs={6}></Grid>
               </Grid>
-              <Grid item xs={6}></Grid>
-            </Grid>
-
+            </>
           </div>
         </div>
       </div>
     </Draggable>
   );
 }
-
-const Svg = (props) => {
-  return (
-    <svg width="220" height="80" viewBox="0 0 218 87" fill="none" xmlns="http://www.w3.org/2000/svg" className={"svg-box"}>
-      <path
-        d="M23.358 70.89C8.874 70.89 0.816 64.056 0 52.224H8.466C9.588 61.404 15.708 63.954 23.562 63.954C32.232 63.954 35.802 60.18 35.802 55.284C35.802 49.368 31.722 47.838 22.032 45.798C11.628 43.656 2.346 41.514 2.346 29.988C2.346 21.216 9.078 15.504 21.318 15.504C34.374 15.504 40.8 21.726 42.024 32.028H33.558C32.742 25.092 28.968 22.032 21.114 22.032C13.566 22.032 10.506 25.398 10.506 29.58C10.506 35.292 15.606 36.414 24.684 38.25C35.292 40.392 44.166 42.738 44.166 54.876C44.166 65.484 35.496 70.89 23.358 70.89Z"
-        fill="black"
-      />
-      <path
-        d="M47.7129 23.358V16.626H55.3629V0H63.6249V16.626H73.8249V23.358H63.6249V57.63C63.6249 61.302 65.5629 62.526 68.9289 62.526C70.5609 62.526 72.3969 62.118 73.3149 61.812H73.6209V68.952C71.6829 69.36 69.4389 69.666 66.9909 69.666C60.2589 69.666 55.3629 66.912 55.3629 59.466V23.358H47.7129Z"
-        fill="black"
-      />
-      <path
-        d="M99.8862 70.66C86.0022 70.66 79.2422 63.276 79.2422 51.316C79.2422 32.492 91.7742 18.66 109.766 18.66C123.598 18.66 130.41 26.044 130.41 38.004C130.41 56.828 117.878 70.66 99.8862 70.66ZM100.042 68.476C108.934 68.476 114.238 60.364 117.202 45.284C118.398 39.096 118.97 34.988 118.97 32.18C118.97 25.524 116.318 20.844 109.35 20.844C100.458 20.844 95.1542 28.956 92.2422 43.984C91.0462 50.224 90.4742 54.332 90.4742 57.14C90.4742 63.796 93.1262 68.476 100.042 68.476Z"
-        fill="black"
-      />
-      <path
-        d="M146.782 16.626V25.398H146.986C150.148 20.298 155.656 16.014 162.694 16.014C164.224 16.014 165.04 16.218 166.06 16.626V24.582H165.754C164.53 24.174 163.714 24.072 162.082 24.072C153.922 24.072 146.782 30.192 146.782 40.086V69.36H138.52V16.626H146.782Z"
-        fill="black"
-      />
-      <path
-        d="M180.215 86.802C177.053 86.802 175.013 86.598 172.769 85.68V78.336H173.177C174.299 78.948 176.033 79.458 178.787 79.458C182.255 79.458 184.601 78.132 186.641 73.032L188.681 67.83L168.077 16.626H177.053L189.497 49.47C191.129 53.856 193.067 59.772 193.067 59.772H193.271C193.271 59.772 195.107 53.856 196.739 49.47L208.775 16.626H217.547L195.005 73.644C190.721 84.558 186.641 86.802 180.215 86.802Z"
-        fill="black"
-      />
-    </svg>
-  );
-};

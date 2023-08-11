@@ -1,15 +1,24 @@
 import React, { useRef, useEffect } from "react";
 import { gsap } from "gsap";
-import { BothWays, CanDragIcon } from "./commonIcon";
+import { BothWays } from "./commonIcon";
+import $ from "jquery"
 
 export default function CustomCursor(ref) {
   const outer = useRef(null);
   const text = useRef(null);
 
   useEffect(() => {
-    document.addEventListener("mousemove", onMouseMove);
-    document.addEventListener("mouseleave", onMouseLeave);
-    document.addEventListener("mouseenter", onMouseEnter);
+    $(function () {
+      $(document).on("mousemove", (e) => {
+        onMouseMove(e)
+      })
+      $(document).on("mouseleave", () => {
+        onMouseLeave()
+      })
+      $(document).on("mouseenter", () => {
+        onMouseEnter()
+      })
+    })
   }, []);
 
   function onMouseMove(event) {
@@ -35,13 +44,6 @@ export default function CustomCursor(ref) {
       duration: 0.3,
       ease: "none",
     });
-
-    gsap.to(text.current, {
-      opacity: 0,
-      scale: 0,
-      duration: 0.3,
-      ease: "none",
-    });
   };
 
   const onMouseEnter = () => {
@@ -51,23 +53,12 @@ export default function CustomCursor(ref) {
       duration: 0.3,
       ease: "none",
     });
-
-    gsap.to(text.current, {
-      opacity: 0,
-      scale: 1,
-      duration: 0.3,
-      ease: "none",
-    });
   };
 
   return (
     <div>
       <span id="cursor-text" className="cursor-text reg" ref={text}>
-        <div className="icon-wrapper">
-          <BothWays />
-          <CanDragIcon />
-        </div>
-
+        <BothWays />
       </span>
       <span id="outer-circle" className="outer-circle" ref={outer}></span>
     </div>
