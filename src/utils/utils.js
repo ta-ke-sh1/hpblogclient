@@ -83,27 +83,31 @@ export const textShuffle = (sourceElement, content, interval, duration) => {
   const letters = "0123456789abcdefghijklmnoupqrstuvxyz!#$%^&*()_+-=<>?/";
   clearInterval(interval);
 
-  interval = setInterval(() => {
-    sourceElement.innerText = content
-      .split("")
-      .map((letter, i) => {
-        if (i < iteration) {
-          if (!"!#$%^&*()_+-=<>?/".split("").includes(content[i])) {
-            return content[i].toLowerCase();
+  if (sourceElement) {
+    interval = setInterval(() => {
+      sourceElement.innerText = content
+        .split("")
+        .map((letter, i) => {
+          if (i < iteration) {
+            if (!"!#$%^&*()_+-=<>?/".split("").includes(content[i])) {
+              return content[i].toLowerCase();
+            }
+            return content[i];
           }
-          return content[i];
-        }
 
-        return letters[Math.floor(Math.random() * 54)];
-      })
-      .join("");
+          return letters[Math.floor(Math.random() * 54)];
+        })
+        .join("");
 
-    if (iteration >= content.length) {
-      clearInterval(interval);
-    }
+      if (iteration >= content.length) {
+        clearInterval(interval);
+      }
 
-    iteration += 1;
-  }, duration);
+      iteration += 1;
+    }, duration);
+  } else {
+    return;
+  }
 };
 
 export function randomInteger(min, max) {

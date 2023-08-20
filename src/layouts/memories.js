@@ -4,7 +4,7 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { cursorMagnify, cursorNormal, textShuffle } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
-import { Grid } from "@mui/material";
+import { Grid, Hidden } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MarqueTrack from "../components/marques/Marque";
 
@@ -72,7 +72,7 @@ export default function Memories() {
   const titlesContainer = useRef(null);
   const yearContainer = useRef(null);
 
-  const min_left = 14;
+  const min_left = 12.5;
   const max_right = 100 - min_left;
 
   useLayoutEffect(() => {
@@ -92,7 +92,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => { };
+  const initEye = () => {};
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -141,7 +141,7 @@ export default function Memories() {
       initLineBorder(items);
       const images = document.querySelectorAll(`.image`);
       initBorders(images);
-      updateAbsolutePosition(-50);
+      updateAbsolutePosition(-10);
     });
   };
 
@@ -156,9 +156,11 @@ export default function Memories() {
   };
 
   const trackOnMouseLeave = () => {
-    if (titlesContainer.current.innerHTML !== "folio. 01") {
-      textShuffle(titlesContainer.current, "folio. 01", interval_1, 30);
-      textShuffle(yearContainer.current, "2023", interval_2, 100);
+    if (titlesContainer.current) {
+      if (titlesContainer.current.innerHTML !== "folio. 01") {
+        textShuffle(titlesContainer.current, "folio. 01", interval_1, 20);
+        textShuffle(yearContainer.current, "2023", interval_2, 100);
+      }
     }
   };
 
@@ -204,7 +206,7 @@ export default function Memories() {
 
       gsap.to(trackContainer.current, {
         transform: `translate(${percentage}%, -50%)`,
-        duration: 2.4,
+        duration: 3.4,
         ease: "power2.out",
         fill: "forwards",
       });
@@ -222,7 +224,7 @@ export default function Memories() {
       duration: 2,
     });
 
-    textShuffle(titlesContainer.current, data[index].title, interval_1, 30, 2);
+    textShuffle(titlesContainer.current, data[index].title, interval_1, 20, 2);
     textShuffle(yearContainer.current, data[index].year, interval_2, 100);
   };
 
@@ -247,7 +249,7 @@ export default function Memories() {
   return (
     <>
       <m.div
-        id={'eye-move-area'}
+        id={"eye-move-area"}
         onMouseEnter={() => documentOnMouseEnter()}
         onMouseLeave={() => documentOnMouseLeave()}
         style={{ overflow: "hidden", height: "100vh" }}
@@ -260,84 +262,89 @@ export default function Memories() {
           ease: "easeOut",
         }}
       >
-        <MarqueTrack
+        {/* <MarqueTrack
           isReverse={false}
           width={100}
           style={{
             top: "75px",
           }}
-        />
-        <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()} onMouseLeave={() => trackOnMouseLeave()}>
+        /> */}
+        <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
             <h1>Hola,</h1>
             <p>Welcome to my folio. v1</p>
-            <p>My name is Trung and I'm a freshly graduated code writer. <br />
-              Although currently working as a back-end dev,<br />
-              my side hobby is creating and exploring visuals of web</p>
-            <div className="heading-col">
-            </div>
+            <p>
+              My name is Trung and I'm a freshly graduated code writer. <br />
+              Although currently working as a back-end dev,
+              <br />
+              my side hobby is creating and exploring visuals of web.
+            </p>
+            <div className="heading-col"></div>
           </div>
-          {data.map((image, index) => (
-            <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
-              <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" width={"100%"} height={"100%"} src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
-            </div>
-          ))}
+          <div
+            onMouseLeave={() => trackOnMouseLeave()}
+            style={{
+              display: "flex",
+            }}
+          >
+            {data.map((image, index) => (
+              <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
+                <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
+              </div>
+            ))}
+          </div>
+
           <div className="outro-item">
-            <h1>Hola,</h1>
-            <p>Welcome to my portfolio</p>
+            <h1>Contact me,</h1>
+            <p>Let's get in touch!</p>
           </div>
         </div>
-        <div className="fullpage">
-          <div className="relative">
-            <div className="center-div">
-              <FollowingEye height={300} />
-            </div>
-          </div>
-        </div>
-        <MarqueTrack
+        {/* <MarqueTrack
           isReverse={true}
           width={100}
           style={{
             bottom: "85px",
           }}
-        />
+        /> */}
       </m.div>
-      <div className="bottom-div">
-        <Grid container columns={12}>
-          <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
-            <div className="ideas-row-text med" style={{ marginLeft: "1.5vw" }}>
-              [ Project :
-            </div>
-            <div className="ideas-row-text med">
-              <span ref={titlesContainer}>folio. 01</span> ]
-            </div>
-          </Grid>
-          <Grid item xs={12} sm={1}></Grid>
-          <Grid item xs={12} sm={4}>
-            <div className="ideas-row-text med">
-              [ Year : <span ref={yearContainer}>2023</span> ]{" "}
-            </div>
-          </Grid>
-          <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
-            <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
-              Scroll / Drag
-            </div>
-            <div className="arrow-row" id="arrow" ref={arrow}>
-              <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 421.37 130.81">
-                <g id="Layer_2" data-name="Layer 2">
-                  <g id="Layer_1-2" data-name="Layer 1">
-                    <path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" />
-                    <polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" />
+      <Hidden lgDown={"md"}>
+        <div className="bottom-div">
+          <Grid container columns={12}>
+            <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
+              <div className="ideas-row-text med" style={{ marginLeft: "1.5vw" }}>
+                [ Project :
+              </div>
+              <div className="ideas-row-text med">
+                <span ref={titlesContainer}>folio. 01</span> ]
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={1}></Grid>
+            <Grid item xs={12} sm={4}>
+              <div className="ideas-row-text med">
+                [ Year : <span ref={yearContainer}>2023</span> ]{" "}
+              </div>
+            </Grid>
+            <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
+              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
+                Scroll / Drag
+              </div>
+              <div className="arrow-row" id="arrow" ref={arrow}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 421.37 130.81">
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                      <path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" />
+                      <polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" />
+                    </g>
                   </g>
-                </g>
-              </svg>
-            </div>
-            <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
-              Explore
-            </div>
+                </svg>
+              </div>
+              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
+                Explore
+              </div>
+            </Grid>
           </Grid>
-        </Grid>
-      </div>
+        </div>
+      </Hidden>
     </>
   );
 }

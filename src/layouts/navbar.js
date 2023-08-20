@@ -6,6 +6,7 @@ import { useDimensions } from "../hooks/useDimensions";
 import { Grid } from "@mui/material";
 import { gsap } from "gsap";
 import useModal from "../hooks/useModal";
+import FollowingEye from "../components/custom/eye";
 
 export default function MenuOverlay() {
   const { isShowing, toggle } = useModal();
@@ -59,6 +60,9 @@ export default function MenuOverlay() {
               <Grid item xs={12} sm={2}></Grid>
               <Grid item xs={12} sm={2}></Grid>
             </Grid>
+            <div className="eye-container">
+              <FollowingEye height={50} />
+            </div>
 
             <NavigationMenu />
             <MenuToggle onClick={toggle} toggle={() => toggleOpen()} />
