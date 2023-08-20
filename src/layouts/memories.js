@@ -1,10 +1,10 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useLayoutEffect, useRef, useState } from "react";
-import { cursorMagnify, cursorNormal, textShuffle } from "../utils/utils";
+import { cursorMagnify, cursorNormal, randomInteger, textShuffle } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
-import { Grid, Hidden } from "@mui/material";
+import { Divider, Grid, Hidden } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import MarqueTrack from "../components/marques/Marque";
 
@@ -72,7 +72,7 @@ export default function Memories() {
   const titlesContainer = useRef(null);
   const yearContainer = useRef(null);
 
-  const min_left = 12.5;
+  const min_left = 15;
   const max_right = 100 - min_left;
 
   useLayoutEffect(() => {
@@ -92,7 +92,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => {};
+  const initEye = () => { };
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -110,19 +110,30 @@ export default function Memories() {
         duration: 0,
       });
     } else {
+
       gsap.to(trackContainer.current, {
         transform: `translate(-${min_left}%, -50%)`,
         duration: 0,
+
       });
+    }
+
+    for (let i = 0; i < items.length; i++) {
+      let margin = randomInteger(-120, 120)
+      gsap.to(items[i], {
+        marginTop: margin
+      })
     }
     setItem(items);
   };
 
   const initLineBorder = (items) => {
     for (let i = 0; i < items.length; i++) {
+
       gsap.to(items[i], {
         borderTop: window.innerWidth < 600 ? "1px solid black" : "0px solid black",
         duration: 0,
+
       });
     }
   };
@@ -147,7 +158,7 @@ export default function Memories() {
 
   const handleMouseScroll = (e) => {
     if (!isOnTrack.current) return;
-    const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 240;
+    const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 360;
     const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left), -max_right);
     updateAbsolutePosition(nextPercentage);
     if (trackContainer.current) {
@@ -206,10 +217,19 @@ export default function Memories() {
 
       gsap.to(trackContainer.current, {
         transform: `translate(${percentage}%, -50%)`,
-        duration: 3.4,
+        duration: 2,
         ease: "power2.out",
         fill: "forwards",
       });
+
+      for (const image of trackContainer.current.getElementsByClassName("image")) {
+        gsap.to(image, {
+          objectPosition: `${100 + percentage}% center`,
+          duration: 2,
+          ease: "power2.out",
+          fill: 'forwards'
+        })
+      }
     }
   };
 
@@ -219,12 +239,13 @@ export default function Memories() {
   const animateIn = (index) => {
     if (isMouseDown) return;
     var image = document.getElementById(`image-div-${index}`);
+    let title = document.getElementById(`image-title-${index}`)
 
     gsap.to(image, {
       duration: 2,
     });
 
-    textShuffle(titlesContainer.current, data[index].title, interval_1, 20, 2);
+    textShuffle(title, data[index].title, interval_1, 40, 2);
     textShuffle(yearContainer.current, data[index].year, interval_2, 100);
   };
 
@@ -271,14 +292,22 @@ export default function Memories() {
         /> */}
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
-            <h1>Hola,</h1>
-            <p>Welcome to my folio. v1</p>
-            <p>
-              My name is Trung and I'm a freshly graduated code writer. <br />
-              Although currently working as a back-end dev,
+            <div className="sans-med s-128">
+              Hi, I'm Trung. Ha,
+            </div>
+            <div className="introduction-paragraph">
+              <p>
+                a freshly graduated code writer, who currently working as a back-end developer at Toshiba Software Development Vietnam.
+                However, my side-hobby is to create flashy & dope shits (who doesn't tbh).
+              </p>
+              <p>
+                This portfolio was made during my
+                lunchbreaks as a method to keep myself fresh against the endless grinding of capitalism.
+              </p>
               <br />
-              my side hobby is creating and exploring visuals of web.
-            </p>
+              <Divider className="dvd" />
+            </div>
+
             <div className="heading-col"></div>
           </div>
           <div
@@ -290,6 +319,12 @@ export default function Memories() {
             {data.map((image, index) => (
               <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
                 <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
+                <div className="title-row">
+                  <div>[0{index + 1}] [{data[index].year}]</div>
+                  <div id={`image-title-${index}`} className="right-aligned">
+                    [{data[index].title}]
+                  </div>
+                </div>
               </div>
             ))}
           </div>
@@ -311,18 +346,12 @@ export default function Memories() {
         <div className="bottom-div">
           <Grid container columns={12}>
             <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
-              <div className="ideas-row-text med" style={{ marginLeft: "1.5vw" }}>
-                [ Project :
-              </div>
               <div className="ideas-row-text med">
-                <span ref={titlesContainer}>folio. 01</span> ]
+                [ <span ref={titlesContainer}>folio. 01</span> ]
               </div>
             </Grid>
             <Grid item xs={12} sm={1}></Grid>
             <Grid item xs={12} sm={4}>
-              <div className="ideas-row-text med">
-                [ Year : <span ref={yearContainer}>2023</span> ]{" "}
-              </div>
             </Grid>
             <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
               <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">

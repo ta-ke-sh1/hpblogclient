@@ -32,6 +32,18 @@
 	position: relative;
 	padding-left: 2vw;
 	align-items: center;
+
+	.dvd {
+		opacity: 1;
+		border: 1px solid #d6ff0a;
+		margin: -10px 0 30px 0;
+	}
+
+	.introduction-paragraph {
+		width: 40%;
+		text-align: justify;
+		text-justify: inter-word;
+	}
 }
 
 .outro-item {
@@ -103,19 +115,29 @@
 .img-container {
 	position: relative;
 	height: 100%;
+	width: 15vw;
+	min-width: 240px;
+	margin-right: 50px;
 
 	.image {
-		width: 25vw;
-		height: 100vh;
+		width: 100%;
+		height: 40vh;
 		object-fit: cover;
-		object-position: 100% center;
-		border-left: 4px solid #d6ff0a;
+		object-position: 80% center;
+
+	}
+
+	.title-row {
+		width: 100%;
+		display: flex;
+		justify-content: space-between;
+	}
+
+	.right-aligned {
+		text-align: end;
 	}
 }
 
-.img-container:last-child .image{
-	border-right:  4px solid #d6ff0a;
-}
 
 .eye-outer {
 	display: flex;
@@ -133,7 +155,7 @@
 	width: 120px;
 }
 
-.eye-container{
+.eye-container {
 	position: absolute;
 	top: 7.5px;
 	left: 50%;

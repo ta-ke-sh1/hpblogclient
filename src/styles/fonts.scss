@@ -18,12 +18,21 @@
 	src: url("./fonts/CotfordTextItalic.otf") format("opentype");
 }
 
+@font-face {
+	font-family: "sans-serif-med-text";
+	src: url("./fonts/HaasGrotDisp65Medium.otf") format("opentype");
+}
+
 body {
 	font-family: "reg-text";
 }
 
 .display-font {
 	font-family: "display-text";
+}
+
+.s-128 {
+	font-size: 7rem;
 }
 
 .s-64 {
@@ -56,4 +65,8 @@ body {
 
 .display {
 	font-family: "display-text";
+}
+
+.sans-med {
+	font-family: "sans-serif-med-text";
 }
