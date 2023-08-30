@@ -1,0 +1,50 @@
+.preloader {
+    position: absolute;
+    left: 0;
+    top: 0;
+    
+    color: white;
+    width: 100%;
+    height:100%;
+    
+    
+}
+
+#first-slide {
+    background-color: black;
+    z-index: 1000;
+}
+
+#second-slide {
+    background-color: #92aa19;
+    z-index: 999;
+}
+
+
+#third-slide {
+    background-color: #c4e51c;
+    z-index: 998;
+}
+
+#fourth-slide {
+    background-color: #D2FB0A;
+    z-index: 997;
+}
+
+.text-loading{
+    position: absolute;
+    right: 60px;
+    bottom: 60px;
+    font-size: 2.5rem;
+    z-index: 1001;
+    color: white;
+}
+
+.text-title{
+    position: absolute;
+    bottom: 60px;
+    left: 60px;
+    font-size: 3rem;
+    z-index: 1001;
+    color: white;
+}

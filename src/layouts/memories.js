@@ -10,6 +10,7 @@ import MarqueTrack from "../components/marques/Marque";
 
 import $ from "jquery";
 import FollowingEye from "../components/custom/eye";
+import PreloaderAnimation from "../animation/preloader";
 
 const data = [
   {
@@ -72,8 +73,8 @@ export default function Memories() {
   const titlesContainer = useRef(null);
   const yearContainer = useRef(null);
 
-  const min_left = 15;
-  const max_right = 100 - min_left;
+  const min_left = useRef(5);
+  const max_right = 100 - min_left.current;
 
   useLayoutEffect(() => {
     initListeners();
@@ -92,7 +93,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => { };
+  const initEye = () => {};
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -110,30 +111,19 @@ export default function Memories() {
         duration: 0,
       });
     } else {
-
       gsap.to(trackContainer.current, {
-        transform: `translate(-${min_left}%, -50%)`,
+        transform: `translate(-${min_left.current}%, -50%)`,
         duration: 0,
-
       });
-    }
-
-    for (let i = 0; i < items.length; i++) {
-      let margin = randomInteger(-120, 120)
-      gsap.to(items[i], {
-        marginTop: margin
-      })
     }
     setItem(items);
   };
 
   const initLineBorder = (items) => {
     for (let i = 0; i < items.length; i++) {
-
       gsap.to(items[i], {
         borderTop: window.innerWidth < 600 ? "1px solid black" : "0px solid black",
         duration: 0,
-
       });
     }
   };
@@ -148,18 +138,19 @@ export default function Memories() {
     });
 
     window.addEventListener("resize", () => {
+      window.location.reload();
       const items = document.querySelectorAll(`.overflow-text`);
       initLineBorder(items);
       const images = document.querySelectorAll(`.image`);
       initBorders(images);
-      updateAbsolutePosition(-10);
+      updateAbsolutePosition(0);
     });
   };
 
   const handleMouseScroll = (e) => {
     if (!isOnTrack.current) return;
     const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 360;
-    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left), -max_right);
+    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -10), -90) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
     updateAbsolutePosition(nextPercentage);
     if (trackContainer.current) {
       trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
@@ -169,8 +160,8 @@ export default function Memories() {
   const trackOnMouseLeave = () => {
     if (titlesContainer.current) {
       if (titlesContainer.current.innerHTML !== "folio. 01") {
-        textShuffle(titlesContainer.current, "folio. 01", interval_1, 20);
-        textShuffle(yearContainer.current, "2023", interval_2, 100);
+        textShuffle(titlesContainer.current, "folio. 01", null, 20);
+        textShuffle(yearContainer.current, "2023", null, 100);
       }
     }
   };
@@ -204,9 +195,9 @@ export default function Memories() {
       if (trackContainer.current.getAttribute("data-mouse-down-at") === "0") return;
       const mouseDelta = parseFloat(trackContainer.current.getAttribute("data-mouse-down-at")) - e.clientX,
         maxDelta = window.innerWidth / 2;
-      const percentage = (mouseDelta / maxDelta) * -min_left;
+      const percentage = (mouseDelta / maxDelta) * -min_left.current;
       const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + percentage,
-        nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left), -max_right);
+        nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
       updateAbsolutePosition(nextPercentage);
     }
   };
@@ -227,26 +218,23 @@ export default function Memories() {
           objectPosition: `${100 + percentage}% center`,
           duration: 2,
           ease: "power2.out",
-          fill: 'forwards'
-        })
+          fill: "forwards",
+        });
       }
     }
   };
 
-  let interval_1 = null;
-  let interval_2 = null;
-
   const animateIn = (index) => {
     if (isMouseDown) return;
     var image = document.getElementById(`image-div-${index}`);
-    let title = document.getElementById(`image-title-${index}`)
+    let title = document.getElementById(`image-title-${index}`);
 
     gsap.to(image, {
       duration: 2,
     });
 
-    textShuffle(title, data[index].title, interval_1, 40, 2);
-    textShuffle(yearContainer.current, data[index].year, interval_2, 100);
+    textShuffle(title, data[index].title, null, 40, 2);
+    textShuffle(yearContainer.current, data[index].year, null, 100);
   };
 
   const animateOut = (index) => {
@@ -269,6 +257,8 @@ export default function Memories() {
 
   return (
     <>
+      <div className="entrance-image"></div>
+      <div className="outro-image"></div>
       <m.div
         id={"eye-move-area"}
         onMouseEnter={() => documentOnMouseEnter()}
@@ -292,23 +282,43 @@ export default function Memories() {
         /> */}
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
-            <div className="sans-med s-128">
-              Hi, I'm Trung. Ha,
-            </div>
-            <div className="introduction-paragraph">
-              <p>
-                a freshly graduated code writer, who currently working as a back-end developer at Toshiba Software Development Vietnam.
-                However, my side-hobby is to create flashy & dope shits (who doesn't tbh).
-              </p>
-              <p>
-                This portfolio was made during my
-                lunchbreaks as a method to keep myself fresh against the endless grinding of capitalism.
-              </p>
-              <br />
-              <Divider className="dvd" />
-            </div>
-
-            <div className="heading-col"></div>
+            <Grid container>
+              <Grid item sm={12} md={6}>
+                <div className="relative">
+                  <div className="center-div">
+                    <div>
+                      <div className="display-font s-128 title">
+                        Trung. Ha,
+                        <br />
+                        Folio. 01
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid
+                item
+                sm={12}
+                md={3}
+                sx={{
+                  height: "100vh",
+                  width: "100%",
+                }}
+              >
+                <div className="relative">
+                  <div className="center-div">
+                    <div>
+                      <div className="introduction-paragraph">
+                        <p>A freshly graduated code writer, and currently working as a back-end developer at Toshiba. However, my side-hobby is to create flashy & dope shits (who doesn't tbh).</p>
+                        <p>This portfolio was made during my lunchbreaks as a method to keep myself fresh.</p>
+                        <br />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid item sm={12} md={3}></Grid>
+            </Grid>
           </div>
           <div
             onMouseLeave={() => trackOnMouseLeave()}
@@ -320,18 +330,36 @@ export default function Memories() {
               <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
                 <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
                 <div className="title-row">
-                  <div>[0{index + 1}] [{data[index].year}]</div>
-                  <div id={`image-title-${index}`} className="right-aligned">
-                    [{data[index].title}]
-                  </div>
+                  <Grid container>
+                    <Grid item xs={12}>
+                      [0{index + 1}] - [{data[index].year}]
+                    </Grid>
+                    <Grid item xs={12}>
+                      <div id={`image-title-${index}`}>{data[index].title}</div>
+                    </Grid>
+                  </Grid>
                 </div>
               </div>
             ))}
           </div>
 
           <div className="outro-item">
-            <h1>Contact me,</h1>
-            <p>Let's get in touch!</p>
+            <Grid container>
+              <Grid item sm={12} md={4}>
+                <h1 className="display-font s-128">Contact me,</h1>
+              </Grid>
+              <Grid item sm={12} md={4}></Grid>
+              <Grid item sm={12} md={4}>
+                {" "}
+                <p>Let's get in touch!</p>
+                <p>Facebook</p>
+                <p>Instagram</p>
+                <p>GitHub</p>
+                <p>Behance</p>
+                <p>LinkedIn</p>
+              </Grid>
+            </Grid>
+            <div></div>
           </div>
         </div>
         {/* <MarqueTrack
@@ -351,8 +379,7 @@ export default function Memories() {
               </div>
             </Grid>
             <Grid item xs={12} sm={1}></Grid>
-            <Grid item xs={12} sm={4}>
-            </Grid>
+            <Grid item xs={12} sm={4}></Grid>
             <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
               <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
                 Scroll / Drag
