@@ -11,6 +11,7 @@ import MarqueTrack from "../components/marques/Marque";
 import $ from "jquery";
 import FollowingEye from "../components/custom/eye";
 import PreloaderAnimation from "../animation/preloader";
+import GradientMap from "../components/gradient/gradient";
 
 const data = [
   {
@@ -93,7 +94,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => {};
+  const initEye = () => { };
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -257,8 +258,10 @@ export default function Memories() {
 
   return (
     <>
-      <div className="entrance-image"></div>
-      <div className="outro-image"></div>
+      <GradientMap />
+      <div className="outro-image" style={{
+        backgroundImage: `url(${process.env.PUBLIC_URL + "/about/cropped.jpg"})`
+      }}></div>
       <m.div
         id={"eye-move-area"}
         onMouseEnter={() => documentOnMouseEnter()}
@@ -283,31 +286,17 @@ export default function Memories() {
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
             <Grid container>
-              <Grid item sm={12} md={6}>
+              <Grid item sm={12} md={1}></Grid>
+              <Grid item sm={12} md={6} sx={{
+                height: "100vh",
+                width: "100%",
+              }}>
                 <div className="relative">
                   <div className="center-div">
                     <div>
                       <div className="display-font s-128 title">
                         Trung. Ha,
-                        <br />
-                        Folio. 01
                       </div>
-                    </div>
-                  </div>
-                </div>
-              </Grid>
-              <Grid
-                item
-                sm={12}
-                md={3}
-                sx={{
-                  height: "100vh",
-                  width: "100%",
-                }}
-              >
-                <div className="relative">
-                  <div className="center-div">
-                    <div>
                       <div className="introduction-paragraph">
                         <p>A freshly graduated code writer, and currently working as a back-end developer at Toshiba. However, my side-hobby is to create flashy & dope shits (who doesn't tbh).</p>
                         <p>This portfolio was made during my lunchbreaks as a method to keep myself fresh.</p>
@@ -317,7 +306,7 @@ export default function Memories() {
                   </div>
                 </div>
               </Grid>
-              <Grid item sm={12} md={3}></Grid>
+
             </Grid>
           </div>
           <div
@@ -345,10 +334,9 @@ export default function Memories() {
 
           <div className="outro-item">
             <Grid container>
-              <Grid item sm={12} md={4}>
+              <Grid item sm={12} md={8}>
                 <h1 className="display-font s-128">Contact me,</h1>
               </Grid>
-              <Grid item sm={12} md={4}></Grid>
               <Grid item sm={12} md={4}>
                 {" "}
                 <p>Let's get in touch!</p>
