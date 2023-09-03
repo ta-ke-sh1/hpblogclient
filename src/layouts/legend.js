@@ -1,20 +1,17 @@
 import React from "react";
 import background from "../images/DSC_0642.jpg";
-import { motion as m, } from 'framer-motion';
+import { motion as m } from "framer-motion";
 import { container, item } from "../animation/animation";
 
 export default function LegendBanner() {
     return (
-        <m.div
-            initial={{ y: '100%' }}
-            animate={{ y: '0%' }}
-            exit={{ y: '-100%' }}
-            transition={{
-                duration: 0.75,
-                ease: 'easeOut'
-            }}>
+        <m.div>
             <div className="container custom-container">
-                <m.div className="entrance-paragraph" variants={container} initial='hidden' animate='show'>
+                <m.div
+                    className="entrance-paragraph"
+                    variants={container}
+                    initial="hidden"
+                    animate="show">
                     <div className="overflow-hidden">
                         <m.p variants={item} className="entrance-item">
                             Welcome to

@@ -15,7 +15,7 @@ import MarqueTrack from "../components/marques/Marque";
 
 import $ from "jquery";
 import FollowingEye from "../components/custom/eye";
-import PreloaderAnimation from "../animation/preloader";
+import PreloaderAnimation, { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
 
 const data = [
@@ -64,6 +64,7 @@ const data = [
 ];
 
 export default function Memories() {
+    const preloader = usePreloader();
     //const { data, error, isLoaded } = useFetch(host_url + "/image");
     const navigate = useNavigate();
     const trackContainer = useRef(null);
@@ -311,7 +312,12 @@ export default function Memories() {
         let text = document.getElementById("cursor-text");
         setTransitioning(true);
         cursorNormal(outer, text);
-        navigate("/project/" + index);
+        console.log(preloader);
+        preloader.tl.reverse();
+        setTimeout(() => {
+            navigate("/project/" + index);
+        }, 1500);
+
         setTransitioning(false);
     };
 
@@ -330,14 +336,7 @@ export default function Memories() {
                 onMouseEnter={() => documentOnMouseEnter()}
                 onMouseLeave={() => documentOnMouseLeave()}
                 style={{ overflow: "hidden", height: "100vh" }}
-                ref={container}
-                initial={{ opacity: 0 }}
-                animate={{ opacity: 1 }}
-                exit={{ opacity: 0 }}
-                transition={{
-                    duration: 0.75,
-                    ease: "easeOut",
-                }}>
+                ref={container}>
                 {/* <MarqueTrack
           isReverse={false}
           width={100}

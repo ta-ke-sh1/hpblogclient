@@ -2,8 +2,11 @@ import React, { useEffect, useState, useRef } from "react";
 import { motion as m } from "framer-motion";
 import { textShuffle } from "../../utils/utils";
 import { gsap } from "gsap";
+import { usePreloader } from "../../animation/preloader";
 
 export default function BlogDetails({ props }) {
+    const preloader = usePreloader();
+
     const posterTrackContainer = useRef(null);
     const blogTitle = useRef(null);
     const [lastIndex, setLast] = useState(-1);
@@ -36,6 +39,9 @@ export default function BlogDetails({ props }) {
     };
 
     useEffect(() => {
+        setTimeout(() => {
+            preloader.tl.play();
+        }, 1500);
         let icon = document.getElementById("svg-cursor-icon");
         if (icon) {
             gsap.to(icon, {
@@ -81,15 +87,7 @@ export default function BlogDetails({ props }) {
     };
 
     return (
-        <m.div
-            initial={{ y: "100%" }}
-            animate={{ y: "0%" }}
-            exit={{ y: "-100%" }}
-            className="custom-wrapper"
-            transition={{
-                duration: 0.75,
-                ease: "easeOut",
-            }}>
+        <m.div>
             <div className="blog-details-wrapper">
                 <div className="blog-text med">
                     <p id="blog-title" ref={blogTitle}>
