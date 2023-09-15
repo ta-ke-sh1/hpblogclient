@@ -5,7 +5,7 @@ const useToggle = () => {
 
   function toggle() {
     console.log("Clicked");
-    setIsShowing(!isShowing);
+    setIsShowing((isShowing) => !isShowing);
   }
 
   return {

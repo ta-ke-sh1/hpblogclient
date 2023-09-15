@@ -1,6 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
-import { motion as m, useCycle } from "framer-motion";
+import { motion as m } from "framer-motion";
 import { MenuToggle } from "../components/buttons/MenuToggle";
 import { useDimensions } from "../hooks/useDimensions";
 import { Grid, Divider } from "@mui/material";
@@ -30,6 +30,8 @@ export default function MenuOverlay() {
       opacity: window.innerWidth < 800 ? 0 : 1,
       duration: 0,
     });
+
+    closeNav()
   }, []);
 
   const initListener = () => {
@@ -40,6 +42,50 @@ export default function MenuOverlay() {
       });
     });
   };
+
+  const openNav = () => {
+    gsap.to(navMenu.current, {
+      y: "0%",
+      duration: 0,
+      opacity: 1,
+      ease: ease,
+    });
+
+    gsap.to(navBg.current, {
+      opacity: 0.7,
+      duration: 0.7,
+      ease: ease,
+    });
+
+    gsap.to(navContent.current, {
+      delay: 0.2,
+      y: "0%",
+      duration: 1,
+      ease: ease,
+    });
+  }
+
+  const closeNav = () => {
+    gsap.to(navMenu.current, {
+      y: "-100%",
+      duration: 0,
+      opacity: 0,
+      delay: 0.7,
+      ease: ease,
+    });
+
+    gsap.to(navBg.current, {
+      opacity: 0,
+      duration: 0.7,
+      ease: ease,
+    });
+
+    gsap.to(navContent.current, {
+      y: "-100%",
+      duration: 0.5,
+      ease: ease,
+    });
+  }
 
   const handlePageChange = () => {
     console.log(window.location.href);
@@ -52,49 +98,14 @@ export default function MenuOverlay() {
   };
 
   const ease = "power";
+
   const toggleOpen = () => {
     if (isOpen) {
       // close
-      gsap.to(navMenu.current, {
-        y: "-100%",
-        duration: 0,
-        opacity: 0,
-        delay: 0.7,
-        ease: ease,
-      });
-
-      gsap.to(navBg.current, {
-        opacity: 0,
-        duration: 0.7,
-        ease: ease,
-      });
-
-      gsap.to(navContent.current, {
-        y: "-100%",
-        duration: 0.5,
-        ease: ease,
-      });
+      closeNav()
     } else {
       // open
-      gsap.to(navMenu.current, {
-        y: "0%",
-        duration: 0,
-        opacity: 1,
-        ease: ease,
-      });
-
-      gsap.to(navBg.current, {
-        opacity: 0.7,
-        duration: 0.7,
-        ease: ease,
-      });
-
-      gsap.to(navContent.current, {
-        delay: 0.2,
-        y: "0%",
-        duration: 1,
-        ease: ease,
-      });
+      openNav()
     }
     setOpen(!isOpen);
   };
@@ -131,7 +142,7 @@ export default function MenuOverlay() {
               <div className="nav-content" ref={navContent}>
                 <NavigationContent />
               </div>
-              <div className="nav-background" ref={navBg}></div>
+              <div className="nav-background" ref={navBg} onClick={() => toggleOpen()} ></div>
             </div>
             <MenuToggle onClick={toggle} toggle={() => toggleOpen()} />
           </m.div>

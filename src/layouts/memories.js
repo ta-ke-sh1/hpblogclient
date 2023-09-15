@@ -4,12 +4,8 @@ import React, { useLayoutEffect, useRef, useState } from "react";
 import { cursorMagnify, cursorNormal, randomInteger, textShuffle } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
-import { Divider, Grid, Hidden } from "@mui/material";
+import { Divider, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import MarqueTrack from "../components/marques/Marque";
-
-import $ from "jquery";
-import FollowingEye from "../components/custom/eye";
 import PreloaderAnimation, { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
 
@@ -99,7 +95,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => {};
+  const initEye = () => { };
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -278,13 +274,6 @@ export default function Memories() {
         }}
       ></div>
       <m.div id={"eye-move-area"} onMouseEnter={() => documentOnMouseEnter()} onMouseLeave={() => documentOnMouseLeave()} style={{ overflow: "hidden", height: "100vh", top: 0 }} ref={container}>
-        {/* <MarqueTrack
-          isReverse={false}
-          width={100}
-          style={{
-            top: "75px",
-          }}
-        /> */}
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
             <Grid container>
@@ -346,7 +335,7 @@ export default function Memories() {
           }}
         /> */}
       </m.div>
-      <Hidden lgDown={"md"}>
+      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
         <div className="bottom-div">
           <Grid container columns={12}>
             <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
@@ -376,7 +365,7 @@ export default function Memories() {
             </Grid>
           </Grid>
         </div>
-      </Hidden>
+      </Box>
     </>
   );
 }
