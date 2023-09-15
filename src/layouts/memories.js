@@ -1,12 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
 import React, { useLayoutEffect, useRef, useState } from "react";
-import {
-    cursorMagnify,
-    cursorNormal,
-    randomInteger,
-    textShuffle,
-} from "../utils/utils";
+import { cursorMagnify, cursorNormal, randomInteger, textShuffle } from "../utils/utils";
 import { motion as m } from "framer-motion";
 import gsap from "gsap";
 import { Divider, Grid, Hidden } from "@mui/material";
@@ -19,553 +14,436 @@ import PreloaderAnimation, { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
 
 const data = [
-    {
-        name: "30",
-        id: "3Y5469EzyslVhGUIITI6",
-        title: "Ftnss Trckr",
-        year: "2023",
-    },
-    {
-        name: "28",
-        id: "9TIrW5pqtfC9cIKcG5fu",
-        title: "expnse trckr",
-        year: "2022",
-    },
-    {
-        name: "26",
-        id: "PwGLWPa4pgnw1rPS0i1t",
-        title: "30 Days Poster",
-        year: "2022",
-    },
-    {
-        name: "4",
-        id: "9TIrW5pqtfC9cIKcG5fu",
-        title: "Snkr E-commerce",
-        year: "2020",
-    },
-    {
-        name: "5",
-        id: "SSRFGiddYEQKjXtvLcJG",
-        title: "Secret Society",
-        year: "2019",
-    },
-    {
-        name: "24",
-        id: "SeteUHhdR8xQCoq7wCOX",
-        title: "White Collection",
-        year: "2018",
-    },
-    {
-        name: "7",
-        id: "ANnNgHEr7XJh8persKCy",
-        title: "YRC Recruitment",
-        year: "2017",
-    },
+  {
+    name: "30",
+    id: "3Y5469EzyslVhGUIITI6",
+    title: "Ftnss Trckr",
+    year: "2023",
+  },
+  {
+    name: "28",
+    id: "9TIrW5pqtfC9cIKcG5fu",
+    title: "expnse trckr",
+    year: "2022",
+  },
+  {
+    name: "26",
+    id: "PwGLWPa4pgnw1rPS0i1t",
+    title: "30 Days Poster",
+    year: "2022",
+  },
+  {
+    name: "4",
+    id: "9TIrW5pqtfC9cIKcG5fu",
+    title: "Snkr E-commerce",
+    year: "2020",
+  },
+  {
+    name: "5",
+    id: "SSRFGiddYEQKjXtvLcJG",
+    title: "Secret Society",
+    year: "2019",
+  },
+  {
+    name: "24",
+    id: "SeteUHhdR8xQCoq7wCOX",
+    title: "White Collection",
+    year: "2018",
+  },
+  {
+    name: "7",
+    id: "ANnNgHEr7XJh8persKCy",
+    title: "YRC Recruitment",
+    year: "2017",
+  },
 ];
 
 export default function Memories() {
-    const preloader = usePreloader();
-    //const { data, error, isLoaded } = useFetch(host_url + "/image");
-    const navigate = useNavigate();
-    const trackContainer = useRef(null);
-    const container = useRef(null);
-    const arrow = useRef(null);
+  const preloader = usePreloader();
+  //const { data, error, isLoaded } = useFetch(host_url + "/image");
+  const navigate = useNavigate();
+  const trackContainer = useRef(null);
+  const container = useRef(null);
+  const arrow = useRef(null);
 
-    const [isMouseDown, setMouseDown] = useState(false);
-    const isOnTrack = useRef(false);
-    const [isTransitioning, setTransitioning] = useState(false);
+  const [isMouseDown, setMouseDown] = useState(false);
+  const isOnTrack = useRef(false);
+  const [isTransitioning, setTransitioning] = useState(false);
 
-    const [item, setItem] = useState([]);
+  const [item, setItem] = useState([]);
 
-    const titlesContainer = useRef(null);
-    const yearContainer = useRef(null);
+  const titlesContainer = useRef(null);
+  const yearContainer = useRef(null);
 
-    const min_left = useRef(5);
-    const max_right = 100 - min_left.current;
+  const min_left = useRef(5);
+  const max_right = 100 - min_left.current;
 
-    useLayoutEffect(() => {
-        initListeners();
-        const images = document.querySelectorAll(`.image`);
-        initBorders(images);
-        const items = document.querySelectorAll(`.overflow-text`);
-        initLineBorder(items);
+  useLayoutEffect(() => {
+    setTimeout(() => {
+      preloader.tl.play();
+    }, 1500);
 
-        let icon = document.getElementById("svg-cursor-icon");
-        gsap.to(icon, {
-            transform: "rotate(90deg)",
-            duration: 0.4,
-            ease: "power",
-        });
+    initListeners();
+    const images = document.querySelectorAll(`.image`);
+    initBorders(images);
+    const items = document.querySelectorAll(`.overflow-text`);
+    initLineBorder(items);
 
-        initEye();
-    }, [isOnTrack]);
+    let icon = document.getElementById("svg-cursor-icon");
+    gsap.to(icon, {
+      transform: "rotate(90deg)",
+      duration: 0.4,
+      ease: "power",
+    });
 
-    const initEye = () => {};
+    initEye();
+  }, [isOnTrack]);
 
-    const documentOnMouseEnter = () => {
-        isOnTrack.current = true;
-        let outer = document.getElementById("outer-circle");
-        let text = document.getElementById("cursor-text");
-        if (!isTransitioning) {
-            cursorMagnify(outer, text);
-        }
-    };
+  const initEye = () => {};
 
-    const initBorders = (items) => {
-        if (window.innerWidth < 800) {
-            gsap.to(trackContainer.current, {
-                transform: `translate(${-min_left}%, -50%)`,
-                duration: 0,
-            });
-        } else {
-            gsap.to(trackContainer.current, {
-                transform: `translate(-${min_left.current}%, -50%)`,
-                duration: 0,
-            });
-        }
-        setItem(items);
-    };
+  const documentOnMouseEnter = () => {
+    isOnTrack.current = true;
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
+    if (!isTransitioning) {
+      cursorMagnify(outer, text);
+    }
+  };
 
-    const initLineBorder = (items) => {
-        for (let i = 0; i < items.length; i++) {
-            gsap.to(items[i], {
-                borderTop:
-                    window.innerWidth < 600
-                        ? "1px solid black"
-                        : "0px solid black",
-                duration: 0,
-            });
-        }
-    };
+  const initBorders = (items) => {
+    if (window.innerWidth < 800) {
+      gsap.to(trackContainer.current, {
+        transform: `translate(${-min_left}%, -50%)`,
+        duration: 0,
+      });
+    } else {
+      gsap.to(trackContainer.current, {
+        transform: `translate(-${min_left.current}%, -50%)`,
+        duration: 0,
+      });
+    }
+    setItem(items);
+  };
 
-    const initListeners = () => {
-        container.current.onmousemove = (e) => handleMouseMove(e);
-        container.current.onmousedown = (e) => handleMouseDown(e);
-        container.current.onmouseup = () => handleOnUp();
+  const initLineBorder = (items) => {
+    for (let i = 0; i < items.length; i++) {
+      gsap.to(items[i], {
+        borderTop: window.innerWidth < 600 ? "1px solid black" : "0px solid black",
+        duration: 0,
+      });
+    }
+  };
 
-        container.current.addEventListener("mousewheel", (e) => {
-            handleMouseScroll(e);
-        });
+  const initListeners = () => {
+    container.current.onmousemove = (e) => handleMouseMove(e);
+    container.current.onmousedown = (e) => handleMouseDown(e);
+    container.current.onmouseup = () => handleOnUp();
 
-        window.addEventListener("resize", () => {
-            window.location.reload();
-            const items = document.querySelectorAll(`.overflow-text`);
-            initLineBorder(items);
-            const images = document.querySelectorAll(`.image`);
-            initBorders(images);
-            updateAbsolutePosition(0);
-        });
-    };
+    container.current.addEventListener("mousewheel", (e) => {
+      handleMouseScroll(e);
+    });
 
-    const handleMouseScroll = (e) => {
-        if (!isOnTrack.current) return;
-        const nextPercentageUnconstrained =
-            parseFloat(
-                trackContainer.current.getAttribute("data-prev-percentage")
-            ) +
-            e.wheelDelta / 360;
-        const nextPercentage =
-            window.innerWidth < 1000
-                ? Math.max(Math.min(nextPercentageUnconstrained, -10), -90)
-                : Math.max(
-                      Math.min(nextPercentageUnconstrained, -min_left.current),
-                      -max_right
-                  );
-        updateAbsolutePosition(nextPercentage);
-        if (trackContainer.current) {
-            trackContainer.current.setAttribute(
-                "data-prev-percentage",
-                parseFloat(
-                    trackContainer.current.getAttribute("data-percentage")
-                )
-            );
-        }
-    };
+    window.addEventListener("resize", () => {
+      window.location.reload();
+      const items = document.querySelectorAll(`.overflow-text`);
+      initLineBorder(items);
+      const images = document.querySelectorAll(`.image`);
+      initBorders(images);
+      updateAbsolutePosition(0);
+    });
+  };
 
-    const trackOnMouseLeave = () => {
-        if (titlesContainer.current) {
-            if (titlesContainer.current.innerHTML !== "folio. 01") {
-                textShuffle(titlesContainer.current, "folio. 01", null, 20);
-                textShuffle(yearContainer.current, "2023", null, 100);
-            }
-        }
-    };
+  const handleMouseScroll = (e) => {
+    if (!isOnTrack.current) return;
+    const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 360;
+    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -10), -90) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
+    updateAbsolutePosition(nextPercentage);
+    if (trackContainer.current) {
+      trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
+    }
+  };
 
-    const documentOnMouseLeave = () => {
-        isOnTrack.current = false;
-        let outer = document.getElementById("outer-circle");
-        let text = document.getElementById("cursor-text");
-        if (!isTransitioning) {
-            cursorNormal(outer, text);
-        }
-    };
+  const trackOnMouseLeave = () => {
+    if (titlesContainer.current) {
+      if (titlesContainer.current.innerHTML !== "folio. 01") {
+        textShuffle(titlesContainer.current, "folio. 01", null, 20);
+        textShuffle(yearContainer.current, "2023", null, 100);
+      }
+    }
+  };
 
-    const handleOnUp = () => {
-        setMouseDown(false);
-        if (trackContainer.current) {
-            trackContainer.current.setAttribute("data-mouse-down-at", "0");
-            trackContainer.current.setAttribute(
-                "data-prev-percentage",
-                parseFloat(
-                    trackContainer.current.getAttribute("data-percentage")
-                )
-            );
-        }
-    };
+  const documentOnMouseLeave = () => {
+    isOnTrack.current = false;
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
+    if (!isTransitioning) {
+      cursorNormal(outer, text);
+    }
+  };
 
-    const handleMouseDown = (e) => {
-        setMouseDown(true);
-        if (trackContainer.current) {
-            trackContainer.current.setAttribute(
-                "data-mouse-down-at",
-                e.clientX
-            );
-        }
-    };
+  const handleOnUp = () => {
+    setMouseDown(false);
+    if (trackContainer.current) {
+      trackContainer.current.setAttribute("data-mouse-down-at", "0");
+      trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
+    }
+  };
 
-    const handleMouseMove = (e) => {
-        if (trackContainer.current) {
-            if (
-                trackContainer.current.getAttribute("data-mouse-down-at") ===
-                "0"
-            )
-                return;
-            const mouseDelta =
-                    parseFloat(
-                        trackContainer.current.getAttribute(
-                            "data-mouse-down-at"
-                        )
-                    ) - e.clientX,
-                maxDelta = window.innerWidth / 2;
-            const percentage = (mouseDelta / maxDelta) * -min_left.current;
-            const nextPercentageUnconstrained =
-                    parseFloat(
-                        trackContainer.current.getAttribute(
-                            "data-prev-percentage"
-                        )
-                    ) + percentage,
-                nextPercentage =
-                    window.innerWidth < 1000
-                        ? Math.max(
-                              Math.min(nextPercentageUnconstrained, -20),
-                              -80
-                          )
-                        : Math.max(
-                              Math.min(
-                                  nextPercentageUnconstrained,
-                                  -min_left.current
-                              ),
-                              -max_right
-                          );
-            updateAbsolutePosition(nextPercentage);
-        }
-    };
+  const handleMouseDown = (e) => {
+    setMouseDown(true);
+    if (trackContainer.current) {
+      trackContainer.current.setAttribute("data-mouse-down-at", e.clientX);
+    }
+  };
 
-    const updateAbsolutePosition = (percentage) => {
-        if (trackContainer.current) {
-            trackContainer.current.setAttribute("data-percentage", percentage);
+  const handleMouseMove = (e) => {
+    if (trackContainer.current) {
+      if (trackContainer.current.getAttribute("data-mouse-down-at") === "0") return;
+      const mouseDelta = parseFloat(trackContainer.current.getAttribute("data-mouse-down-at")) - e.clientX,
+        maxDelta = window.innerWidth / 2;
+      const percentage = (mouseDelta / maxDelta) * -min_left.current;
+      const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + percentage,
+        nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
+      updateAbsolutePosition(nextPercentage);
+    }
+  };
 
-            gsap.to(trackContainer.current, {
-                transform: `translate(${percentage}%, -50%)`,
-                duration: 2,
-                ease: "power2.out",
-                fill: "forwards",
-            });
+  const updateAbsolutePosition = (percentage) => {
+    if (trackContainer.current) {
+      trackContainer.current.setAttribute("data-percentage", percentage);
 
-            for (const image of trackContainer.current.getElementsByClassName(
-                "image"
-            )) {
-                gsap.to(image, {
-                    objectPosition: `${100 + percentage}% center`,
-                    duration: 2,
-                    ease: "power2.out",
-                    fill: "forwards",
-                });
-            }
-        }
-    };
+      gsap.to(trackContainer.current, {
+        transform: `translate(${percentage}%, -50%)`,
+        duration: 2,
+        ease: "power2.out",
+        fill: "forwards",
+      });
 
-    const animateIn = (index) => {
-        if (isMouseDown) return;
-        var image = document.getElementById(`image-div-${index}`);
-        let title = document.getElementById(`image-title-${index}`);
-
+      for (const image of trackContainer.current.getElementsByClassName("image")) {
         gsap.to(image, {
-            duration: 2,
+          objectPosition: `${100 + percentage}% center`,
+          duration: 2,
+          ease: "power2.out",
+          fill: "forwards",
         });
+      }
+    }
+  };
 
-        textShuffle(title, data[index].title, null, 40, 2);
-        textShuffle(yearContainer.current, data[index].year, null, 100);
-    };
+  const animateIn = (index) => {
+    if (isMouseDown) return;
+    var image = document.getElementById(`image-div-${index}`);
+    let title = document.getElementById(`image-title-${index}`);
 
-    const animateOut = (index) => {
-        if (isMouseDown) return;
+    gsap.to(image, {
+      duration: 2,
+    });
 
-        var image = document.getElementById(`image-div-${index}`);
-        gsap.to(image, {
-            duration: 2,
-        });
-    };
+    textShuffle(title, data[index].title, null, 40, 2);
+  };
 
-    const handleNavigate = (index) => {
-        let outer = document.getElementById("outer-circle");
-        let text = document.getElementById("cursor-text");
-        setTransitioning(true);
-        cursorNormal(outer, text);
-        console.log(preloader);
-        preloader.tl.reverse();
-        setTimeout(() => {
-            navigate("/project/" + index);
-        }, 1500);
+  const animateOut = (index) => {
+    if (isMouseDown) return;
 
-        setTransitioning(false);
-    };
+    var image = document.getElementById(`image-div-${index}`);
+    let title = document.getElementById(`image-title-${index}`);
+    gsap.to(image, {
+      duration: 2,
+    });
 
-    return (
-        <>
-            <GradientMap />
-            <div
-                className="outro-image"
-                style={{
-                    backgroundImage: `url(${
-                        process.env.PUBLIC_URL + "/about/cropped.jpg"
-                    })`,
-                }}></div>
-            <m.div
-                id={"eye-move-area"}
-                onMouseEnter={() => documentOnMouseEnter()}
-                onMouseLeave={() => documentOnMouseLeave()}
-                style={{ overflow: "hidden", height: "100vh" }}
-                ref={container}>
-                {/* <MarqueTrack
+    textShuffle(title, data[index].title, null, 40, 2);
+  };
+
+  const handleNavigate = (index) => {
+    let outer = document.getElementById("outer-circle");
+    let text = document.getElementById("cursor-text");
+    setTransitioning(true);
+    cursorNormal(outer, text);
+    console.log(preloader);
+    preloader.tl.reverse();
+    setTimeout(() => {
+      navigate("/project/" + index);
+    }, 1500);
+
+    setTransitioning(false);
+  };
+
+  return (
+    <>
+      <GradientMap />
+      <div
+        className="outro-image"
+        style={{
+          backgroundImage: `url(${process.env.PUBLIC_URL + "/about/cropped.jpg"})`,
+        }}
+      ></div>
+      <m.div id={"eye-move-area"} onMouseEnter={() => documentOnMouseEnter()} onMouseLeave={() => documentOnMouseLeave()} style={{ overflow: "hidden", height: "100vh", top: 0 }} ref={container}>
+        {/* <MarqueTrack
           isReverse={false}
           width={100}
           style={{
             top: "75px",
           }}
         /> */}
-                <div
-                    className="image-track"
-                    ref={trackContainer}
-                    id="memory-track"
-                    data-mouse-down-at="0"
-                    data-prev-percentage="0"
-                    data-percentage="0"
-                    onMouseUp={() => handleOnUp()}>
-                    <div className="entry-item">
-                        <Grid container>
-                            <Grid item sm={12} md={1}></Grid>
-                            <Grid
-                                item
-                                sm={12}
-                                md={6}
-                                sx={{
-                                    height: "100vh",
-                                    width: "100%",
-                                }}>
-                                <div className="relative">
-                                    <div className="center-div">
-                                        <div>
-                                            <div className="display-font s-128 title">
-                                                Trung. Ha,
-                                            </div>
-                                            <div className="introduction-paragraph">
-                                                <p>
-                                                    A freshly graduated code
-                                                    writer, and currently
-                                                    working as a back-end
-                                                    developer at Toshiba.
-                                                    However, my side-hobby is to
-                                                    create flashy & dope shits
-                                                    (who doesn't tbh).
-                                                </p>
-                                                <p>
-                                                    This portfolio was made
-                                                    during my lunchbreaks as a
-                                                    method to keep myself fresh.
-                                                </p>
-                                                <br />
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                            </Grid>
-                        </Grid>
+        <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
+          <div className="entry-item">
+            <Grid container>
+              <Grid item sm={12} md={1}></Grid>
+              <Grid
+                item
+                sm={12}
+                md={6}
+                sx={{
+                  height: "100vh",
+                  width: "100%",
+                }}
+              >
+                <div className="relative">
+                  <div className="center-div">
+                    <div>
+                      <div className="display-font s-128 title">Trung. Ha,</div>
+                      <div className="introduction-paragraph">
+                        <p>A freshly graduated code writer, and currently working as a back-end developer at Toshiba. However, my side-hobby is to create flashy & dope shits (who doesn't tbh).</p>
+                        <p>This portfolio was made during my lunchbreaks as a method to keep myself fresh.</p>
+                        <br />
+                      </div>
                     </div>
-                    <div
-                        onMouseLeave={() => trackOnMouseLeave()}
-                        style={{
-                            display: "flex",
-                        }}>
-                        {data.map((image, index) => (
-                            <div
-                                onMouseEnter={() => animateIn(index)}
-                                onMouseLeave={() => animateOut(index)}
-                                onClick={() => handleNavigate(index)}
-                                className="img-container"
-                                id={`image-${index}`}
-                                key={`image-${index}`}>
-                                <img
-                                    preserveAspectRatio="xMidYMid slice"
-                                    id={`image-div-${index}`}
-                                    className="image"
-                                    src={
-                                        `${process.env.PUBLIC_URL}/projects/30_days/day ` +
-                                        image.name +
-                                        `.jpg`
-                                    }
-                                    alt={image.name}
-                                    draggable="false"
-                                />
-                                <div className="title-row">
-                                    <Grid container>
-                                        <Grid item xs={12}>
-                                            [0{index + 1}] - [{data[index].year}
-                                            ]
-                                        </Grid>
-                                        <Grid item xs={12}>
-                                            <div id={`image-title-${index}`}>
-                                                {data[index].title}
-                                            </div>
-                                        </Grid>
-                                    </Grid>
-                                </div>
-                            </div>
-                        ))}
-                    </div>
-
-                    <ContactMe />
+                  </div>
                 </div>
-                {/* <MarqueTrack
+              </Grid>
+            </Grid>
+          </div>
+          <div
+            onMouseLeave={() => trackOnMouseLeave()}
+            style={{
+              display: "flex",
+            }}
+          >
+            {data.map((image, index) => (
+              <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
+                <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
+                <div className="title-row">
+                  <Grid container>
+                    <Grid item xs={12}>
+                      [0{index + 1}] - [{data[index].year}]
+                    </Grid>
+                    <Grid item xs={12}>
+                      <div id={`image-title-${index}`}>{data[index].title}</div>
+                    </Grid>
+                  </Grid>
+                </div>
+              </div>
+            ))}
+          </div>
+
+          <ContactMe />
+        </div>
+        {/* <MarqueTrack
           isReverse={true}
           width={100}
           style={{
             bottom: "85px",
           }}
         /> */}
-            </m.div>
-            <Hidden lgDown={"md"}>
-                <div className="bottom-div">
-                    <Grid container columns={12}>
-                        <Grid
-                            display="flex"
-                            item
-                            xs={12}
-                            sm={3}
-                            justifyContent="space-between">
-                            <div className="ideas-row-text med">
-                                [ <span ref={titlesContainer}>folio. 01</span> ]
-                            </div>
-                        </Grid>
-                        <Grid item xs={12} sm={1}></Grid>
-                        <Grid item xs={12} sm={4}></Grid>
-                        <Grid
-                            display="flex"
-                            justifyContent="space-between"
-                            item
-                            xs={12}
-                            sm={4}>
-                            <div
-                                style={{ zIndex: 10 }}
-                                display={"inline-flex"}
-                                className="ideas-row-text med">
-                                Scroll / Drag
-                            </div>
-                            <div className="arrow-row" id="arrow" ref={arrow}>
-                                <svg
-                                    xmlns="http://www.w3.org/2000/svg"
-                                    viewBox="0 0 421.37 130.81">
-                                    <g id="Layer_2" data-name="Layer 2">
-                                        <g id="Layer_1-2" data-name="Layer 1">
-                                            <path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" />
-                                            <polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" />
-                                        </g>
-                                    </g>
-                                </svg>
-                            </div>
-                            <div
-                                style={{ zIndex: 10 }}
-                                display={"inline-flex"}
-                                className="ideas-row-text med">
-                                Explore
-                            </div>
-                        </Grid>
-                    </Grid>
-                </div>
-            </Hidden>
-        </>
-    );
+      </m.div>
+      <Hidden lgDown={"md"}>
+        <div className="bottom-div">
+          <Grid container columns={12}>
+            <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
+              <div className="ideas-row-text med">
+                [ <span ref={titlesContainer}>folio. 01</span> ]
+              </div>
+            </Grid>
+            <Grid item xs={12} sm={1}></Grid>
+            <Grid item xs={12} sm={4}></Grid>
+            <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
+              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
+                Scroll / Drag
+              </div>
+              <div className="arrow-row" id="arrow" ref={arrow}>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 421.37 130.81">
+                  <g id="Layer_2" data-name="Layer 2">
+                    <g id="Layer_1-2" data-name="Layer 1">
+                      <path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" />
+                      <polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" />
+                    </g>
+                  </g>
+                </svg>
+              </div>
+              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
+                Explore
+              </div>
+            </Grid>
+          </Grid>
+        </div>
+      </Hidden>
+    </>
+  );
 }
 
 const ContactMe = () => {
-    function sendMail() {
-        var link =
-            "mailto:ha.the.trung.1698@gmail.com" +
-            "?cc=ha.the.trung.1698@gmail.com" +
-            "&subject=" +
-            encodeURIComponent("This is my subject") +
-            "&body=" +
-            encodeURIComponent(document.getElementById("myText").value);
-        window.location.href = link;
-    }
+  function sendMail() {
+    var link = "mailto:ha.the.trung.1698@gmail.com" + "?cc=ha.the.trung.1698@gmail.com" + "&subject=" + encodeURIComponent("This is my subject") + "&body=" + encodeURIComponent(document.getElementById("myText").value);
+    window.location.href = link;
+  }
 
-    return (
-        <div className="outro-item">
-            <h1 className="display-font s-64">Let's get in touch.</h1>
-            <p id="myText">Feel free to drop me a line!</p>
+  return (
+    <div className="outro-item">
+      <h1 className="display-font s-64">Let's get in touch.</h1>
+      <p id="myText">Feel free to drop me a line!</p>
 
-            <Grid container>
-                <Grid item sm={12} md={6}>
-                    <p>Hanoi</p>
-                </Grid>
-                <Grid item sm={12} md={3}>
-                    <p>
-                        {new Date().toLocaleString("en-US", {
-                            timeZone: "Asia/Bangkok",
-                        })}
-                    </p>
-                </Grid>
-            </Grid>
-            <br />
-            <Divider
-                sx={{
-                    border: "0.5px solid #d6ff0a",
-                    marginBottom: "20px",
-                }}
-            />
-            <h1 className="display-font s-64">Contact</h1>
-            <Grid container>
-                <Grid item sm={12} md={6} onClick={() => sendMail()}>
-                    <p>ha.the.trung.1698@gmail.com</p>
-                </Grid>
+      <Grid container>
+        <Grid item sm={12} md={6}>
+          <p>Hanoi</p>
+        </Grid>
+        <Grid item sm={12} md={3}>
+          <p>
+            {new Date().toLocaleString("en-US", {
+              timeZone: "Asia/Bangkok",
+            })}
+          </p>
+        </Grid>
+      </Grid>
+      <br />
+      <Divider
+        sx={{
+          border: "0.5px solid #d6ff0a",
+          marginBottom: "20px",
+        }}
+      />
+      <h1 className="display-font s-64">Contact</h1>
+      <Grid container>
+        <Grid item sm={12} md={6} onClick={() => sendMail()}>
+          <p>ha.the.trung.1698@gmail.com</p>
+        </Grid>
 
-                <Grid item sm={12} md={3}>
-                    <p>(+84) 818 16 1998</p>
-                </Grid>
-            </Grid>
-            <br />
-            <Divider
-                sx={{
-                    border: "0.5px solid #d6ff0a",
-                    marginBottom: "20px",
-                }}
-            />
-            <h1 className="display-font s-64">Social</h1>
-            <Grid container>
-                <Grid item sm={12} md={3}>
-                    <p>Facebook</p>
-                </Grid>
-                <Grid item sm={12} md={3}>
-                    <p>GitHub</p>
-                </Grid>
-                <Grid item sm={12} md={3}>
-                    <p>LinkedIn</p>
-                </Grid>
-                <Grid item sm={12} md={3}>
-                    <p>Behance</p>
-                </Grid>
-            </Grid>
-            <div></div>
-        </div>
-    );
+        <Grid item sm={12} md={3}>
+          <p>(+84) 818 16 1998</p>
+        </Grid>
+      </Grid>
+      <br />
+      <Divider
+        sx={{
+          border: "0.5px solid #d6ff0a",
+          marginBottom: "20px",
+        }}
+      />
+      <h1 className="display-font s-64">Social</h1>
+      <Grid container>
+        <Grid item sm={12} md={3}>
+          <p>Facebook</p>
+        </Grid>
+        <Grid item sm={12} md={3}>
+          <p>GitHub</p>
+        </Grid>
+        <Grid item sm={12} md={3}>
+          <p>LinkedIn</p>
+        </Grid>
+        <Grid item sm={12} md={3}>
+          <p>Behance</p>
+        </Grid>
+      </Grid>
+      <div></div>
+    </div>
+  );
 };
