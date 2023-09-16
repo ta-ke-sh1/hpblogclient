@@ -6,7 +6,7 @@ import { motion as m } from "framer-motion";
 import gsap from "gsap";
 import { Divider, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
-import PreloaderAnimation, { usePreloader } from "../animation/preloader";
+import { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
 
 const data = [
@@ -152,7 +152,7 @@ export default function Memories() {
   const handleMouseScroll = (e) => {
     if (!isOnTrack.current) return;
     const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 360;
-    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -10), -90) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
+    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
     updateAbsolutePosition(nextPercentage);
     if (trackContainer.current) {
       trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
@@ -217,7 +217,7 @@ export default function Memories() {
 
       for (const image of trackContainer.current.getElementsByClassName("image")) {
         gsap.to(image, {
-          objectPosition: `${100 + percentage}% center`,
+          objectPosition: `center ${20 + percentage}% `,
           duration: 2,
           ease: "power2.out",
           fill: "forwards",
@@ -273,7 +273,7 @@ export default function Memories() {
           backgroundImage: `url(${process.env.PUBLIC_URL + "/about/cropped.jpg"})`,
         }}
       ></div>
-      <m.div id={"eye-move-area"} onMouseEnter={() => documentOnMouseEnter()} onMouseLeave={() => documentOnMouseLeave()} style={{ overflow: "hidden", height: "100vh", top: 0 }} ref={container}>
+      <m.div className="main-track-container" onMouseEnter={() => documentOnMouseEnter()} onMouseLeave={() => documentOnMouseLeave()} style={{ overflow: "hidden", height: "100vh", top: 0 }} ref={container}>
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
           <div className="entry-item">
             <Grid container>
@@ -341,26 +341,6 @@ export default function Memories() {
             <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
               <div className="ideas-row-text med">
                 [ <span ref={titlesContainer}>folio. 01</span> ]
-              </div>
-            </Grid>
-            <Grid item xs={12} sm={1}></Grid>
-            <Grid item xs={12} sm={4}></Grid>
-            <Grid display="flex" justifyContent="space-between" item xs={12} sm={4}>
-              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
-                Scroll / Drag
-              </div>
-              <div className="arrow-row" id="arrow" ref={arrow}>
-                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 421.37 130.81">
-                  <g id="Layer_2" data-name="Layer 2">
-                    <g id="Layer_1-2" data-name="Layer 1">
-                      <path d="M0,68.91H408l-57,57,4.95,5,65.41-65.4L356,0,351,5l57,57H0m0,0v7" />
-                      <polygon points="351.01 4.95 351.01 4.95 351.01 4.95 351.01 4.95" />
-                    </g>
-                  </g>
-                </svg>
-              </div>
-              <div style={{ zIndex: 10 }} display={"inline-flex"} className="ideas-row-text med">
-                Explore
               </div>
             </Grid>
           </Grid>

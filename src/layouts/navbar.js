@@ -70,19 +70,20 @@ export default function MenuOverlay() {
       y: "-100%",
       duration: 0,
       opacity: 0,
-      delay: 0.7,
+      delay: 1,
       ease: ease,
     });
 
     gsap.to(navBg.current, {
       opacity: 0,
-      duration: 0.7,
+      duration: 1,
       ease: ease,
     });
 
     gsap.to(navContent.current, {
       y: "-100%",
-      duration: 0.5,
+      delay: 0.1,
+      duration: 0.9,
       ease: ease,
     });
   }
