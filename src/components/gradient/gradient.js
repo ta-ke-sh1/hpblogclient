@@ -1,14 +1,14 @@
-import React from "react"
+import React from "react";
 
 export default function GradientMap(props) {
-
-    return (
-        <div className="entrance-image" style={{
-
-        }}>
-            <div className="isolate">
-                <div className="overlay"></div>
-            </div>
-        </div>
-    )
+  return (
+    <div className="entrance-image">
+      {/* <video
+                className="overlay"
+                src={`${process.env.PUBLIC_URL + "/about/vid.mp4"}`}
+                autoPlay
+                loop></video> */}
+      <img className="overlay" src={`${process.env.PUBLIC_URL + "/about/legend.gif"}`} />
+    </div>
+  );
 }

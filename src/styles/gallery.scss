@@ -23,7 +23,7 @@
 	position: absolute;
 	left: 50%;
 	top: 50%;
-	transform: translate(-50%, -50%);
+	transform: translate(0%, -50%);
 	user-select: none;
 }
 
@@ -204,7 +204,40 @@
 .overlay {
 	position: absolute;
 	top: 0;
-	width: 100%;
 	height: 100%;
-	background: linear-gradient(30deg, #338CAE, #FD9878, #FFCF66);
+	width: 100%;
+	object-fit: cover;
+}
+
+.main-mobile-container {
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	overflow: hidden;
+
+	.img-mobile-card {
+		width: 100%;
+		height: 100%;
+		position: relative;
+		background-size: cover;
+		background-position: center
+
+		
+	}
+}
+
+.mobile-image {
+	height: 100%;
+	width: 100%;
+	object-fit: cover;
+}
+
+.mobile-content{
+	position: absolute;
+	left: 0;
+	top: 0;
+	height: 100%;
+	width: 100%;
 }

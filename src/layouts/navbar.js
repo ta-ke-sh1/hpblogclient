@@ -25,23 +25,8 @@ export default function MenuOverlay() {
   const navBg = useRef(null);
 
   useEffect(() => {
-    initListener();
-    gsap.to(containerRef.current, {
-      opacity: window.innerWidth < 800 ? 0 : 1,
-      duration: 0,
-    });
-
-    closeNav()
+    closeNav();
   }, []);
-
-  const initListener = () => {
-    window.addEventListener("resize", () => {
-      gsap.to(containerRef.current, {
-        opacity: window.innerWidth < 800 ? 0 : 1,
-        duration: 0.5,
-      });
-    });
-  };
 
   const openNav = () => {
     gsap.to(navMenu.current, {
@@ -63,7 +48,7 @@ export default function MenuOverlay() {
       duration: 1,
       ease: ease,
     });
-  }
+  };
 
   const closeNav = () => {
     gsap.to(navMenu.current, {
@@ -86,7 +71,7 @@ export default function MenuOverlay() {
       duration: 0.9,
       ease: ease,
     });
-  }
+  };
 
   const handlePageChange = () => {
     console.log(window.location.href);
@@ -103,10 +88,10 @@ export default function MenuOverlay() {
   const toggleOpen = () => {
     if (isOpen) {
       // close
-      closeNav()
+      closeNav();
     } else {
       // open
-      openNav()
+      openNav();
     }
     setOpen(!isOpen);
   };
@@ -117,15 +102,12 @@ export default function MenuOverlay() {
         <div ref={containerRef}>
           <m.div ref={burgerRef} animate={isOpen ? "open" : "closed"}>
             <Grid container columns={12}>
-              <Grid item xs={12} sm={2}>
+              <Grid item xs={12} sm={4}>
                 <Link style={{ textDecoration: "none" }} onClick={() => handlePageChange()} className="nav-link">
                   <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
                     [ Trung. ]
                   </div>
                 </Link>
-              </Grid>
-              <Grid item xs={12} sm={2}>
-                <div className="nav-item med" style={{ zIndex: 10, color: "black" }}></div>
               </Grid>
               <Grid item xs={12} sm={2}>
                 {/* <Link style={{ textDecoration: "none" }} to={"/about"} className="nav-link">
@@ -143,7 +125,7 @@ export default function MenuOverlay() {
               <div className="nav-content" ref={navContent}>
                 <NavigationContent />
               </div>
-              <div className="nav-background" ref={navBg} onClick={() => toggleOpen()} ></div>
+              <div className="nav-background" ref={navBg} onClick={() => toggleOpen()}></div>
             </div>
             <MenuToggle onClick={toggle} toggle={() => toggleOpen()} />
           </m.div>

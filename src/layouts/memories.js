@@ -8,6 +8,8 @@ import { Divider, Grid, Box } from "@mui/material";
 import { useNavigate } from "react-router-dom";
 import { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
+import { useDimensions } from "../hooks/useDimensions";
+import MobileMain from "./mobile/mainMobile";
 
 const data = [
   {
@@ -66,22 +68,21 @@ export default function Memories() {
   const isOnTrack = useRef(false);
   const [isTransitioning, setTransitioning] = useState(false);
 
-  const [item, setItem] = useState([]);
-
   const titlesContainer = useRef(null);
   const yearContainer = useRef(null);
 
-  const min_left = useRef(5);
-  const max_right = 100 - min_left.current;
+  const { height, width } = useDimensions();
 
   useLayoutEffect(() => {
     setTimeout(() => {
       preloader.tl.play();
     }, 1500);
 
+    console.log(height);
+    console.log(width);
+
     initListeners();
-    const images = document.querySelectorAll(`.image`);
-    initBorders(images);
+    initBorders();
     const items = document.querySelectorAll(`.overflow-text`);
     initLineBorder(items);
 
@@ -95,7 +96,7 @@ export default function Memories() {
     initEye();
   }, [isOnTrack]);
 
-  const initEye = () => { };
+  const initEye = () => {};
 
   const documentOnMouseEnter = () => {
     isOnTrack.current = true;
@@ -106,19 +107,11 @@ export default function Memories() {
     }
   };
 
-  const initBorders = (items) => {
-    if (window.innerWidth < 800) {
-      gsap.to(trackContainer.current, {
-        transform: `translate(${-min_left}%, -50%)`,
-        duration: 0,
-      });
-    } else {
-      gsap.to(trackContainer.current, {
-        transform: `translate(-${min_left.current}%, -50%)`,
-        duration: 0,
-      });
-    }
-    setItem(items);
+  const initBorders = () => {
+    gsap.to(trackContainer.current, {
+      transform: `translate(0%, -50%)`,
+      duration: 0,
+    });
   };
 
   const initLineBorder = (items) => {
@@ -131,13 +124,15 @@ export default function Memories() {
   };
 
   const initListeners = () => {
-    container.current.onmousemove = (e) => handleMouseMove(e);
-    container.current.onmousedown = (e) => handleMouseDown(e);
-    container.current.onmouseup = () => handleOnUp();
+    if (container.current) {
+      container.current.onmousemove = (e) => handleMouseMove(e);
+      container.current.onmousedown = (e) => handleMouseDown(e);
+      container.current.onmouseup = () => handleOnUp();
 
-    container.current.addEventListener("mousewheel", (e) => {
-      handleMouseScroll(e);
-    });
+      container.current.addEventListener("mousewheel", (e) => {
+        handleMouseScroll(e);
+      });
+    }
 
     window.addEventListener("resize", () => {
       window.location.reload();
@@ -152,7 +147,7 @@ export default function Memories() {
   const handleMouseScroll = (e) => {
     if (!isOnTrack.current) return;
     const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + e.wheelDelta / 360;
-    const nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
+    const nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
     updateAbsolutePosition(nextPercentage);
     if (trackContainer.current) {
       trackContainer.current.setAttribute("data-prev-percentage", parseFloat(trackContainer.current.getAttribute("data-percentage")));
@@ -196,10 +191,10 @@ export default function Memories() {
     if (trackContainer.current) {
       if (trackContainer.current.getAttribute("data-mouse-down-at") === "0") return;
       const mouseDelta = parseFloat(trackContainer.current.getAttribute("data-mouse-down-at")) - e.clientX,
-        maxDelta = window.innerWidth / 2;
-      const percentage = (mouseDelta / maxDelta) * -min_left.current;
+        maxDelta = window.innerWidth * 4;
+      const percentage = (mouseDelta / maxDelta) * -100;
       const nextPercentageUnconstrained = parseFloat(trackContainer.current.getAttribute("data-prev-percentage")) + percentage,
-        nextPercentage = window.innerWidth < 1000 ? Math.max(Math.min(nextPercentageUnconstrained, -20), -80) : Math.max(Math.min(nextPercentageUnconstrained, -min_left.current), -max_right);
+        nextPercentage = Math.max(Math.min(nextPercentageUnconstrained, 0), -100);
       updateAbsolutePosition(nextPercentage);
     }
   };
@@ -214,39 +209,18 @@ export default function Memories() {
         ease: "power2.out",
         fill: "forwards",
       });
-
-      for (const image of trackContainer.current.getElementsByClassName("image")) {
-        gsap.to(image, {
-          objectPosition: `center ${20 + percentage}% `,
-          duration: 2,
-          ease: "power2.out",
-          fill: "forwards",
-        });
-      }
     }
   };
 
   const animateIn = (index) => {
     if (isMouseDown) return;
-    var image = document.getElementById(`image-div-${index}`);
     let title = document.getElementById(`image-title-${index}`);
-
-    gsap.to(image, {
-      duration: 2,
-    });
-
     textShuffle(title, data[index].title, null, 40, 2);
   };
 
   const animateOut = (index) => {
     if (isMouseDown) return;
-
-    var image = document.getElementById(`image-div-${index}`);
     let title = document.getElementById(`image-title-${index}`);
-    gsap.to(image, {
-      duration: 2,
-    });
-
     textShuffle(title, data[index].title, null, 40, 2);
   };
 
@@ -263,8 +237,7 @@ export default function Memories() {
 
     setTransitioning(false);
   };
-
-  return (
+  return width > 800 ? (
     <>
       <GradientMap />
       <div
@@ -335,7 +308,7 @@ export default function Memories() {
           }}
         /> */}
       </m.div>
-      <Box sx={{ display: { xs: 'none', md: 'block' } }}>
+      <Box sx={{ display: { xs: "none", md: "block" } }}>
         <div className="bottom-div">
           <Grid container columns={12}>
             <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
@@ -346,6 +319,10 @@ export default function Memories() {
           </Grid>
         </div>
       </Box>
+    </>
+  ) : (
+    <>
+      <MobileMain />
     </>
   );
 }

@@ -9,9 +9,11 @@ import { Routes, Route, useLocation } from "react-router-dom";
 import AboutMe from "../../layouts/aboutMe";
 import StoryCard from "../card/storyCard";
 import Story from "../../views/about/story";
+import { useDimensions } from "../../hooks/useDimensions";
 
 export default function AnimatedRoute() {
   const location = useLocation();
+
   return (
     <AnimatePresence initial={false} mode={"wait"}>
       <Routes location={location} key={location.pathname}>
