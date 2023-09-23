@@ -3,6 +3,7 @@ import { usePreloader } from "../../animation/preloader";
 import { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { cursorNormal } from "../../utils/utils";
+import GradientMap from "../../components/gradient/gradient";
 
 export default function MobileMain() {
   const data = [
@@ -67,7 +68,12 @@ export default function MobileMain() {
   return (
     <>
       <div className="main-mobile-container">
-        {data.map((image, index) => (
+        <div className="img-mobile-card">
+          <img
+            className="overlay"
+            src={`${process.env.PUBLIC_URL + "/about/legend.gif"}`}></img>
+        </div>
+        {/* {data.map((image, index) => (
           <div className="img-mobile-card" onClick={() => handleNavigate(index)} id={`image-${index}`} key={`image-${index}`}>
             <div className="mobile-content">
               <div>
@@ -77,7 +83,7 @@ export default function MobileMain() {
             </div>
             <img id={`image-div-${index}`} className="mobile-image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
           </div>
-        ))}
+        ))} */}
       </div>
     </>
   );

@@ -3,11 +3,9 @@ import React from "react";
 export default function GradientMap(props) {
   return (
     <div className="entrance-image">
-      <video
+      <img
         className="overlay"
-        src={`${process.env.PUBLIC_URL + "/about/vid.mp4"}`}
-        autoPlay
-        loop></video>
+        src={`${process.env.PUBLIC_URL + "/about/legend.gif"}`}></img>
     </div>
   );
 }
