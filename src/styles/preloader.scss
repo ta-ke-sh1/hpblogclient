@@ -9,24 +9,28 @@
 }
 
 #first-slide {
-    background-color: black;
+    background-color: #ebebeb;
     z-index: 1000;
+    position: fixed;
 }
 
 #second-slide {
     background-color: #338CAE;
     z-index: 999;
+    position: fixed;
 }
 
 
 #third-slide {
     background-color: #FD9878;
     z-index: 998;
+    position: fixed;
 }
 
 #fourth-slide {
     background-color: #FFCF66;
     z-index: 997;
+    position: fixed;
 }
 
 .text-loading {
@@ -44,5 +48,5 @@
     left: 60px;
     font-size: 3rem;
     z-index: 1001;
-    color: white;
+    color: black;
 }

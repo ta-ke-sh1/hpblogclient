@@ -104,7 +104,7 @@ export default function MenuOverlay() {
             <Grid container columns={12}>
               <Grid item xs={12} sm={4}>
                 <Link style={{ textDecoration: "none" }} onClick={() => handlePageChange()} className="nav-link">
-                  <div className="nav-item med" style={{ zIndex: 10, color: "black" }}>
+                  <div className="nav-item med" style={{ zIndex: 10 }}>
                     [ Trung. ]
                   </div>
                 </Link>
@@ -140,10 +140,10 @@ const NavigationContent = () => {
     <div className="content-container">
       <h1 className="display-font s-64">Adios</h1>
       <Grid container>
-        <Grid item sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <p>Hanoi</p>
         </Grid>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>
             {new Date().toLocaleString("en-US", {
               timeZone: "Asia/Bangkok",
@@ -160,11 +160,11 @@ const NavigationContent = () => {
       />
       <h1 className="display-font s-64">Contact</h1>
       <Grid container>
-        <Grid item sm={12} md={6}>
+        <Grid item xs={12} sm={12} md={6}>
           <p>ha.the.trung.1698@gmail.com</p>
         </Grid>
 
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>(+84) 818 16 1998</p>
         </Grid>
       </Grid>
@@ -177,16 +177,16 @@ const NavigationContent = () => {
       />
       <h1 className="display-font s-64">Social</h1>
       <Grid container>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>Facebook</p>
         </Grid>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>GitHub</p>
         </Grid>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>LinkedIn</p>
         </Grid>
-        <Grid item sm={12} md={3}>
+        <Grid item xs={12} sm={12} md={3}>
           <p>Behance</p>
         </Grid>
       </Grid>

@@ -8,9 +8,10 @@ export default function BlogDetails({ props }) {
   const main = useRef(null);
 
   const data = {
-    title: "White Collection",
-    date: "Aug, 2018",
-    description: "A set of illustration",
+    title: "30 Days",
+    date: "Aug, 2022",
+    description: "A set of illustration for 30 days",
+    tags: ["Illustration", "Poster Design"],
   };
 
   useEffect(() => {
@@ -37,26 +38,39 @@ export default function BlogDetails({ props }) {
         style={{
           backgroundSize: "cover",
           backgroundPosition: "top",
-          backgroundImage: `url(https://images.pexels.com/photos/18249749/pexels-photo-18249749/free-photo-of-dawn-landscape-sunset-man.jpeg)`,
+          backgroundImage: `url(${process.env.PUBLIC_URL}/gradients/4.jpg)`,
         }}
       >
+        <div className="details-title">
+          <h1
+            className="s-128 display"
+            style={{
+              lineHeight: "6.25rem",
+            }}
+          >
+            {data.title}
+          </h1>
+          <p>[ {data.description} ]</p>
+          <p className="chips-container">
+            {data.tags.map((chip) => (
+              <Chip title={chip} variant="outlined" />
+            ))}
+          </p>
+        </div>
         <Grid container columns={12}>
-          <Grid item xs={12} sm={8}></Grid>
-          <Grid item xs={12} sm={3}>
-            <h1
-              className="s-128 display"
-              style={{
-                lineHeight: "6.75rem",
-              }}
-            >
-              {data.title}
-            </h1>
-            <p>{data.date}</p>
-            <p>{data.description}</p>
-          </Grid>
-          <Grid item xs={12} sm={1}></Grid>
+          <Grid item xs={12} sm={2}></Grid>
+          <Grid item xs={12} sm={4}></Grid>
+          <Grid item xs={12} sm={6}></Grid>
         </Grid>
       </div>
     </div>
   );
 }
+
+const Chip = (props) => {
+  return (
+    <div className={"chip " + props.variant} style={{ ...props.sx }}>
+      <div className="chip-content"> {props.title}</div>
+    </div>
+  );
+};

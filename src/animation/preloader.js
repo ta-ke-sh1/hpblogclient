@@ -45,9 +45,9 @@ export function PreloaderWrapper({ children }) {
       ease: "power2",
     })
     .to(titleText.current, {
-      delay: -1.5,
+      delay: -2.2,
       opacity: 0,
-      duration: 1,
+      duration: 0.4,
       ease: "power2",
     });
 

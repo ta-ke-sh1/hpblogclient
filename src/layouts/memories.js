@@ -13,19 +13,19 @@ import MobileMain from "./mobile/mainMobile";
 
 const data = [
   {
-    name: "30",
+    name: "1",
     id: "3Y5469EzyslVhGUIITI6",
     title: "Ftnss Trckr",
     year: "2023",
   },
   {
-    name: "28",
+    name: "2",
     id: "9TIrW5pqtfC9cIKcG5fu",
     title: "expnse trckr",
     year: "2022",
   },
   {
-    name: "26",
+    name: "3",
     id: "PwGLWPa4pgnw1rPS0i1t",
     title: "30 Days Poster",
     year: "2022",
@@ -39,11 +39,11 @@ const data = [
   {
     name: "5",
     id: "SSRFGiddYEQKjXtvLcJG",
-    title: "Secret Society",
-    year: "2019",
+    title: "Soft Love Collection",
+    year: "2018",
   },
   {
-    name: "24",
+    name: "6",
     id: "SeteUHhdR8xQCoq7wCOX",
     title: "White Collection",
     year: "2018",
@@ -283,7 +283,7 @@ export default function Memories() {
           >
             {data.map((image, index) => (
               <div onMouseEnter={() => animateIn(index)} onMouseLeave={() => animateOut(index)} onClick={() => handleNavigate(index)} className="img-container" id={`image-${index}`} key={`image-${index}`}>
-                <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/projects/30_days/day ` + image.name + `.jpg`} alt={image.name} draggable="false" />
+                <img preserveAspectRatio="xMidYMid slice" id={`image-div-${index}`} className="image" src={`${process.env.PUBLIC_URL}/gradients/` + image.name + `.jpg`} alt={image.name} draggable="false" />
                 <div className="title-row">
                   <Grid container>
                     <Grid item xs={12}>

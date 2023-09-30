@@ -108,6 +108,50 @@
 }
 
 .blog-details{
-	padding-top: 30vh;
-	color: white
+	color: white;
+
+	.details-title{
+		padding: 20px 30px;
+		width: 100vw;
+		bottom: 0;
+		word-break: initial;
+		position: fixed;
+		left: 50%;
+		transform: translateX(-50%);
+	}
+}
+
+.chips-container {
+	display: flex;
+
+	.chip {
+		margin-right: 10px;
+		border-radius: 30px;
+		transition-duration: 0.4s;
+
+		.chip-content{
+			padding: 10px 20px;
+			word-break: initial;
+		}
+	}
+
+	.outlined {
+		border: 1px solid white;
+		color: white;
+		
+		&:hover {
+			background-color: white;
+			color: black;
+		}
+	}
+
+	.filled {
+		background-color: white;
+		color: black;
+
+		&:hover {
+			background-color: black;
+			color: white;
+		}
+	}
 }

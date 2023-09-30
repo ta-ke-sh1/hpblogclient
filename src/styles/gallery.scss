@@ -16,7 +16,7 @@
 }
 
 .image-track {
-	background-color: #f8f8f8;
+	background-color: #141414;;
 	height: 100%;
 	align-items: center;
 	display: flex;
@@ -214,28 +214,87 @@
 	left: 0;
 	top: 0;
 	width: 100vw;
-	height: 100vh;
-	overflow: hidden;
 
 	.img-mobile-card {
 		width: 100%;
-		height: 100%;
+		height: 100vh;
 		position: relative;
 		background-size: cover;
-		background-position: center
+		background-position: center;
+
+		.title {
+			padding: 30px;
+			color: white;
+			position: absolute;
+			left: 0; 
+			bottom: 10px;
+
+			.main-title{
+				line-height: 142px;
+			}
+		}
+	}
+
+	.projects {
+		padding: 0px 30px;
+		left: 0;
+		bottom: 0;
+		width: 100%;
+
+		.project-item{
+			position: relative;
+			display: flex;
+			height: 300px;
+			width: 100%;
+			margin-bottom: 40px;
+			
+			.image{
+				border-radius: 5px;
+				position: absolute;
+				left: 0;
+				top: 0;
+				height: 100%;
+				width: 100%;
+				z-index: -1;
+				object-fit: cover;
+			}
+
+			.project-item-title{
+				position: absolute;
+				left: 20px;
+				bottom: 10px;
+			}
+
+			.project-item-index{
+				position: absolute;
+				top: 15px;
+				right: 15px;
+			}
+		}
 	}
 }
 
 .mobile-image {
-	height: 100%;
-	width: 100%;
 	object-fit: cover;
+	transform: rotate(15px);
+	position: absolute;
+	left: 0;
+	top: 0;
+	width: 100vw;
+	height: 100vh;
+	z-index: -1;
+	mask-image: linear-gradient(to top,rgba(255, 255, 255, 0), rgb(255, 255, 255, 1), rgba(255, 255, 255, 0));
 }
 
-.mobile-content {
-	position: absolute;
+.mobile-content{
 	left: 0;
 	top: 0;
 	height: 100%;
 	width: 100%;
+}
+
+.contact-content{
+	left: 0;
+	bottom: 0;
+	position: absolute;
 }
