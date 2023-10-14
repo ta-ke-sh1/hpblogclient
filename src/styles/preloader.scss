@@ -5,7 +5,7 @@
 
     color: white;
     width: 100%;
-    height: 105vh;
+    height: 105vh
 }
 
 #first-slide {
@@ -35,8 +35,7 @@
 
 .text-loading {
     position: absolute;
-    right: 60px;
-    bottom: 60px;
+    
     font-size: 2.5rem;
     z-index: 1001;
     color: white;
@@ -44,8 +43,9 @@
 
 .text-title {
     position: absolute;
-    bottom: 60px;
-    left: 60px;
+    left: 50%;
+    top:50%;
+    transform: translate(-50%, -50%);
     font-size: 3rem;
     z-index: 1001;
     color: black;

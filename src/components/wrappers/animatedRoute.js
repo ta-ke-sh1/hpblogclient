@@ -10,6 +10,7 @@ import AboutMe from "../../layouts/aboutMe";
 import StoryCard from "../card/storyCard";
 import Story from "../../views/about/story";
 import { useDimensions } from "../../hooks/useDimensions";
+import VerticalMarqueTrack from "../marques/vertical";
 
 export default function AnimatedRoute() {
   const location = useLocation();
@@ -24,22 +25,9 @@ export default function AnimatedRoute() {
         <Route
           path="/testCard"
           element={
-            <StoryCard
-              className={"draggable"}
-              key={"111"}
-              id={"111"}
-              pos={{ x: 500, y: 200 }}
-              children={
-                <>
-                  <Story />
-                  <Story />
-                  <Story />
-                </>
-              }
-              title={"Testing"}
-              width={35}
-              height={100}
-            />
+            <>
+              <VerticalMarqueTrack />
+            </>
           }
         ></Route>
         <Route path="/project/:id" errorElement={<ErrorPage />} element={<BlogDetails />} />

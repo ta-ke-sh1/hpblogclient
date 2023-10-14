@@ -118,7 +118,6 @@
 }
 
 .marque-track {
-	position: fixed;
 	background-color: #d6ff0a;
 	height: 100px;
 	overflow: hidden;
@@ -127,9 +126,25 @@
 	z-index: 100;
 }
 
+.vertical-marquee {
+	background-color: #d6ff0a;
+	height: 100vh;
+	overflow: hidden;
+	width: 90px;
+	z-index: 100;
+}
+
 .svg-box {
+	width: fit-content;
 	position: absolute;
+}
+
+.horizontal-item {
 	padding-right: 20px;
+}
+
+.vertical-item{
+	padding-bottom: 40px;
 }
 
 #eye-move-area::-webkit-scrollbar {

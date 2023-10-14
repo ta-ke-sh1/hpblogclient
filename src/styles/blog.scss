@@ -111,13 +111,35 @@
 	color: white;
 
 	.details-title{
+		position: relative;
 		padding: 20px 30px;
-		width: 100vw;
-		bottom: 0;
 		word-break: initial;
+		height: 100vh;
+
+		.title-container{
+			width: fit-content;
+			position: absolute;
+			left: 30px;
+			bottom: 30px;
+		}
+	
+	}
+
+	.details-thumbnails{
 		position: fixed;
-		left: 50%;
-		transform: translateX(-50%);
+		bottom: 0;
+		right: 0;
+		padding: 20px 30px;
+
+		.slider {
+			position: relative;
+			width: 50vw;
+			height: 100%;
+
+			.slider-track{
+				position: absolute;
+			}
+		}
 	}
 }
 
@@ -153,5 +175,22 @@
 			background-color: black;
 			color: white;
 		}
+	}
+}
+
+.showcase-container{
+	width: 100%;
+	margin-top: 100vh;
+	padding: 100px 12.5vw;
+	background: none;
+	 
+	.grid-item{
+		margin-bottom: 20px;
+		max-width: 100%;
+	}
+
+	.img-div{
+		width: 90%;
+		height: auto;
 	}
 }

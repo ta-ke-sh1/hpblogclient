@@ -78,7 +78,7 @@ export function PreloaderWrapper({ children }) {
         <div className="preloader" id="third-slide" ref={preloader_3}></div>
         <div className="preloader" id="fourth-slide" ref={preloader_4}></div>
         <div ref={titleText} className="text-title display">
-          Folio. 01
+          space. <span className="reg">01</span>
         </div>
       </>
       {children}

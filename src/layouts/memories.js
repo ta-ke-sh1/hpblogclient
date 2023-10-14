@@ -10,6 +10,8 @@ import { usePreloader } from "../animation/preloader";
 import GradientMap from "../components/gradient/gradient";
 import { useDimensions } from "../hooks/useDimensions";
 import MobileMain from "./mobile/mainMobile";
+import MarqueTrack from "../components/marques/Marque";
+import VerticalMarqueTrack from "../components/marques/vertical";
 
 const data = [
   {
@@ -29,12 +31,6 @@ const data = [
     id: "PwGLWPa4pgnw1rPS0i1t",
     title: "30 Days Poster",
     year: "2022",
-  },
-  {
-    name: "4",
-    id: "9TIrW5pqtfC9cIKcG5fu",
-    title: "Snkr E-commerce",
-    year: "2020",
   },
   {
     name: "5",
@@ -62,14 +58,12 @@ export default function Memories() {
   const navigate = useNavigate();
   const trackContainer = useRef(null);
   const container = useRef(null);
-  const arrow = useRef(null);
 
   const [isMouseDown, setMouseDown] = useState(false);
   const isOnTrack = useRef(false);
   const [isTransitioning, setTransitioning] = useState(false);
 
   const titlesContainer = useRef(null);
-  const yearContainer = useRef(null);
 
   const { height, width } = useDimensions();
 
@@ -154,14 +148,7 @@ export default function Memories() {
     }
   };
 
-  const trackOnMouseLeave = () => {
-    if (titlesContainer.current) {
-      if (titlesContainer.current.innerHTML !== "folio. 01") {
-        textShuffle(titlesContainer.current, "folio. 01", null, 20);
-        textShuffle(yearContainer.current, "2023", null, 100);
-      }
-    }
-  };
+  const trackOnMouseLeave = () => {};
 
   const documentOnMouseLeave = () => {
     isOnTrack.current = false;
@@ -248,22 +235,40 @@ export default function Memories() {
       ></div>
       <m.div className="main-track-container" onMouseEnter={() => documentOnMouseEnter()} onMouseLeave={() => documentOnMouseLeave()} style={{ overflow: "hidden", height: "100vh", top: 0 }} ref={container}>
         <div className="image-track" ref={trackContainer} id="memory-track" data-mouse-down-at="0" data-prev-percentage="0" data-percentage="0" onMouseUp={() => handleOnUp()}>
-          <div className="entry-item">
+          <div
+            className="entry-item"
+            style={{
+              width: "80vw",
+            }}
+          >
             <Grid container>
               <Grid item sm={12} md={1}></Grid>
-              <Grid
-                item
-                sm={12}
-                md={6}
-                sx={{
-                  height: "100vh",
-                  width: "100%",
-                }}
-              >
+              <Grid item sm={12} md={8}>
                 <div className="relative">
                   <div className="center-div">
                     <div>
-                      <div className="display-font s-128 title">Trung. Ha,</div>
+                      <div className="display-font s-128 title">Xin chào!</div>
+                      <div className="introduction-paragraph">
+                        <p>Welcome to Space. 01, I'm Trung Ha.</p>
+                        <p>This is my personal space, portfolio and first ever launched product.</p>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </Grid>
+              <Grid item sm={12} md={1}></Grid>
+              <Grid item sm={12} md={2}>
+                <VerticalMarqueTrack isReverse={true} _svg={0} />
+              </Grid>
+            </Grid>
+          </div>
+          <div className="entry-item" style={{ marginRight: "100px", width: "80vw" }}>
+            <Grid container spacing={4}>
+              <Grid item sm={12} md={1}></Grid>
+              <Grid item sm={12} md={10}>
+                <div className="relative">
+                  <div className="center-div">
+                    <div>
                       <div className="introduction-paragraph">
                         <p>A freshly graduated code writer, and currently working as a back-end developer at Toshiba. However, my side-hobby is to create flashy & dope shits (who doesn't tbh).</p>
                         <p>This portfolio was made during my lunchbreaks as a method to keep myself fresh.</p>
@@ -273,6 +278,7 @@ export default function Memories() {
                   </div>
                 </div>
               </Grid>
+              <Grid item sm={12} md={1}></Grid>
             </Grid>
           </div>
           <div
@@ -297,23 +303,15 @@ export default function Memories() {
               </div>
             ))}
           </div>
-
           <ContactMe />
         </div>
-        {/* <MarqueTrack
-          isReverse={true}
-          width={100}
-          style={{
-            bottom: "85px",
-          }}
-        /> */}
       </m.div>
       <Box sx={{ display: { xs: "none", md: "block" } }}>
         <div className="bottom-div">
           <Grid container columns={12}>
             <Grid display="flex" item xs={12} sm={3} justifyContent="space-between">
               <div className="ideas-row-text med">
-                [ <span ref={titlesContainer}>folio. 01</span> ]
+                [ <span ref={titlesContainer}>space. 01</span> ]
               </div>
             </Grid>
           </Grid>
@@ -335,61 +333,68 @@ const ContactMe = () => {
 
   return (
     <div className="outro-item">
-      <h1 className="display-font s-64">Let's get in touch.</h1>
-      <p id="myText">Feel free to drop me a line!</p>
-
       <Grid container>
+        <Grid item sm={12} md={6}></Grid>
         <Grid item sm={12} md={6}>
-          <p>Hanoi</p>
-        </Grid>
-        <Grid item sm={12} md={3}>
-          <p>
-            {new Date().toLocaleString("en-US", {
-              timeZone: "Asia/Bangkok",
-            })}
-          </p>
-        </Grid>
-      </Grid>
-      <br />
-      <Divider
-        sx={{
-          border: "0.5px solid #d6ff0a",
-          marginBottom: "20px",
-        }}
-      />
-      <h1 className="display-font s-64">Contact</h1>
-      <Grid container>
-        <Grid item sm={12} md={6} onClick={() => sendMail()}>
-          <p>ha.the.trung.1698@gmail.com</p>
-        </Grid>
+          <Grid container>
+            <h1 className="display-font s-64">Let's get in touch.</h1>
+            <p id="myText">Feel free to drop me a line!</p>
+            <Grid container>
+              <Grid item sm={12} md={6}></Grid>
+              <Grid item sm={12} md={6}></Grid>
+              <Grid item sm={12} md={6}>
+                <p>Hanoi</p>
+              </Grid>
+              <Grid item sm={12} md={3}>
+                <p>
+                  {new Date().toLocaleString("en-US", {
+                    timeZone: "Asia/Bangkok",
+                  })}
+                </p>
+              </Grid>
+            </Grid>
+            <br />
+            <Divider
+              sx={{
+                border: "0.5px solid #d6ff0a",
+                marginBottom: "20px",
+              }}
+            />
+            <h1 className="display-font s-64">Contact</h1>
+            <Grid container>
+              <Grid item sm={12} md={6} onClick={() => sendMail()}>
+                <p>ha.the.trung.1698@gmail.com</p>
+              </Grid>
 
-        <Grid item sm={12} md={3}>
-          <p>(+84) 818 16 1998</p>
+              <Grid item sm={12} md={3}>
+                <p>(+84) 818 16 1998</p>
+              </Grid>
+            </Grid>
+            <br />
+            <Divider
+              sx={{
+                border: "0.5px solid #d6ff0a",
+                marginBottom: "20px",
+              }}
+            />
+            <h1 className="display-font s-64">Social</h1>
+            <Grid container>
+              <Grid item sm={12} md={3}>
+                <p>Facebook</p>
+              </Grid>
+              <Grid item sm={12} md={3}>
+                <p>GitHub</p>
+              </Grid>
+              <Grid item sm={12} md={3}>
+                <p>LinkedIn</p>
+              </Grid>
+              <Grid item sm={12} md={3}>
+                <p>Behance</p>
+              </Grid>
+            </Grid>
+          </Grid>
         </Grid>
       </Grid>
-      <br />
-      <Divider
-        sx={{
-          border: "0.5px solid #d6ff0a",
-          marginBottom: "20px",
-        }}
-      />
-      <h1 className="display-font s-64">Social</h1>
-      <Grid container>
-        <Grid item sm={12} md={3}>
-          <p>Facebook</p>
-        </Grid>
-        <Grid item sm={12} md={3}>
-          <p>GitHub</p>
-        </Grid>
-        <Grid item sm={12} md={3}>
-          <p>LinkedIn</p>
-        </Grid>
-        <Grid item sm={12} md={3}>
-          <p>Behance</p>
-        </Grid>
-      </Grid>
-      <div></div>
     </div>
   );
 };

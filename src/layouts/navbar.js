@@ -104,7 +104,7 @@ export default function MenuOverlay() {
             <Grid container columns={12}>
               <Grid item xs={12} sm={4}>
                 <Link style={{ textDecoration: "none" }} onClick={() => handlePageChange()} className="nav-link">
-                  <div className="nav-item med" style={{ zIndex: 10 }}>
+                  <div className="nav-item med nav-btn" style={{ zIndex: 10 }}>
                     [ Trung. ]
                   </div>
                 </Link>
