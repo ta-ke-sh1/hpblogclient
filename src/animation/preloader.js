@@ -72,7 +72,11 @@ export function PreloaderWrapper({ children }) {
 
   return (
     <Preloader.Provider value={value}>
-      <>
+      <div
+        style={{
+          opacity: 0,
+        }}
+      >
         <div className="preloader" id="first-slide" ref={preloader}></div>
         <div className="preloader" id="second-slide" ref={preloader_2}></div>
         <div className="preloader" id="third-slide" ref={preloader_3}></div>
@@ -80,7 +84,7 @@ export function PreloaderWrapper({ children }) {
         <div ref={titleText} className="text-title display">
           space. <span className="reg">01</span>
         </div>
-      </>
+      </div>
       {children}
     </Preloader.Provider>
   );

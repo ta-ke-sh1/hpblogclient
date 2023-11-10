@@ -14,6 +14,11 @@
 }
 
 @font-face {
+	font-family: "serif-italic-text";
+	src: url("./fonts/CotfordTextItalic.otf") format("opentype");
+}
+
+@font-face {
 	font-family: "display-text";
 	src: url("./fonts/HaasGrotDisp65Medium.otf") format("opentype");
 }
@@ -73,4 +78,20 @@ body {
 
 .sans-med {
 	font-family: "sans-serif-med-text";
+}
+
+.serif-italic {
+	font-family: "serif-italic-text";
+}
+
+.decorative-text-container{
+	height: 100px;
+	
+	
+}
+
+.decorative-text-small{
+
+	font-size: 32px;
+
 }
